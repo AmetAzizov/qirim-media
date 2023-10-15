@@ -1,0 +1,18 @@
+version: '1.0'
+services:
+  frontend:
+    build:
+      context: ../client
+      dockerfile: ../dev-config/Dockerfile.client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../client:/usr/app
+  backend:
+    build:
+      context: ../server-cms
+      dockerfile: ../dev-config/Dockerfile.cms
+    ports:
+      - "1337:1337"
+    volumes:
+      - ../server-cms:/usr/app
