@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Arrows from '../common/Arrows';
 import formatDateWithMonthName from '../../lib/newsPosts';
 
-const fetcher = url => fetch(url).then(res => res.json());
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const OptimizedArrows = React.memo(Arrows);
 
@@ -20,7 +20,7 @@ const BgSlider = () => {
         fetcher
     );
     const getNextSlides = useCallback(
-        current => {
+        (current: number) => {
             let nextSlides = [];
             let count = 0;
             let i = current + 1;
@@ -63,7 +63,7 @@ const BgSlider = () => {
             style={{
                 backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), url(${data.data[
                     currentSlide
-                ].attributes.image?.data?.map(img => img.attributes.url)})`,
+                ].attributes.image?.data?.map((img: any) => img.attributes.url)})`,
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat'
@@ -75,7 +75,7 @@ const BgSlider = () => {
                 }
             >
                 <Slider ref={sliderRef} {...settings} className={'flex-2 w-[66%] z-[1]'}>
-                    {data.data.map(item => (
+                    {data.data.map((item: any) => (
                         <div
                             key={item.attributes.slug}
                             className={'w-full max-w-[850px] text-left'}
@@ -119,7 +119,7 @@ const BgSlider = () => {
                             >
                                 <Image
                                     src={`${slide.attributes.image?.data?.map(
-                                        img => img.attributes.url
+                                        (img: any) => img.attributes.url
                                     )}`}
                                     width={108}
                                     height={108}

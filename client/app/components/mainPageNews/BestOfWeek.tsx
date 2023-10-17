@@ -1,6 +1,5 @@
 import React from 'react';
 import BigItem from './BigItem';
-import SmallItem from './SmallItem';
 import '../../styles/main-news.scss';
 import Link from 'next/link';
 

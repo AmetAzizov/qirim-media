@@ -7,9 +7,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {getNewsPosts, getNewsPost, getSlugs} from '@/app/lib/newsPosts';
 
+interface NewsSlugParams {
+    slug: string;
+}
+
 const apiUrl = 'http://localhost:1337/api/news-posts';
 
-export default async function NewsSlug({params: {slug}}) {
+export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams}) {
     const newsPosts = await getNewsPosts(0, 4);
     const newsPost = await getNewsPost(slug);
     if (!newsPost) {
@@ -68,7 +72,7 @@ export default async function NewsSlug({params: {slug}}) {
                         <div className={'mt-16'}>
                             <h3 className={'text-2xl font-bold mb-9'}>Читайте також:</h3>
                             <ul>
-                                {newsPosts.map(newsPost => (
+                                {newsPosts.map((newsPost: any) => (
                                     <li key={newsPost.slug} className='flex items-center mb-8'>
                                         <span
                                             className={

@@ -57,7 +57,7 @@ export default async function TodayNews() {
                                 </time>
                             </div>
                         </Link>
-                        {newsPosts.slice(1).map(newsPost => (
+                        {newsPosts.slice(1).map((newsPost: any) => (
                             <Link key={newsPost.slug} href={`news/${newsPost.slug}`} className={'flex items-center flex-row-reverse justify-between xl:flex-row'}>
                                 <Image
                                     className={'rounded-xl max-w-[144px] h-full md:max-h-[126px] md:max-w-[169px]'}

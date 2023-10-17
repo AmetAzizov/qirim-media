@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 
 
-export default function NewsItemClient({children}) {
+export default function NewsItemClient({children}: any) {
     // const [visibleItems, setVisibleItems] = useState(30);
     // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     // const [isPickerVisible, setPickerVisible] = useState(false);

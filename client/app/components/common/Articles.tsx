@@ -12,7 +12,7 @@ export default async function Articles() {
     console.log('ReviewsPage reviews:', articles);
     return (
         <>
-            {articles.map(article => (
+            {articles.map((article: any) => (
                 <article
                     key={article.slug}
                     className={'border-b-[1px] border-solid border-[--secondary-color-3] py-4'}

@@ -7,7 +7,7 @@ export default async function NewsItemServer() {
     console.log('ReviewsPage reviews:', newsPosts);
     return (
         <>
-            {newsPosts.map(newsPost => (
+            {newsPosts.map((newsPost: any) => (
                 <li key={newsPost.slug}>
                     <Link className={'hover:opacity-50'} href={`news/${newsPost.slug}`}>
                         <div
