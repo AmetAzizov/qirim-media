@@ -1,17 +1,17 @@
-version: '1.0'
+version: '3.9.0'
 services:
-  frontend:
+  client:
     build:
       context: ../client
-      dockerfile: ../dev-config/Dockerfile.client
+      dockerfile: ../client/dockerfile
     ports:
       - "3000:3000"
     volumes:
       - ../client:/usr/app
-  backend:
+  server-cms:
     build:
       context: ../server-cms
-      dockerfile: ../dev-config/Dockerfile.cms
+      dockerfile: ../server-cms/dockerfile
     ports:
       - "1337:1337"
     volumes:

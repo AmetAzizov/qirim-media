@@ -1,7 +1,0 @@
-FROM node:16
-WORKDIR /usr/app
-COPY package*.json ./
-# RUN npm config set unsafe-perm true
-RUN npm ci
-COPY . .
-CMD [ "npm", "run", "develop"]
