@@ -111,7 +111,3 @@ exports
 dist
 build
 .strapi-updater.json
-
-# local env files
-.env
-.env*.example

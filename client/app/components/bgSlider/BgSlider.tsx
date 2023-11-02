@@ -16,7 +16,7 @@ const BgSlider = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const sliderRef = useRef(null);
     const {data, error} = useSWR(
-        `${apiUrl}/news-posts?filters[mainSlider][$eq]=true&pagination[start]=0&pagination[limit]=4&sort=createdAt:desc&populate=image`,
+        `${apiUrl}/news-posts?pagination[start]=0&pagination[limit]=4&sort=createdAt:DESC&populate=image`,
         fetcher
     );
     const getNextSlides = useCallback(
