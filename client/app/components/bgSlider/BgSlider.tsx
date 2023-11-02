@@ -9,14 +9,14 @@ import Arrows from '../common/Arrows';
 import formatDateWithMonthName from '../../lib/newsPosts';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const OptimizedArrows = React.memo(Arrows);
 
 const BgSlider = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const sliderRef = useRef(null);
     const {data, error} = useSWR(
-        `${apiUrl}/news-posts?pagination[start]=0&pagination[limit]=4&sort=createdAt:DESC&populate=image`,
+        `${apiUrl}/news-posts?filters[mainSlider][$eq]=true&pagination[start]=0&pagination[limit]=4&sort=createdAt:desc&populate=image`,
         fetcher
     );
     const getNextSlides = useCallback(
