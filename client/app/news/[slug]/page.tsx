@@ -7,6 +7,7 @@ import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getNewsPosts, getNewsPost, getSlugs} from '@/app/lib/newsPosts';
+import '../../styles/react-markdown.scss'
 
 interface NewsSlugParams {
     slug: string;
@@ -59,7 +60,7 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                 className={'w-full rounded-lg'}
                             />
                             <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>{newsPost.subtitle}</div>
-                                <ReactMarkdown className={'text-base font-medium mb-9 space-y-9 lg:text-2xl'}>{newsPost.text}</ReactMarkdown>
+                                <ReactMarkdown className={'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl'}>{newsPost.text}</ReactMarkdown>
                             <div>
                                 <time
                                     className={'text-base font-medium text-[--secondary-color-5]'}
