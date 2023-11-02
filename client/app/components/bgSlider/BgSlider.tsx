@@ -1,6 +1,7 @@
 'use client';
 
 import React, {useState, useRef, useCallback, memo} from 'react';
+import ReactMarkdown from 'react-markdown';
 import useSWR from 'swr';
 import Slider from 'react-slick';
 import Image from 'next/image';
@@ -96,13 +97,13 @@ const BgSlider = () => {
                                             className={''}
                                         /> */}
 
-                                <p
+                                <ReactMarkdown
                                     className={
                                         'text-base font-medium text-[--background-color] mt-7 max-w-[593px] text-clip line-clamp-2 xl:line-clamp-3'
                                     }
                                 >
                                     {item.attributes.text}
-                                </p>
+                                </ReactMarkdown>
                             </Link>
                             <OptimizedArrows sliderRef={sliderRef} />
                         </div>
