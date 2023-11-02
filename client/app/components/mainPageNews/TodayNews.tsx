@@ -42,7 +42,7 @@ export default async function TodayNews() {
                                 width={290}
                                 height={217}
                                 alt='main news'
-                                className='rounded-t-md w-full md:rounded-l-md md:rounded-tr-none'
+                                className='rounded-t-md w-full md:rounded-l-md md:rounded-tr-none md:h-full md:max-w-[466px]'
                             />
                             <div
                                 className={
@@ -60,7 +60,7 @@ export default async function TodayNews() {
                         {newsPosts.slice(1).map((newsPost: any) => (
                             <Link key={newsPost.slug} href={`news/${newsPost.slug}`} className={'flex items-center flex-row-reverse justify-between xl:flex-row'}>
                                 <Image
-                                    className={'rounded-xl max-w-[144px] h-full md:max-h-[126px] md:max-w-[169px]'}
+                                    className={'rounded-xl max-w-[144px] w-full h-full md:max-h-[126px] md:max-w-[169px]'}
                                     src={`${newsPost.image}`}
                                     width={169}
                                     height={126}

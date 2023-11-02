@@ -8,6 +8,11 @@ services:
       - "3000:3000"
     volumes:
       - ../client:/usr/app
+    dns:
+      - 185.86.77.8
+    depends_on:
+      - server-cms
+
   server-cms:
     build:
       context: ../server-cms
@@ -16,3 +21,7 @@ services:
       - "1337:1337"
     volumes:
       - ../server-cms:/usr/app
+    dns:
+      - 185.86.77.8
+    environment:
+      - NODE_ENV=production

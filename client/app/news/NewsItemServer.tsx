@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {getNewsPosts} from '../lib/newsPosts';
 
 export default async function NewsItemServer() {
-    const newsPosts = await getNewsPosts(0, 200);
+    const newsPosts = await getNewsPosts(0, 10000);
     console.log('ReviewsPage reviews:', newsPosts);
     return (
         <>

@@ -9,7 +9,7 @@ import Arrows from '../common/Arrows';
 import formatDateWithMonthName from '../../lib/newsPosts';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL
 const OptimizedArrows = React.memo(Arrows);
 
 const BgSlider = () => {
@@ -49,7 +49,7 @@ const BgSlider = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         adaptiveHeight: true,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 10000,
         speed: 1000,
         beforeChange: (_current: number, next: number) => {
@@ -74,7 +74,7 @@ const BgSlider = () => {
                     'flex items-center justify-center xl:justify-between xl:max-w-[1479px] w-full'
                 }
             >
-                <Slider ref={sliderRef} {...settings} className={'flex-2 w-[66%] z-[1]'}>
+                <Slider ref={sliderRef} {...settings} className={'flex-2 w-full xl:w-[66%] z-[1]'}>
                     {data.data.map((item: any) => (
                         <div
                             key={item.attributes.slug}

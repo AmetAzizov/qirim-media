@@ -30,6 +30,7 @@ export default function formatDateWithMonthName(dateString) {
 
 function formatDateWithMonthNameAndTime(dateString) {
     const date = new Date(dateString);
+    date.setHours(date.getHours() + 3);
     const day = date.getDate();
     const monthName = MONTH_NAMES[date.getMonth()];
     const year = date.getFullYear();
@@ -58,6 +59,7 @@ export async function getNewsPost(slug) {
     const item = data[0];
     return {
         ...toNewsPost(item),
+        subtitle: item.attributes.subtitle,
         authorName: item.attributes.authorName,
         text: item.attributes.text,
         dateTime: formatDateWithMonthNameAndTime(item.attributes.publishedAt)
@@ -85,7 +87,7 @@ export async function getSlugs() {
 
 export async function fetchNewsPosts(parameters) {
     const url = `${apiUrl}/news-posts?` + qs.stringify(parameters, {encodeValuesOnly: true});
-    const response = await fetch(url, {cache: 'force-cache'});
+    const response = await fetch(url, {cache: 'no-store'});
     if (!response.ok) {
         throw new Error(`CMS returned ${response.status} for ${url}`);
     }
@@ -97,7 +99,9 @@ function toNewsPost(item) {
     return {
         slug: attributes.slug,
         title: attributes.title,
+        subtitle: attributes.subtitle,
         date: formatDateWithMonthName(attributes.publishedAt),
         image: attributes.image?.data?.map(img => img.attributes.url)
     };
 }
+

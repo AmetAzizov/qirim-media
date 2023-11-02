@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown';
 import Breadcrumbs from '@/app/components/common/BreadCrumbs';
 import SwipeBlogCard from '@/app/blogs/SwipeBlogCard';
 import NewsItem from '../NewsItemServer';
@@ -11,7 +12,7 @@ interface NewsSlugParams {
     slug: string;
 }
 
-const apiUrl = 'http://localhost:1337/api/news-posts';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams}) {
     const newsPosts = await getNewsPosts(0, 4);
@@ -57,10 +58,8 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                 alt='mainnews-id'
                                 className={'w-full rounded-lg'}
                             />
-                            <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}></div>
-                            <p className={'text-base font-medium mb-9 lg:text-2xl'}>
-                                {newsPost.text}
-                            </p>
+                            <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>{newsPost.subtitle}</div>
+                                <ReactMarkdown className={'text-base font-medium mb-9 space-y-9 lg:text-2xl'}>{newsPost.text}</ReactMarkdown>
                             <div>
                                 <time
                                     className={'text-base font-medium text-[--secondary-color-5]'}
@@ -80,7 +79,7 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                             }
                                         ></span>
                                         <Link
-                                            href={`${apiUrl}/${newsPost.slug}`}
+                                            href={`${newsPost.slug}`}
                                             className={
                                                 'text-base font-semibold text-[--primary-color-5] lg:text-lg'
                                             }
