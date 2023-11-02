@@ -1,0 +1,27 @@
+version: '3.9.0'
+services:
+  client:
+    build:
+      context: ../client
+      dockerfile: ../client/dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../client:/usr/app
+    dns:
+      - 185.86.77.8
+    depends_on:
+      - server-cms
+
+  server-cms:
+    build:
+      context: ../server-cms
+      dockerfile: ../server-cms/dockerfile
+    ports:
+      - "1337:1337"
+    volumes:
+      - ../server-cms:/usr/app
+    dns:
+      - 185.86.77.8
+    environment:
+      - NODE_ENV=production
