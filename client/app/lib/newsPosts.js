@@ -30,7 +30,7 @@ export default function formatDateWithMonthName(dateString) {
 
 function formatDateWithMonthNameAndTime(dateString) {
     const date = new Date(dateString);
-    date.setHours(date.getHours() + 3);
+    date.setHours(date.getHours() + 2);
     const day = date.getDate();
     const monthName = MONTH_NAMES[date.getMonth()];
     const year = date.getFullYear();
