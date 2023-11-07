@@ -20,7 +20,7 @@ export default {
             }))
         },
         options: {
-            tz: 'Europe/Kyiv'
+            tz: 'EET'
         }
     }
 }

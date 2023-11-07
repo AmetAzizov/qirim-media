@@ -100,10 +100,10 @@ const BgSlider = () => {
 
                                 <ReactMarkdown
                                     className={
-                                        'react-markdown text-base font-medium text-[--background-color] mt-7 max-w-[593px] text-clip line-clamp-2 xl:line-clamp-3'
+                                        'react-markdown text-base font-medium text-[--background-color] mt-7 max-w-[593px] text-clip line-clamp-3 xl:line-clamp-3'
                                     }
                                 >
-                                    {item.attributes.text}
+                                    {item.attributes.subtitle}
                                 </ReactMarkdown>
                             </Link>
                             <OptimizedArrows sliderRef={sliderRef} />
