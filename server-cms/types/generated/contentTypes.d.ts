@@ -423,6 +423,12 @@ export interface ApiNewsPostNewsPost extends Schema.CollectionType {
         };
       }> &
       Attribute.DefaultTo<false>;
+    publish_at: Attribute.DateTime &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
