@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Arrows from '../common/Arrows';
 import formatDateWithMonthName from '../../lib/newsPosts';
+import '../../styles/react-markdown.scss'
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -99,7 +100,7 @@ const BgSlider = () => {
 
                                 <ReactMarkdown
                                     className={
-                                        'text-base font-medium text-[--background-color] mt-7 max-w-[593px] text-clip line-clamp-2 xl:line-clamp-3'
+                                        'react-markdown text-base font-medium text-[--background-color] mt-7 max-w-[593px] text-clip line-clamp-2 xl:line-clamp-3'
                                     }
                                 >
                                     {item.attributes.text}
