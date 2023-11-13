@@ -30,22 +30,12 @@ export default function formatDateWithMonthName(dateString) {
 }
 
 function formatDateWithMonthNameAndTime(dateString) {
-<<<<<<< HEAD
-    const date = new Date(dateString);
-    date.setHours(date.getHours() + 2);
-    const day = date.getDate();
-    const monthName = MONTH_NAMES[date.getMonth()];
-    const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-=======
     const date = moment.tz(dateString, "Europe/Kyiv");
     const day = date.date();
     const monthName = MONTH_NAMES[date.month()];
     const year = date.year();
     const hours = date.hours();
     const minutes = date.minutes();
->>>>>>> be13a7065f512a40fd0d7b2e7c209d5f71959120
 
     return `${day} ${monthName} ${year} / ${hours}:${minutes.toString().padStart(2, '0')}`;
 }

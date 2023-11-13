@@ -25,3 +25,4 @@ services:
       - 185.86.77.8
     environment:
       - NODE_ENV=production
+      - TZ=Europe/Kyiv
