@@ -38,9 +38,9 @@ const BgSlider = () => {
     );
 
     if (error) return <div>Error loading data</div>;
-    if (!data) return <div>Loading...</div>;
+    if (!data) return <div className={'h-[100vh] flex items-center justify-center text-xl'}>Завантаження...</div>;
 
-    console.log('Data received:', data);
+    // console.log('Data received:', data);
 
     const settings = {
         fade: true,

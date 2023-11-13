@@ -36,7 +36,7 @@ export default async function TodayNews() {
                 </h2>
                 <div className='flex justify-between'>
                     <div className={'grid grid-cols-1 max-w-[972px] gap-11 md:grid-cols-2 xl:mr-5'}>
-                        <Link href={`news/${newsPosts[0].slug}`} className={'item-top flex flex-col rounded-xl md:flex-row'}>
+                        <Link href={`news/${newsPosts[0].slug}`} className={'item-top flex flex-col rounded-xl md:flex-row md:max-h-[350px]'}>
                             <Image
                                 src={`${newsPosts[0].image}`}
                                 width={290}
