@@ -13,3 +13,13 @@ module.exports = {
         domains: ['s3-qirimbucket.gmhost.space']
     },
 };
+// module.exports = {
+//     images: {
+//         remotePatterns: [
+//             {
+//                 protocol: 'http',
+//                 hostname: 's3-qirimbucket.gmhost.space',
+//             }
+//         ]
+//     }
+// };

@@ -14,8 +14,8 @@ const Home = () => {
 
             {/* <MainBlogs /> */}
             <TodayNews />
-            {/* <MainNews />
-            <BestOfWeek /> */}
+            {/* <MainNews /> */}
+            <BestOfWeek />
         </>
     );
 };

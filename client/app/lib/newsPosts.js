@@ -6,18 +6,18 @@ import moment from 'moment-timezone';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const MONTH_NAMES = [
-    'Січня',
-    'Лютого',
-    'Березня',
-    'Квітня',
-    'Травня',
-    'Червня',
-    'Липня',
-    'Серпня',
-    'Вересня',
-    'Жовтня',
-    'Листопада',
-    'Грудня'
+    'січня',
+    'лютого',
+    'березня',
+    'квітня',
+    'травня',
+    'червня',
+    'липня',
+    'серпня',
+    'вересня',
+    'жовтня',
+    'листопада',
+    'грудня'
 ];
 
 export default function formatDateWithMonthName(dateString) {

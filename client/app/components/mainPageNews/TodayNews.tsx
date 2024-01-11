@@ -8,18 +8,18 @@ import {getNewsPosts} from '@/app/lib/newsPosts';
 const date = new Date();
 const day = date.getDate();
 const months = [
-    'Січеня',
-    'Лютого',
-    'Березня',
-    'Квітня',
-    'Травня',
-    'Червеня',
-    'Липня',
-    'Серпня',
-    'Вересня',
-    'Жовтня',
-    'Листопада',
-    'Груденя'
+    'cічня',
+    'лютого',
+    'березня',
+    'квітня',
+    'травня',
+    'червеня',
+    'липня',
+    'серпня',
+    'вересня',
+    'жовтня',
+    'листопада',
+    'грудня'
 ];
 const month = months[date.getMonth()];
 
@@ -46,7 +46,7 @@ export default async function TodayNews() {
                             />
                             <div
                                 className={
-                                    'flex flex-col items-start justify-between bg-[--secondary-color-4] p-2.5 lg:p-4'
+                                    'flex flex-col items-start justify-between bg-[--secondary-color-4] p-2.5 lg:p-4 lg:w-full'
                                 }
                             >
                                 <p className={'text-lg font-medium mb-2.5 text-clip line-clamp-3 lg:text-xl lg:mb-8'}>
