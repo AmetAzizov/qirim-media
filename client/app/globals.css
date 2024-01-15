@@ -44,7 +44,7 @@ body {
 }
 
 .grid-rows-13 {
-    grid-template-rows: repeat(13, minmax(290px, 1fr));
+    grid-template-rows: repeat(13, minmax(76px, 1fr));
 }
 
 * {

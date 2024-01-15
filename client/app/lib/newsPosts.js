@@ -87,6 +87,21 @@ export async function getNewsPost(slug) {
     };
 }
 
+export async function getBestOfWeek(start, limit) {
+    const {data} = await fetchNewsPosts({
+        filters: {
+            bestOfWeek: {
+                $eq: 'true',
+            }
+        },
+        fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+        populate: {image: {fields: ['url']}},
+        sort: ['publishedAt:desc'],
+        pagination: {start, limit}
+    });
+    return data.map(toNewsPost);
+}
+
 export async function getNewsPosts(start, limit) {
     const {data} = await fetchNewsPosts({
         fields: ['slug', 'title', 'subtitle', 'publishedAt'],

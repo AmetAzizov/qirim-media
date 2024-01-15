@@ -1,14 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getNewsPosts} from '@/app/lib/newsPosts';
+import {getBestOfWeek, getNewsPosts} from '@/app/lib/newsPosts';
 import '../../styles/main-news.scss';
 
 export default async function BestOfWeek() {
-    const newsPosts = await getNewsPosts(0, 13);
+    const newsPosts = await getBestOfWeek(0, 13);
+    console.log(newsPosts);
 
     return (
-        <section className={'px-4 ml-11 lg:ml-0 lg:my-24'}>
+        <section className={'px-4 lg:my-24'}>
             <div className={'max-w-[1479px] mx-auto my-0 w-full'}>
                 <div className={'flex items-center justify-between mb-9'}>
                     <h2 className={'title-text'}>Найкраще за тиждень</h2>
@@ -28,14 +29,14 @@ export default async function BestOfWeek() {
                     }
                 >
                     <Link
-                        href={`news/${newsPosts.slug}`}
+                        href={`news/${newsPosts[0].slug}`}
                         style={{
-                            backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${newsPosts.image})`,
+                            backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${newsPosts[0].image})`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat'
                         }}
-                        className={'item-big-top flex items-end w-full rounded-xl p-4 lg:h-auto'}
+                        className={'item-big-top flex items-end w-full h-[296px] rounded-xl p-4 lg:h-auto'}
                     >
                         <div className={'flex flex-col'}>
                             <h2
@@ -43,10 +44,10 @@ export default async function BestOfWeek() {
                                     'text-base font-medium text-[--background-color] text-clip line-clamp-2'
                                 }
                             >
-                                {newsPosts.title}
+                                {newsPosts[0].title}
                             </h2>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                12.11.23
+                                {newsPosts[0].date}
                             </time>
                         </div>
                     </Link>
@@ -60,7 +61,7 @@ export default async function BestOfWeek() {
                         >
                             <Image
                                 className={
-                                    'rounded-xl max-w-[144px] w-full h-full md:max-h-[126px] md:max-w-[169px]'
+                                    'rounded-xl max-w-[120px] w-[100rem] h-[86px] md:w-[100vw] md:h-[126px] md:max-w-[169px]'
                                 }
                                 src={`${newsPost.image}`}
                                 width={169}
@@ -82,14 +83,14 @@ export default async function BestOfWeek() {
                         </Link>
                     ))}
                     <Link
-                        href={`news/${newsPosts.slug}`}
+                        href={`news/${newsPosts[1].slug}}`}
                         style={{
-                            backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url('/main-news.png')`,
+                            backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${newsPosts[1].image})`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat'
                         }}
-                        className={'item-big-bottom flex items-end w-full rounded-xl p-4 lg:h-auto'}
+                        className={'item-big-bottom flex items-end w-full h-[296px] rounded-xl p-4 lg:h-auto'}
                     >
                         <div className={'flex flex-col'}>
                             <h2
@@ -97,11 +98,10 @@ export default async function BestOfWeek() {
                                     'text-base font-medium text-[--background-color] text-clip line-clamp-2'
                                 }
                             >
-                                З нейтральної до недружньої або Як Росія образилась на Туреччину
-                                через підтримку України
+                                {newsPosts[1].title}
                             </h2>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                10 Липня 2023
+                                {newsPosts[1].date}
                             </time>
                         </div>
                     </Link>

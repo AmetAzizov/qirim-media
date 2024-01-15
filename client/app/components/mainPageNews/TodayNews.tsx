@@ -26,7 +26,7 @@ const month = months[date.getMonth()];
 export default async function TodayNews() {
     const newsPosts = await getNewsPosts(0, 7);
     return (
-        <section className={'px-4 lg:my-24'}>
+        <section className={'px-4 my-11 lg:my-24'}>
             <div className={'max-w-[1479px] mx-auto my-0 w-full'}>
                 <h2 className={'title-text mb-9'}>
                     Сьогоднi,{' '}
@@ -60,7 +60,7 @@ export default async function TodayNews() {
                         {newsPosts.slice(1).map((newsPost: any) => (
                             <Link key={newsPost.slug} href={`news/${newsPost.slug}`} className={'flex items-center flex-row-reverse justify-between xl:flex-row'}>
                                 <Image
-                                    className={'rounded-xl max-w-[144px] w-full h-full md:max-h-[126px] md:max-w-[169px]'}
+                                    className={'rounded-xl max-w-[120px] w-[100rem] max-h-[86px] h-[100rem] md:w-[100vw] md:max-h-[126px] md:max-w-[169px]'}
                                     src={`${newsPost.image}`}
                                     width={169}
                                     height={126}

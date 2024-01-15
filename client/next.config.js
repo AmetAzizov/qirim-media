@@ -9,17 +9,15 @@
 // };
 // next.config.js
 module.exports = {
+    // images: {
+    //     domains: ['s3-qirimbucket.gmhost.space']
+    // },
     images: {
-        domains: ['s3-qirimbucket.gmhost.space']
-    },
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**'
+            }
+        ]
+    }
 };
-// module.exports = {
-//     images: {
-//         remotePatterns: [
-//             {
-//                 protocol: 'http',
-//                 hostname: 's3-qirimbucket.gmhost.space',
-//             }
-//         ]
-//     }
-// };

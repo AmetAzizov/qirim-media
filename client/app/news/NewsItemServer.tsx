@@ -4,7 +4,7 @@ import {getNewsPosts} from '../lib/newsPosts';
 
 export default async function NewsItemServer() {
     const newsPosts = await getNewsPosts(0, 50);
-    console.log('ReviewsPage reviews:', newsPosts);
+    // console.log('ReviewsPage reviews:', newsPosts);
     return (
         <>
             {newsPosts.map((newsPost: any) => (
