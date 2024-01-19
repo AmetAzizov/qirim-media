@@ -57,7 +57,7 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                 width={1012}
                                 height={582}
                                 alt='mainnews-id'
-                                className={'w-full rounded-lg'}
+                                className={'w-full h-[582px] rounded-lg'}
                             />
                             <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>{newsPost.subtitle}</div>
                                 <ReactMarkdown className={'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl'}>{newsPost.text}</ReactMarkdown>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getBestOfWeek, getNewsPosts} from '@/app/lib/newsPosts';
+import {getBestOfWeek} from '@/app/lib/newsPosts';
 import '../../styles/main-news.scss';
 
 export default async function BestOfWeek() {

@@ -101,6 +101,14 @@
         }
       },
       "type": "boolean"
+    },
+    "mainNews": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "boolean"
     }
   }
 }

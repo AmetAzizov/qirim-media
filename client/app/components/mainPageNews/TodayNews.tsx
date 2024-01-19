@@ -42,7 +42,7 @@ export default async function TodayNews() {
                                 width={290}
                                 height={217}
                                 alt='main news'
-                                className='rounded-t-md w-full md:rounded-l-md md:rounded-tr-none md:h-full md:max-w-[466px]'
+                                className='rounded-t-md w-full min-h-[217px] md:rounded-l-md md:rounded-tr-none md:h-full md:max-w-[466px]'
                             />
                             <div
                                 className={
