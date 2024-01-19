@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getMainNews} from '@/app/lib/newsPosts';
+import MainNewsItem from './MainNewsItem';
 
 export default async function MainNews() {
     const newsPosts = await getMainNews(0, 7);
@@ -32,7 +33,7 @@ export default async function MainNews() {
                         className={'item-left w-full rounded-xl bg-[--secondary-color-4] lg:h-auto'}
                     >
                         <Image
-                            className='w-full min-h-[217px] rounded-t-xl sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[475px]'
+                            className='w-full min-h-[217px] rounded-t-xl sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
                             src={`${newsPosts[0].image}`}
                             width={290}
                             height={217}
@@ -52,35 +53,36 @@ export default async function MainNews() {
                         </div>
                     </Link>
                     {newsPosts.slice(1).map((newsPost: any) => (
-                        <Link
-                            key={newsPost.slug}
-                            href={`news/${newsPost.slug}`}
-                            className={
-                                'flex items-center flex-col justify-between'
-                            }
-                        >
-                            <Image
-                                className={
-                                    'rounded-xl w-full h-[185px] sm:h-[245px] md:h-[300px] lg:h-[370px] xl:h-[190px]'
-                                }
-                                src={`${newsPost.image}`}
-                                width={254}
-                                height={200}
-                                alt='news-pic'
-                            />
-                            <div className={''}>
-                                <p
-                                    className={
-                                        'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-4'
-                                    }
-                                >
-                                    {newsPost.title}
-                                </p>
-                                <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                    {newsPost.date}
-                                </time>
-                            </div>
-                        </Link>
+                        // <Link
+                        //     key={newsPost.slug}
+                        //     href={`news/${newsPost.slug}`}
+                        //     className={
+                        //         'flex items-center flex-col justify-between'
+                        //     }
+                        // >
+                        //     <Image
+                        //         className={
+                        //             'rounded-xl w-full h-[185px] sm:h-[245px] md:h-[300px] lg:h-[370px] xl:h-[190px]'
+                        //         }
+                        //         src={`${newsPost.image}`}
+                        //         width={254}
+                        //         height={200}
+                        //         alt='news-pic'
+                        //     />
+                        //     <div className={''}>
+                        //         <p
+                        //             className={
+                        //                 'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-4'
+                        //             }
+                        //         >
+                        //             {newsPost.title}
+                        //         </p>
+                        //         <time className={'text-sm font-medium text-[--secondary-color-2]'}>
+                        //             {newsPost.date}
+                        //         </time>
+                        //     </div>
+                        // </Link>
+                        <MainNewsItem key={newsPost.slug} newsPost={newsPost} />
                     ))}
                 </div>
             </div>

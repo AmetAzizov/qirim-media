@@ -6,8 +6,9 @@ import Articles from '@/app/components/common/Articles';
 import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getNewsPosts, getNewsPost, getSlugs} from '@/app/lib/newsPosts';
-import '../../styles/react-markdown.scss'
+import {getNewsPosts, getNewsPost, getMainNews} from '@/app/lib/newsPosts';
+import '../../styles/react-markdown.scss';
+import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
 
 interface NewsSlugParams {
     slug: string;
@@ -18,6 +19,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams}) {
     const newsPosts = await getNewsPosts(0, 4);
     const newsPost = await getNewsPost(slug);
+    const mainNewsPosts = await getMainNews(0, 9);
     if (!newsPost) {
         notFound();
     }
@@ -59,8 +61,16 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                 alt='mainnews-id'
                                 className={'w-full h-[582px] rounded-lg'}
                             />
-                            <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>{newsPost.subtitle}</div>
-                                <ReactMarkdown className={'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl'}>{newsPost.text}</ReactMarkdown>
+                            <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>
+                                {newsPost.subtitle}
+                            </div>
+                            <ReactMarkdown
+                                className={
+                                    'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl'
+                                }
+                            >
+                                {newsPost.text}
+                            </ReactMarkdown>
                             <div>
                                 <time
                                     className={'text-base font-medium text-[--secondary-color-5]'}
@@ -116,7 +126,7 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                             </Link>
                         </div>
                         <div className={'my-11 lg:my-24'}>{/* <SwipeBlogCard /> */}</div>
-                        {/* <div className={'flex items-center justify-between mb-9'}>
+                        <div className={'flex items-center justify-between mb-9'}>
                             <h2 className={'title-text'}>Головнi новини</h2>
                             <Link
                                 href={'/news'}
@@ -126,16 +136,11 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                             >
                                 Бiльше новин
                             </Link>
-                        </div> */}
+                        </div>
                         <div className={'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'}>
-                            {/* <NewsItem key={'id'} />
-                            <NewsItem key={'id'} />
-                            <NewsItem key={'id'} />
-                            <NewsItem key={'id'} />
-                            <NewsItem key={'id'} />
-                            <NewsItem key={'id'} />
-                            <NewsItem key={'id'} />
-                            <NewsItem key={'id'} /> */}
+                            {mainNewsPosts.slice(1).map((newsPost: any) => (
+                                <MainNewsItem key={newsPost.slug} newsPost={newsPost} />
+                            ))}
                         </div>
                     </div>
                 </div>
