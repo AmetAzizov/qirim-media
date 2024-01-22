@@ -24,16 +24,16 @@ export default async function MainNews() {
 
                 <div
                     className={
-                        'grid gap-4 grid-cols-2 xl:grid-cols-5 xl:grid-rows-2 xl:gap-6 xl:max-h-[689px] xl:h-full'
+                        'grid gap-4 grid-cols-2 xl:grid-cols-5 xl:grid-rows-2 xl:gap-4 xl:max-h-[689px] xl:h-full'
                     }
                 >
                     <Link
                         key={newsPosts.slug}
                         href={`news/${newsPosts[0].slug}`}
-                        className={'item-left w-full rounded-xl bg-[--secondary-color-4] lg:h-auto'}
+                        className={'item-left w-full rounded-xl bg-[--secondary-color-4]'}
                     >
                         <Image
-                            className='w-full min-h-[217px] rounded-t-xl sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
+                            className='w-full min-h-[250px] rounded-t-xl sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
                             src={`${newsPosts[0].image}`}
                             width={290}
                             height={217}
@@ -41,10 +41,17 @@ export default async function MainNews() {
                         />
                         <div
                             className={
-                                'flex flex-col items-start bg-[--secondary-color-4] p-2.5 lg:p-4'
+                                'flex flex-col items-start justify-between bg-[--secondary-color-4] p-2.5 lg:p-6'
                             }
                         >
-                            <p className={'text-lg font-medium mb-2.5 lg:text-xl lg:mb-8'}>
+                            <button
+                                className={
+                                    'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
+                                }
+                            >
+                                Новини Украiни
+                            </button>
+                            <p className={'text-lg font-medium lg:text-xl'}>
                                 {newsPosts[0].title}
                             </p>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>

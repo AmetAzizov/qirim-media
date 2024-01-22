@@ -36,7 +36,12 @@ export default async function TodayNews() {
                 </h2>
                 <div className='flex justify-between'>
                     <div className={'grid grid-cols-1 max-w-[972px] gap-11 md:grid-cols-2 xl:mr-5'}>
-                        <Link href={`news/${newsPosts[0].slug}`} className={'item-top flex flex-col rounded-xl md:flex-row md:max-h-[350px]'}>
+                        <Link
+                            href={`news/${newsPosts[0].slug}`}
+                            className={
+                                'item-top flex flex-col rounded-xl md:flex-row md:max-h-[350px]'
+                            }
+                        >
                             <Image
                                 src={`${newsPosts[0].image}`}
                                 width={290}
@@ -46,10 +51,21 @@ export default async function TodayNews() {
                             />
                             <div
                                 className={
-                                    'flex flex-col items-start justify-between bg-[--secondary-color-4] p-2.5 lg:p-4 lg:w-full'
+                                    'flex flex-col items-start justify-between bg-[--secondary-color-4] p-2.5 lg:p-4 lg:w-full xl:p-6'
                                 }
                             >
-                                <p className={'text-lg font-medium mb-2.5 text-clip line-clamp-3 lg:text-xl lg:mb-8'}>
+                                <button
+                                    className={
+                                        'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
+                                    }
+                                >
+                                    Новини Украiни
+                                </button>
+                                <p
+                                    className={
+                                        'text-lg font-medium mb-2.5 text-clip line-clamp-3 lg:text-xl lg:mb-8'
+                                    }
+                                >
                                     {newsPosts[0].title}
                                 </p>
                                 <time className={'text-sm font-medium text-[--secondary-color-2]'}>
@@ -58,24 +74,39 @@ export default async function TodayNews() {
                             </div>
                         </Link>
                         {newsPosts.slice(1).map((newsPost: any) => (
-                            <Link key={newsPost.slug} href={`news/${newsPost.slug}`} className={'flex items-center flex-row-reverse justify-between xl:flex-row'}>
+                            <Link
+                                key={newsPost.slug}
+                                href={`news/${newsPost.slug}`}
+                                className={
+                                    'flex items-center flex-row-reverse justify-between xl:flex-row'
+                                }
+                            >
                                 <Image
-                                    className={'rounded-xl max-w-[120px] w-[100rem] max-h-[86px] h-[100rem] md:w-[100vw] md:max-h-[126px] md:max-w-[169px]'}
+                                    className={
+                                        'rounded-xl max-w-[120px] w-[100rem] max-h-[86px] h-[100rem] md:w-[100vw] md:max-h-[126px] md:max-w-[169px]'
+                                    }
                                     src={`${newsPost.image}`}
                                     width={169}
                                     height={126}
                                     alt='news-pic'
                                 />
                                 <div className={'pr-5 xl:pr-0 xl:pl-5'}>
+                                    <button
+                                        className={
+                                            'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
+                                        }
+                                    >
+                                        Новини Украiни
+                                    </button>
                                     <p
                                         className={
-                                            'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-4'
+                                            'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5'
                                         }
                                     >
                                         {newsPost.title}
                                     </p>
                                     <time
-                                        className={'text-sm font-medium text-[--secondary-color-2]'}
+                                        className={'text-xs font-medium text-[--secondary-color-2]'}
                                     >
                                         {newsPost.date}
                                     </time>

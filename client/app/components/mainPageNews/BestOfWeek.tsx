@@ -36,7 +36,9 @@ export default async function BestOfWeek() {
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat'
                         }}
-                        className={'item-big-top flex items-end w-full h-[296px] rounded-xl p-4 lg:h-auto'}
+                        className={
+                            'item-big-top flex items-end w-full h-[296px] rounded-xl p-4 lg:h-auto'
+                        }
                     >
                         <div className={'flex flex-col'}>
                             <h2
@@ -69,6 +71,13 @@ export default async function BestOfWeek() {
                                 alt='news-pic'
                             />
                             <div className={'pr-5 xl:pr-0 xl:pl-5'}>
+                                <button
+                                    className={
+                                        'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
+                                    }
+                                >
+                                    Новини Украiни
+                                </button>
                                 <p
                                     className={
                                         'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-4'
@@ -83,14 +92,16 @@ export default async function BestOfWeek() {
                         </Link>
                     ))}
                     <Link
-                        href={`news/${newsPosts[1].slug}}`}
+                        href={`news/${newsPosts[1].slug}`}
                         style={{
                             backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${newsPosts[1].image})`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat'
                         }}
-                        className={'item-big-bottom flex items-end w-full h-[296px] rounded-xl p-4 lg:h-auto'}
+                        className={
+                            'item-big-bottom flex items-end w-full h-[296px] rounded-xl p-4 lg:h-auto'
+                        }
                     >
                         <div className={'flex flex-col'}>
                             <h2

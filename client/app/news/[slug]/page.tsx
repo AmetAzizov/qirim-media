@@ -9,6 +9,7 @@ import Image from 'next/image';
 import {getNewsPosts, getNewsPost, getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
+import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 
 interface NewsSlugParams {
     slug: string;
@@ -59,7 +60,9 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                 width={1012}
                                 height={582}
                                 alt='mainnews-id'
-                                className={'w-full h-[582px] rounded-lg'}
+                                className={
+                                    'w-full h-[217px] sm:h-[350px] md:h-[400px] lg:h-[582px] rounded-lg'
+                                }
                             />
                             <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>
                                 {newsPost.subtitle}
@@ -125,7 +128,8 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                 <p className={'text-sm font-medium ml-2.5'}>Підписатись</p>
                             </Link>
                         </div>
-                        <div className={'my-11 lg:my-24'}>{/* <SwipeBlogCard /> */}</div>
+                        {/* <div className={'my-11 lg:my-24'}><SwipeBlogCard /></div> */}
+                        {/* <MainBlogs /> */}
                         <div className={'flex items-center justify-between mb-9'}>
                             <h2 className={'title-text'}>Головнi новини</h2>
                             <Link

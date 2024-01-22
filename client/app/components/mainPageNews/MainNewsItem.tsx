@@ -7,11 +7,11 @@ const NewsItem = ({newsPost}) => {
     return (
         <Link
             href={`news/${newsPost.slug}`}
-            className={'flex items-center flex-col justify-between'}
+            className={'flex items-center flex-col justify-between xl:items-start xl:justify-normal'}
         >
             <Image
                 className={
-                    'rounded-xl w-full h-[185px] sm:h-[245px] md:h-[300px] lg:h-[370px] xl:h-[190px]'
+                    'rounded-xl w-full h-[185px] sm:h-[245px] md:h-[300px] lg:h-[370px] xl:min-h-[190px] xl:h-[190px]'
                 }
                 src={`${newsPost.image}`}
                 width={254}
@@ -19,9 +19,16 @@ const NewsItem = ({newsPost}) => {
                 alt='news-pic'
             />
             <div className={''}>
+                <button
+                    className={
+                        'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
+                    }
+                >
+                    Новини Украiни
+                </button>
                 <p
                     className={
-                        'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-4'
+                        'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-2.5'
                     }
                 >
                     {newsPost.title}
