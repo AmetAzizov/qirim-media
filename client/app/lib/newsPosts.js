@@ -152,7 +152,6 @@ function toNewsPost(item) {
         title: attributes.title,
         subtitle: attributes.subtitle,
         date: formatDateWithMonthName(attributes.publishedAt),
-        image: attributes.image?.data?.map(img => img.attributes.url)
+        image: attributes?.image?.data?.map(img => img.attributes.url)
     };
 }
-

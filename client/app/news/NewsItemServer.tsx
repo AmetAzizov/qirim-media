@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {getNewsPosts} from '../lib/newsPosts';
+import Image from 'next/image';
 
 export default async function NewsItemServer() {
     const newsPosts = await getNewsPosts(0, 50);
@@ -12,7 +13,7 @@ export default async function NewsItemServer() {
                     <Link className={'hover:opacity-50'} href={`news/${newsPost.slug}`}>
                         <div
                             style={{
-                                background: `url(${newsPost.image})`,
+                                backgroundImage: `url(${newsPost.image})`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
@@ -21,7 +22,13 @@ export default async function NewsItemServer() {
                                 borderRadius: '12px'
                             }}
                         ></div>
-                        <button className={'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'}>Новини Украiни</button>
+                        <button
+                            className={
+                                'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
+                            }
+                        >
+                            Новини України
+                        </button>
                         <p
                             className={
                                 'text-sm font-medium text-clip line-clamp-4 lg:text-base my-2.5 lg:line-clamp-3 lg:my-4'

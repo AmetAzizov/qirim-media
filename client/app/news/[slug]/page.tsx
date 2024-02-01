@@ -59,7 +59,7 @@ export default async function NewsSlug({params: {slug}}: {params: NewsSlugParams
                                 src={`${newsPost.image}`}
                                 width={1012}
                                 height={582}
-                                alt='mainnews-id'
+                                alt='img'
                                 className={
                                     'w-full h-[217px] sm:h-[350px] md:h-[400px] lg:h-[582px] rounded-lg'
                                 }
