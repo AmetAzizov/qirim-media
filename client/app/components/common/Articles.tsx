@@ -9,7 +9,7 @@ import {getNewsPosts} from '../../lib/newsPosts';
 
 export default async function Articles() {
     const articles = await getNewsPosts(7, 7);
-    console.log('ReviewsPage reviews:', articles);
+    // console.log('ReviewsPage reviews:', articles);
     return (
         <>
             {articles.map((article: any) => (

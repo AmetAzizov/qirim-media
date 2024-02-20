@@ -3,7 +3,7 @@ import { writeFileSync } from 'fs';
 import qs from 'qs';
 
 
-const url = 'http://localhost:1337/api/reviews'
+const url = 'https://qirim.news/api/news-posts'
 + '?' + qs.stringify({
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: {image: {fields: ['url']}},

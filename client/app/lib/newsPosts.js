@@ -6,18 +6,18 @@ import moment from 'moment-timezone';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const MONTH_NAMES = [
-    'Січня',
-    'Лютого',
-    'Березня',
-    'Квітня',
-    'Травня',
-    'Червня',
-    'Липня',
-    'Серпня',
-    'Вересня',
-    'Жовтня',
-    'Листопада',
-    'Грудня'
+    'січня',
+    'лютого',
+    'березня',
+    'квітня',
+    'травня',
+    'червня',
+    'липня',
+    'серпня',
+    'вересня',
+    'жовтня',
+    'листопада',
+    'грудня'
 ];
 
 export default function formatDateWithMonthName(dateString) {
@@ -40,32 +40,6 @@ function formatDateWithMonthNameAndTime(dateString) {
     return `${day} ${monthName} ${year} / ${hours}:${minutes.toString().padStart(2, '0')}`;
 }
 
-// export default function formatDateWithMonthName(dateString) {
-//     const date = new Date(dateString);
-//     const day = date.getDate();
-//     const monthName = MONTH_NAMES[date.getMonth()];
-//     const year = date.getFullYear();
-
-//     return `${day} ${monthName} ${year}`;
-// }
-
-// function formatDateWithMonthNameAndTime(dateString) {
-//     const date = new Date(dateString);
-//     date.setHours(date.getHours() + 3);
-//     const day = date.getDate();
-//     const monthName = MONTH_NAMES[date.getMonth()];
-//     const year = date.getFullYear();
-//     const hours = date.getHours();
-//     const minutes = date.getMinutes();
-
-//     return `${day} ${monthName} ${year} / ${hours}:${minutes.toString().padStart(2, '0')}`;
-// }
-
-// export async function getFeaturedNews() {
-//     const news = await getNewsPosts();
-//     return news[0];
-// }
-
 export async function getNewsPost(slug) {
     const {data} = await fetchNewsPosts({
         filters: {slug: {$eq: slug}},
@@ -85,6 +59,36 @@ export async function getNewsPost(slug) {
         text: item.attributes.text,
         dateTime: formatDateWithMonthNameAndTime(item.attributes.publishedAt)
     };
+}
+
+export async function getBestOfWeek(start, limit) {
+    const {data} = await fetchNewsPosts({
+        filters: {
+            bestOfWeek: {
+                $eq: 'true',
+            }
+        },
+        fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+        populate: {image: {fields: ['url']}},
+        sort: ['publishedAt:desc'],
+        pagination: {start, limit}
+    });
+    return data.map(toNewsPost);
+}
+
+export async function getMainNews(start, limit) {
+    const {data} = await fetchNewsPosts({
+        filters: {
+            mainNews: {
+                $eq: 'true',
+            }
+        },
+        fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+        populate: {image: {fields: ['url']}},
+        sort: ['publishedAt:desc'],
+        pagination: {start, limit}
+    });
+    return data.map(toNewsPost);
 }
 
 export async function getNewsPosts(start, limit) {

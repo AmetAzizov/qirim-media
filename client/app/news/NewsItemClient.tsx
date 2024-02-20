@@ -10,12 +10,19 @@ export default function NewsItemClient({children}: any) {
     // const [visibleItems, setVisibleItems] = useState(30);
     // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     // const [isPickerVisible, setPickerVisible] = useState(false);
-
     return (
         <section className={'px-4 mb-14 lg:mb-36'}>
             <div className={'max-w-[1479px] mx-auto my-0'}>
                 <Breadcrumbs />
-                <h2 className={'title-text'}>Всi новини</h2>
+                <h2 className={'title-text pb-9'}>Всi новини</h2>
+                    <div className={'flex gap-2.5'}>
+                        <button className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'}>Публікації</button>
+                        <button className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'}>Новини України та світу</button>
+                        <button className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'}>Крим</button>
+                        <button className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'}>Інтервю</button>
+                        <button className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'}>Блоги</button>
+                        <button className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'}>Відео</button>
+                    </div>
                 {/* <div className={'inline-block'} onClick={() => setPickerVisible(!isPickerVisible)}>
                     <div
                         className={
@@ -48,7 +55,7 @@ export default function NewsItemClient({children}: any) {
                         </div>
                     )}
                 </div> */}
-                <div>
+                <div className={'pt-6'}>
                     <ul
                         className={
                             'grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5'

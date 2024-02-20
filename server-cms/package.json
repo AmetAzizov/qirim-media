@@ -10,16 +10,16 @@
     "strapi": "strapi"
   },
   "dependencies": {
+    "18": "^0.0.0",
     "@strapi/plugin-i18n": "4.13.7",
     "@strapi/plugin-users-permissions": "4.13.7",
     "@strapi/provider-upload-aws-s3": "^4.14.2",
     "@strapi/strapi": "4.13.7",
-    "false": "^0.0.4",
     "moment-timezone": "^0.5.43",
     "node-schedule": "^2.1.1",
     "pg": "8.8.0",
     "sharp": "^0.32.6",
-    "strapi": "^3.6.11"
+    "styled-components": "^5.3.3"
   },
   "author": {
     "name": "A Strapi developer"

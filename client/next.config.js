@@ -8,8 +8,16 @@
 //     // ... любые другие конфигурационные параметры
 // };
 // next.config.js
+// Пример настройки в next.config.js
 module.exports = {
     images: {
-        domains: ['s3-qirimbucket.gmhost.space']
-    },
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 's3-qirimbucket.gmhost.space',
+                // port: '1337',
+                // pathname: '/uploads/**'
+            }
+        ]
+    }
 };

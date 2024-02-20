@@ -1,9 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import NewsItem from '@/app/news/NewsItemServer';
+import {getMainNews} from '@/app/lib/newsPosts';
+import MainNewsItem from './MainNewsItem';
 
-const MainNews = () => {
+export default async function MainNews() {
+    const newsPosts = await getMainNews(0, 7);
+
     return (
         <section className={'px-4'}>
             <div className={'max-w-[1479px] mx-auto my-0 w-full'}>
@@ -21,44 +24,75 @@ const MainNews = () => {
 
                 <div
                     className={
-                        'grid gap-4 lg:grid-cols-5 lg:grid-rows-2 lg:gap-6 lg:max-h-[689px] h-full'
+                        'grid gap-4 grid-cols-2 xl:grid-cols-5 xl:grid-rows-2 xl:gap-4 xl:max-h-[689px] xl:h-full'
                     }
                 >
                     <Link
-                        href={'#'}
-                        className={'item-left w-full rounded-xl bg-slate-600 lg:h-auto'}
+                        key={newsPosts.slug}
+                        href={`news/${newsPosts[0].slug}`}
+                        className={'item-left w-full rounded-xl bg-[--secondary-color-4]'}
                     >
                         <Image
-                            src='/main-news.png'
+                            className='w-full min-h-[250px] rounded-t-xl sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
+                            src={`${newsPosts[0].image}`}
                             width={290}
                             height={217}
                             alt='main news'
-                            className='lg:w-full'
                         />
                         <div
                             className={
-                                'flex flex-col items-start bg-[--secondary-color-4] p-2.5 lg:p-4'
+                                'flex flex-col items-start justify-between bg-[--secondary-color-4] p-2.5 lg:p-6'
                             }
                         >
-                            <p className={'text-lg font-medium mb-2.5 lg:text-xl lg:mb-8'}>
-                                У Зеленського пояснили, який сигнал від НАТО отримала Україна на
-                                саміті у Вільнюсі
+                            <button
+                                className={
+                                    'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
+                                }
+                            >
+                                Новини України
+                            </button>
+                            <p className={'text-lg font-medium lg:text-xl'}>
+                                {newsPosts[0].title}
                             </p>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                10 Липня 2023
+                                {newsPosts[0].date}
                             </time>
                         </div>
                     </Link>
-                    {/* <NewsItem key={'id'} />
-                    <NewsItem key={'id'} />
-                    <NewsItem key={'id'} />
-                    <NewsItem key={'id'} />
-                    <NewsItem key={'id'} />
-                    <NewsItem key={'id'} /> */}
+                    {newsPosts.slice(1).map((newsPost: any) => (
+                        // <Link
+                        //     key={newsPost.slug}
+                        //     href={`news/${newsPost.slug}`}
+                        //     className={
+                        //         'flex items-center flex-col justify-between'
+                        //     }
+                        // >
+                        //     <Image
+                        //         className={
+                        //             'rounded-xl w-full h-[185px] sm:h-[245px] md:h-[300px] lg:h-[370px] xl:h-[190px]'
+                        //         }
+                        //         src={`${newsPost.image}`}
+                        //         width={254}
+                        //         height={200}
+                        //         alt='news-pic'
+                        //     />
+                        //     <div className={''}>
+                        //         <p
+                        //             className={
+                        //                 'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-4'
+                        //             }
+                        //         >
+                        //             {newsPost.title}
+                        //         </p>
+                        //         <time className={'text-sm font-medium text-[--secondary-color-2]'}>
+                        //             {newsPost.date}
+                        //         </time>
+                        //     </div>
+                        // </Link>
+                        <MainNewsItem key={newsPost.slug} newsPost={newsPost} />
+                    ))}
                 </div>
             </div>
         </section>
     );
-};
-
-export default MainNews;
+}

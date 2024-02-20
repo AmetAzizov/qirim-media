@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Arrows from '../common/Arrows';
 import formatDateWithMonthName from '../../lib/newsPosts';
-import '../../styles/react-markdown.scss'
+import '../../styles/react-markdown.scss';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -37,10 +37,20 @@ const BgSlider = () => {
         [data]
     );
 
-    if (error) return <div>Error loading data</div>;
-    if (!data) return <div>Loading...</div>;
+    if (error)
+        return (
+            <div className={'h-[100vh] flex items-center justify-center text-xl'}>
+                Данних не отримано, якась помилка спробуйте ще раз
+            </div>
+        );
+    if (!data)
+        return (
+            <div className={'h-[100vh] flex items-center justify-center text-xl'}>
+                Завантаження...
+            </div>
+        );
 
-    console.log('Data received:', data);
+    // console.log('Data received:', data);
 
     const settings = {
         fade: true,
@@ -83,6 +93,50 @@ const BgSlider = () => {
                             className={'w-full max-w-[850px] text-left'}
                         >
                             <Link href={`/news/${data.data[currentSlide].attributes.slug}`}>
+                                {/* <div className={'flex gap-2.5'}>
+                                    <button
+                                        className={
+                                            'text-xs font-medium py-2.5 px-5 bg-[`rgba(219, 219, 219, 0.15)`] rounded-md'
+                                        }
+                                    >
+                                        Публікації
+                                    </button>
+                                    <button
+                                        className={
+                                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
+                                        }
+                                    >
+                                        Новини України та світу
+                                    </button>
+                                    <button
+                                        className={
+                                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
+                                        }
+                                    >
+                                        Крим
+                                    </button>
+                                    <button
+                                        className={
+                                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
+                                        }
+                                    >
+                                        Інтервю
+                                    </button>
+                                    <button
+                                        className={
+                                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
+                                        }
+                                    >
+                                        Блоги
+                                    </button>
+                                    <button
+                                        className={
+                                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
+                                        }
+                                    >
+                                        Відео
+                                    </button>
+                                </div> */}
                                 <h2
                                     className={
                                         'text-2xl font-bold text-[--background-color] text-clip line-clamp-3 xl:line-clamp-2 xl:text-4xl'
@@ -100,7 +154,7 @@ const BgSlider = () => {
 
                                 <ReactMarkdown
                                     className={
-                                        'react-markdown text-base font-medium text-[--background-color] mt-7 max-w-[593px] text-clip line-clamp-3 xl:line-clamp-3'
+                                        'react-markdown text-base font-medium text-[--background-color] mt-7 max-w-[593px] text-clip line-clamp-2 xl:line-clamp-3'
                                     }
                                 >
                                     {item.attributes.subtitle}
