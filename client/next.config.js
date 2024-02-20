@@ -10,6 +10,9 @@
 // next.config.js
 // Пример настройки в next.config.js
 module.exports = {
+    // images: {
+    //     domains: ['s3-qirimbucket.gmhost.space']
+    // }
     images: {
         remotePatterns: [
             {

@@ -9,7 +9,7 @@ import Image from 'next/image';
 import {getNewsPosts, getNewsPost, getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
-import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
+// import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 
 // interface NewsSlugParams {
 //     slug: string;

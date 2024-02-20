@@ -12,7 +12,7 @@ const Home = () => {
             <BgSlider />
             <CountDownTimer />
 
-            {/* <MainBlogs /> */}
+            <MainBlogs />
             <TodayNews />
             <MainNews />
             <BestOfWeek />

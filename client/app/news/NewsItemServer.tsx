@@ -15,7 +15,7 @@ export default async function NewsItemServer({params}: any) {
                     <Link className={'hover:opacity-50'} href={`news/${newsPost.slug}`}>
                         <div
                             style={{
-                                background: `url(${newsPost.image})`,
+                                backgroundImage: `url(${newsPost.image})`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
