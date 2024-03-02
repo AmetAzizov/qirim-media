@@ -55,7 +55,7 @@ export default async function BestOfWeek() {
                     </Link>
                     {newsPosts.slice(2).map((newsPost: any) => (
                         <Link
-                            key={newsPost.slug}
+                            key={newsPost.id}
                             href={`news/${newsPost.slug}`}
                             className={
                                 'flex items-center flex-row-reverse justify-between xl:justify-normal xl:flex-row'

@@ -1,6 +1,7 @@
 'use client';
 import {useState} from 'react';
 import Image from 'next/image';
+import SearchBox from '../SearchBox/SearchBox';
 
 const SearchBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,13 +25,14 @@ const SearchBar = () => {
             </button>
             {isOpen && (
                 <form className={'w-96 absolute right-0 top-0'}>
-                    <input
+                    {/* <input
                         className={'w-full rounded-md py-2 pl-3 pr-14'}
                         type='text'
                         placeholder='Пошук по сайту...'
                         value={query}
                         onChange={e => setQuery(e.target.value)}
-                    />
+                    /> */}
+                    <SearchBox />
                     {/* Здесь может быть кнопка отправки или другие элементы интерфейса */}
                 </form>
             )}

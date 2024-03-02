@@ -89,7 +89,7 @@ export default async function MainNews() {
                         //         </time>
                         //     </div>
                         // </Link>
-                        <MainNewsItem key={newsPost.slug} newsPost={newsPost} />
+                        <MainNewsItem key={newsPost.id} newsPost={newsPost} />
                     ))}
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import SearchBox from '../SearchBox/SearchBox';
 
 type SearchInputProps = {
     inputBg: string;
@@ -16,6 +17,7 @@ const SearchInput = ({inputBg}: SearchInputProps) => {
                 type='text'
                 placeholder='Пошук по сайту...'
             />
+            {/* <SearchBox /> */}
         </form>
     );
 };

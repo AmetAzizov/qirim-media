@@ -11,7 +11,6 @@ const Home = () => {
         <>
             <BgSlider />
             <CountDownTimer />
-
             <MainBlogs />
             <TodayNews />
             <MainNews />

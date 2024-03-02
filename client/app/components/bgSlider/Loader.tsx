@@ -1,20 +1,8 @@
-// import React from 'react';
-// import '../../styles/loading.scss';
 
-// const Loader = (currentSlide: any) => {
-//     return (
-//         <div className='loader-container'>
-//             <div className={`loader-bar ${currentSlide === 0 ? 'loader-bar1' : ''}`}></div>
-//             <div className={`loader-bar ${currentSlide === 1 ? 'loader-bar2' : ''}`}></div>
-//             <div className={`loader-bar ${currentSlide === 2 ? 'loader-bar3' : ''}`}></div>
-//             <div className={`loader-bar ${currentSlide === 3 ? 'loader-bar4' : ''}`}></div>
-//         </div>
-//     );
-// };
 
 // export default Loader;
 import React, { useEffect, useState } from 'react';
-
+import '../../styles/loading.css'
 const Loader = () => {
     const [barWidths, setBarWidths] = useState([0, 0, 0, 0]);
 

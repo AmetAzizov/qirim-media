@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import Image from 'next/image';
@@ -10,7 +11,7 @@ const Breadcrumbs = () => {
 
     pathParts.forEach((part, idx) => {
         const href = `/${pathParts.slice(0, idx + 1).join('/')}`;
-        const defaultLabel = part.charAt(0).toUpperCase() + part.slice(1).replace('-', ' ');
+        const defaultLabel = part.charAt(0).toLowerCase() + part.slice(1).replace('-', ' ');
         const customLabels: {[key: string]: string} = {
             news: 'Всi новини',
             blogs: 'Блоги'
@@ -22,13 +23,13 @@ const Breadcrumbs = () => {
     return (
         <nav
             className={
-                'flex items-center text-[#A8A8A8] py-5 text-xs lg:text-base lg:pt-11 lg:pb-7'
+                'flex items-center text-[#A8A8A8] py-5 text-xs lg:text-base lg:pt-11 lg:pb-7 whitespace-nowrap overflow-x-auto'
             }
         >
             {breadcrumbs.map(({label, href}, idx) => (
                 <React.Fragment key={href}>
                     <div>
-                        <Link className={'hover:text-[--accent-color]'} href={href}>
+                        <Link className={`${pathname === href ? 'text-[--accent-color]' : ''} hover:text-[--accent-color]`} href={href}>
                             {label}
                         </Link>
                     </div>

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import SocialLink from './SocialLink';
 import '../../styles/footer.scss';
 import LanguageSwitcher from '../header/LanguageSwitcher';
-import SearchInput from '../header/SearchInput';
+import SearchBox from '../SearchBox/SearchBox';
 
 type LinkData = {
     title: string;
@@ -19,12 +19,12 @@ const Footer = () => {
         aboutLinks
     }: {links: LinkData[]; videoLinks: LinkData[]; aboutLinks: LinkData[]} = {
         links: [
-            {title: 'Головна', href: '#'},
+            {title: 'Головна', href: '/'},
             {title: 'Новини Украiни та свiту ', href: '#'},
-            {title: 'Усi новини', href: '#'},
+            {title: 'Всi новини', href: '/news'},
             {title: 'Новини Криму', href: '#'},
             {title: 'Ексклюзив', href: '#'},
-            {title: 'Блоги', href: '#'},
+            {title: 'Блоги', href: '/blogs'},
             {title: 'Портрет', href: '#'},
             {title: 'Вiйна', href: '#'},
             {title: 'Кримські татари', href: '#'},
@@ -77,13 +77,13 @@ const Footer = () => {
                         altText='social-network'
                     />
                     <div className={'flex max-w-[110px] mt-5 mb-7 justify-between lg:mt-11'}>
-                        <Link href={'https://www.facebook.com/qirim.news' } target="_blank">
+                        <Link href={'https://www.facebook.com/qirim.news'} target='_blank'>
                             <Image src='/u_facebook.svg' width={20} height={20} alt='fb' />
                         </Link>
-                        <Link href={'https://twitter.com/qirim_news'} target="_blank">
+                        <Link href={'https://twitter.com/qirim_news'} target='_blank'>
                             <Image src='/u_twitter.svg' width={20} height={20} alt='twitter' />
                         </Link>
-                        <Link href={'https://www.instagram.com/qirim.news'} target="_blank">
+                        <Link href={'https://www.instagram.com/qirim.news'} target='_blank'>
                             <Image src='/u_instagram.svg' width={20} height={20} alt='instagram' />
                         </Link>
                     </div>
@@ -119,7 +119,7 @@ const Footer = () => {
 
                 <div className={'flex flex-col justify-between mt-8 lg:mt-0'}>
                     <div className={'flex flex-col gap-y-11'}>
-                        <SearchInput inputBg='bg-[--background-color]' />
+                        <SearchBox />
                         <LanguageSwitcher
                             onClick={handleLanguageClick}
                             textColor='text-[#01060A]'

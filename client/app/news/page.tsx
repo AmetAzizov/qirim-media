@@ -1,66 +1,38 @@
-// import NewsItemServer from './NewsItemServer';
-// import NewsItemClient from './NewsItemClient';
 import Breadcrumbs from '../components/common/BreadCrumbs';
 import React from 'react';
 import Link from 'next/link';
 import {getNewsPosts} from '../lib/newsPosts';
 import Image from 'next/image';
 
+const categoryBtn = [
+    {id: 'Публікації'},
+    {id: 'Новини України та світу'},
+    {id: 'Крим'},
+    {id: 'Інтервю'},
+    {id: 'Блоги'},
+    {id: 'Відео'}
+];
+
 export default async function News({searchParams}: any) {
     const page = parsePageParam(searchParams.page);
     const newsPosts = await getNewsPosts(0, page);
-    console.log('[ReviewsPage] rendering:', page);
+
     return (
-        // <NewsItemClient>
-        //     <NewsItemServer />
-        // </NewsItemClient>
         <section className={'px-4 mb-14 lg:mb-36'}>
             <div className={'max-w-[1479px] mx-auto my-0'}>
-                {/* <Breadcrumbs /> */}
+                <Breadcrumbs />
                 <h2 className={'title-text pb-9'}>Всi новини</h2>
-                <div className={'flex gap-2.5'}>
-                    <button
-                        className={
-                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
-                        }
-                    >
-                        Публікації
-                    </button>
-                    <button
-                        className={
-                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
-                        }
-                    >
-                        Новини України та світу
-                    </button>
-                    <button
-                        className={
-                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
-                        }
-                    >
-                        Крим
-                    </button>
-                    <button
-                        className={
-                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
-                        }
-                    >
-                        Інтервю
-                    </button>
-                    <button
-                        className={
-                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
-                        }
-                    >
-                        Блоги
-                    </button>
-                    <button
-                        className={
-                            'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] rounded-md'
-                        }
-                    >
-                        Відео
-                    </button>
+                <div className={'flex gap-2.5 overflow-auto'}>
+                    {categoryBtn.map(item => (
+                        <button
+                            key={item.id}
+                            className={
+                                'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] whitespace-nowrap rounded-md'
+                            }
+                        >
+                            {item.id}
+                        </button>
+                    ))}
                 </div>
                 {/* <div className={'inline-block'} onClick={() => setPickerVisible(!isPickerVisible)}>
                     <div

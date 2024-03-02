@@ -5,10 +5,9 @@ import Articles from '@/app/components/common/Articles';
 import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getNewsPosts, getNewsPost, getMainNews} from '@/app/lib/newsPosts';
+import {getBlogs, getBlog, getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
-import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 // import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 
 // interface NewsSlugParams {
@@ -17,11 +16,11 @@ import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 
 // const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default async function NewsSlug({params: {slug}}: any) {
-    const newsPosts = await getNewsPosts(0, 4);
-    const newsPost = await getNewsPost(slug);
+export default async function BlogsSlug({params: {slug}}: any) {
+    const blogs = await getBlogs();
+    const blog = await getBlog(slug);
     const mainNewsPosts = await getMainNews(0, 9);
-    if (!newsPost) {
+    if (!blog) {
         notFound();
     }
     return (
@@ -38,14 +37,14 @@ export default async function NewsSlug({params: {slug}}: any) {
                                 <time
                                     className={'text-base font-medium text-[--secondary-color-5]'}
                                 >
-                                    {newsPost.dateTime}
+                                    {blog.dateTime}
                                 </time>
                                 <span
                                     className={
                                         'text-base font-medium text-[--secondary-color-5] ml-8'
                                     }
                                 >
-                                    {newsPost.authorName}
+                                    {blog.authorBlog}
                                 </span>
                             </div>
                             <h2
@@ -53,52 +52,52 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     'text-2xl font-semibold my-6 lg:text-5xl lg:font-medium lg:my-9'
                                 }
                             >
-                                {newsPost.title}
+                                {blog.title}
                             </h2>
-                            <Image
-                                src={`${newsPost.image}`}
+                            {/* <Image
+                                src={`${blog.image}`}
                                 width={1012}
                                 height={582}
                                 alt='mainnews-id'
                                 className={
                                     'w-full h-[217px] sm:h-[350px] md:h-[400px] lg:h-[582px] rounded-lg'
                                 }
-                            />
+                            /> */}
                             <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>
-                                {newsPost.subtitle}
+                                {blog.subtitle}
                             </div>
                             <ReactMarkdown
                                 className={
                                     'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl'
                                 }
                             >
-                                {newsPost.text}
+                                {blog.text}
                             </ReactMarkdown>
                             <div>
                                 <time
                                     className={'text-base font-medium text-[--secondary-color-5]'}
                                 >
-                                    {newsPost.dateTime}
+                                    {blog.dateTime}
                                 </time>
                             </div>
                         </div>
                         <div className={'mt-16'}>
                             <h3 className={'text-2xl font-bold mb-9'}>Читайте також:</h3>
                             <ul>
-                                {newsPosts.map((newsPost: any) => (
-                                    <li key={newsPost.id} className='flex items-center mb-8'>
+                                {blogs.map((newsPost: any) => (
+                                    <li key={blog.id} className='flex items-center mb-8'>
                                         <span
                                             className={
                                                 'w-[9px] min-w-[9px] h-[8px] bg-[--primary-color] rounded-[50%] mr-6'
                                             }
                                         ></span>
                                         <Link
-                                            href={`${newsPost.slug}`}
+                                            href={`${blog.slug}`}
                                             className={
                                                 'text-base font-semibold text-[--primary-color-5] lg:text-lg'
                                             }
                                         >
-                                            {newsPost.title}
+                                            {blog.title}
                                         </Link>
                                     </li>
                                 ))}

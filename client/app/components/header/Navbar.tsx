@@ -37,7 +37,7 @@ const Navbar = () => {
                     <SearchBar />
                 </div>
                 {/* HAMBURGER BUTTON FOR MOBILE */}
-                <BurgerMenu onMenuToggle={setIsMenuOpen} />
+                <BurgerMenu />
             </div>
         </nav>
     );

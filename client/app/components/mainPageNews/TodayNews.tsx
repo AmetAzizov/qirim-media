@@ -75,7 +75,7 @@ export default async function TodayNews() {
                         </Link>
                         {newsPosts.slice(1).map((newsPost: any) => (
                             <Link
-                                key={newsPost.slug}
+                                key={newsPost.id}
                                 href={`news/${newsPost.slug}`}
                                 className={
                                     'flex items-center flex-row-reverse justify-between xl:justify-normal xl:flex-row'

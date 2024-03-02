@@ -24,6 +24,7 @@ const ModalBlog = ({onClose}: any) => {
             className={'overlay fixed top-0 left-0 w-full h-full bg-black/[0.5] z-50'}
         >
             <form
+                
                 onClick={handleContentClick}
                 className='grid fixed top-1/2 left-1/2 translate-x-[-50%] and translate-y-[-50%]
                 max-w-[959px] w-full h-full p-4 gap-y-5 bg-[--background-color] overflow-auto mx-auto my-0 z-50 lg:rounded-xl lg:my-5 lg:h-100vh lg:p-12 lg:gap-y-7'

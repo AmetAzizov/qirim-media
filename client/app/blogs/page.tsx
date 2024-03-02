@@ -1,19 +1,16 @@
-'use client';
+// 'use client';
 import {useState} from 'react';
 import ModalBlog from '../components/common/ModalBlog';
 import BlogCard from './BlogCard';
 import Breadcrumbs from '../components/common/BreadCrumbs';
 import Authors from './Authors';
+import {getBlogs} from '../lib/newsPosts';
+import Link from 'next/link';
+import Image from 'next/image';
+import BtnCreateBlog from './BtnCreateBlog';
 
-const items = Array.from({length: 15}, (_, index) => <BlogCard key={index} styles={''} />);
-
-const Blogs = () => {
-    const [visibleItems, setVisibleItems] = useState(10);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleModalToggle = () => {
-        document.body.style.overflow = isModalOpen ? 'auto' : 'hidden';
-        setIsModalOpen(!isModalOpen);
-    };
+export default async function Blogs() {
+    const blogs = await getBlogs();
 
     return (
         <section className={'px-4 mb-20 lg:mb-36'}>
@@ -28,35 +25,31 @@ const Blogs = () => {
                         Висловлюйте свою думку на будь яку тему, <br /> та публiкуйтеся на нашому
                         порталi
                     </h3>
-                    <button
-                        className={'text-sm font-medium py-5 px-2.5 bg-[--accent-color] rounded-md'}
-                        onClick={handleModalToggle}
-                    >
-                        Висловити свою думку
-                    </button>
-                    {isModalOpen && <ModalBlog onClose={handleModalToggle} />}
+                    <BtnCreateBlog />
                 </div>
                 <div
                     className={
                         'grid gap-y-4 w-full lg:grid-cols-4 lg:grid-rows-2 lg:gap-x-10 lg:gap-y-10'
                     }
                 >
-                    {items.slice(0, visibleItems).map(item => item)}
-                    <Authors />
-                </div>
-                {visibleItems < items.length && (
-                    <button
+                    {blogs.map(blog => (
+                        <BlogCard key={blog.id} blog={blog} />
+                    ))}
+
+                    <div
                         className={
-                            'block mx-auto mb-0 mt-7 w-full font-medium text-sm whitespace-nowrap bg-[--accent-color] px-3.5 py-2.5 rounded-md lg:w-[unset] lg:text-base lg:mt-6'
+                            'hidden lg:block max-w-[339px] bg-[--secondary-color-4] h-full rounded-lg grid-blog py-7 px-4'
                         }
-                        onClick={() => setVisibleItems(visibleItems + 10)}
                     >
-                        Бiльше блогів
-                    </button>
-                )}
+                        <h2 className={'block title-text mb-9'}>Автори</h2>
+                        <div className={'grid grid-cols-3 gap-x-2.5 gap-y-5'}>
+                            {blogs.map(blog => (
+                                <Authors key={blog.id} blog={blog} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
-};
-
-export default Blogs;
+}
