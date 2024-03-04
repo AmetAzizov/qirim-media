@@ -28,7 +28,7 @@ export default function SearchBox() {
         }
     }, [debouncedQuery]);
 
-    const handleChange = newsPost => {
+    const handleChange = ({newsPost}:any) => {
         router.push(`/news/${newsPost.slug}`);
     };
 
@@ -48,8 +48,8 @@ export default function SearchBox() {
                     className='${inputBg} w-full py-2.5 pl-10 pr-5 rounded-md focus:outline-[--primary-color-5] text-xs'
                 />
                 <Combobox.Options className='absolute bg-white py-1 w-full'>
-                    {newsPosts.map(newsPost => (
-                        <Combobox.Option key={newsPost.slug} value={newsPost}>
+                    {newsPosts.map((newsPost: any) => (
+                        <Combobox.Option key={newsPost.id} value={newsPost}>
                             {({active}) => (
                                 <span
                                     className={`block px-2 truncate w-full cursor-pointer ${

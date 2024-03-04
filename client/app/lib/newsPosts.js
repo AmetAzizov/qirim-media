@@ -159,7 +159,7 @@ export async function getSlugs() {
 
 export async function fetchNewsPosts(parameters) {
     const url = `${apiUrl}/news-posts?` + qs.stringify(parameters, {encodeValuesOnly: true});
-    const response = await fetch(url, {cache: 'force-cache'});
+    const response = await fetch(url, {cache: 'no-store'});
     if (!response.ok) {
         throw new Error(`CMS returned ${response.status} for ${url}`);
     }
@@ -168,7 +168,7 @@ export async function fetchNewsPosts(parameters) {
 
 export async function fetchBlogs(parameters) {
     const url = `${apiUrl}/blogs?` + qs.stringify(parameters, {encodeValuesOnly: true});
-    const response = await fetch(url, {cache: 'force-cache'});
+    const response = await fetch(url, {cache: 'no-store'});
     if (!response.ok) {
         throw new Error(`CMS returned ${response.status} for ${url}`);
     }

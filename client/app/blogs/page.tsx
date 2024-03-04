@@ -1,5 +1,3 @@
-// 'use client';
-import {useState} from 'react';
 import ModalBlog from '../components/common/ModalBlog';
 import BlogCard from './BlogCard';
 import Breadcrumbs from '../components/common/BreadCrumbs';
@@ -32,7 +30,7 @@ export default async function Blogs() {
                         'grid gap-y-4 w-full lg:grid-cols-4 lg:grid-rows-2 lg:gap-x-10 lg:gap-y-10'
                     }
                 >
-                    {blogs.map(blog => (
+                    {blogs.map((blog: any) => (
                         <BlogCard key={blog.id} blog={blog} />
                     ))}
 
@@ -43,7 +41,7 @@ export default async function Blogs() {
                     >
                         <h2 className={'block title-text mb-9'}>Автори</h2>
                         <div className={'grid grid-cols-3 gap-x-2.5 gap-y-5'}>
-                            {blogs.map(blog => (
+                            {blogs.map((blog: any) => (
                                 <Authors key={blog.id} blog={blog} />
                             ))}
                         </div>

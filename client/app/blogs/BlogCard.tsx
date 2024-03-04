@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const BlogCard = ({blog}) => {
+const BlogCard = ({blog}:any) => {
     return (
         <div
             className={`h-[272px] flex flex-col justify-between w-full p-5 bg-[--secondary-color-4] rounded-lg sm:max-w-[340px]`}

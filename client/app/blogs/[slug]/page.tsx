@@ -84,7 +84,7 @@ export default async function BlogsSlug({params: {slug}}: any) {
                         <div className={'mt-16'}>
                             <h3 className={'text-2xl font-bold mb-9'}>Читайте також:</h3>
                             <ul>
-                                {blogs.map((newsPost: any) => (
+                                {blogs.map((blog: any) => (
                                     <li key={blog.id} className='flex items-center mb-8'>
                                         <span
                                             className={
