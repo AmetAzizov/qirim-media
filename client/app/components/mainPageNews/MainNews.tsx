@@ -30,10 +30,10 @@ export default async function MainNews() {
                     <Link
                         key={newsPosts.slug}
                         href={`news/${newsPosts[0].slug}`}
-                        className={'item-left w-full rounded-xl bg-[--secondary-color-4]'}
+                        className={'flex flex-col justify-between item-left w-full rounded-xl bg-[--secondary-color-4]'}
                     >
                         <Image
-                            className='w-full min-h-[250px] rounded-t-xl sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
+                            className='w-full min-h-[250px] rounded-t-xl object-cover sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
                             src={`${newsPosts[0].image}`}
                             width={290}
                             height={217}
@@ -41,7 +41,7 @@ export default async function MainNews() {
                         />
                         <div
                             className={
-                                'flex flex-col items-start justify-between bg-[--secondary-color-4] p-2.5 lg:p-6'
+                                'flex flex-col items-start justify-between h-full bg-[--secondary-color-4] p-2.5 lg:p-6'
                             }
                         >
                             <button
@@ -51,9 +51,7 @@ export default async function MainNews() {
                             >
                                 Новини України
                             </button>
-                            <p className={'text-lg font-medium lg:text-xl'}>
-                                {newsPosts[0].title}
-                            </p>
+                            <p className={'text-lg font-medium my-5 lg:text-xl'}>{newsPosts[0].title}</p>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
                                 {newsPosts[0].date}
                             </time>

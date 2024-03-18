@@ -33,6 +33,7 @@
 }
 
 .menu {
+    display: none;
     position: absolute;
     top: 0;
     right: 0;
@@ -45,6 +46,7 @@
 }
 
 .menu.open {
+    display: block;
     transform: translateX(0);
     pointer-events: auto;
 }

@@ -67,7 +67,8 @@
       },
       "type": "uid",
       "required": true,
-      "targetField": "title"
+      "targetField": "title",
+      "maxLength": 30
     },
     "authorName": {
       "pluginOptions": {
@@ -110,6 +111,21 @@
         }
       },
       "type": "boolean"
+    },
+    "categoryList": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "Publications",
+        "News of Ukraine and the world",
+        "Crimea",
+        "Interview"
+      ],
+      "required": false
     }
   }
 }

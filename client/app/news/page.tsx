@@ -24,14 +24,12 @@ export default async function News({searchParams}: any) {
                 <h2 className={'title-text pb-9'}>Всi новини</h2>
                 <div className={'flex gap-2.5 overflow-auto'}>
                     {categoryBtn.map(item => (
-                        <button
+                        <Link
+                            href={'#'}
                             key={item.id}
-                            className={
-                                'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] whitespace-nowrap rounded-md'
-                            }
-                        >
-                            {item.id}
-                        </button>
+                            className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] whitespace-nowrap rounded-md hover:bg-[#F0CA56]'}                         >
+                            asdsad
+                        </Link>
                     ))}
                 </div>
                 {/* <div className={'inline-block'} onClick={() => setPickerVisible(!isPickerVisible)}>

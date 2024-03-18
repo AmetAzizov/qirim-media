@@ -412,6 +412,9 @@ export interface ApiBlogBlog extends Schema.CollectionType {
         i18n: {
           localized: true;
         };
+      }> &
+      Attribute.SetMinMaxLength<{
+        maxLength: 30;
       }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -479,6 +482,9 @@ export interface ApiNewsPostNewsPost extends Schema.CollectionType {
         i18n: {
           localized: true;
         };
+      }> &
+      Attribute.SetMinMaxLength<{
+        maxLength: 30;
       }>;
     authorName: Attribute.String &
       Attribute.Required &
@@ -507,6 +513,14 @@ export interface ApiNewsPostNewsPost extends Schema.CollectionType {
         };
       }>;
     mainNews: Attribute.Boolean &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    categoryList: Attribute.Enumeration<
+      ['Publications', 'News of Ukraine and the world', 'Crimea', 'Interview']
+    > &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

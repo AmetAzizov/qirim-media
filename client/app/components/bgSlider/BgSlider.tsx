@@ -39,13 +39,13 @@ const BgSlider = () => {
 
     if (error)
         return (
-            <div className={'h-[100vh] flex items-center justify-center text-xl'}>
+            <div className={'hidden h-[100vh] lg:flex items-center justify-center text-xl'}>
                 Данних не отримано, якась помилка спробуйте ще раз
             </div>
         );
     if (!data)
         return (
-            <div className={'h-[100vh] flex items-center justify-center text-xl'}>
+            <div className={'hidden h-[100vh] lg:flex items-center justify-center text-xl'}>
                 Завантаження...
             </div>
         );
@@ -71,7 +71,7 @@ const BgSlider = () => {
 
     return (
         <div
-            className={'flex justify-center px-4 h-[100vh]'}
+            className={'hidden lg:justify-center lg:px-4 lg:h-[100vh] lg:flex'}
             style={{
                 backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), url(${data.data[
                     currentSlide

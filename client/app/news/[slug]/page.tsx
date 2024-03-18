@@ -61,7 +61,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                 height={582}
                                 alt='mainnews-id'
                                 className={
-                                    'w-full h-[217px] sm:h-[350px] md:h-[400px] lg:h-[582px] rounded-lg'
+                                    'w-full h-[217px] object-cover sm:h-[350px] md:h-[400px] lg:h-[582px] rounded-lg'
                                 }
                             />
                             <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>

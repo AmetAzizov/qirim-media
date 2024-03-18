@@ -63,7 +63,7 @@ export default async function BestOfWeek() {
                         >
                             <Image
                                 className={
-                                    'rounded-xl max-w-[120px] w-[100rem] h-[86px] md:w-[100vw] md:h-[126px] md:max-w-[169px]'
+                                    'rounded-xl object-cover max-w-[120px] w-[100rem] h-[86px] md:w-[100vw] md:h-[126px] md:max-w-[169px]'
                                 }
                                 src={`${newsPost.image}`}
                                 width={169}

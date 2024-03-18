@@ -90,7 +90,7 @@ const CountDownTimer = () => {
                         >
                             <span className={'text-2xl font-semibold lg:text-4xl'}>88</span>
                             <span className={'text-sm font-medium lg:text-base lg:font-normal'}>
-                                кiлометрiв
+                                км
                             </span>
                         </div>
                         <div
@@ -103,7 +103,7 @@ const CountDownTimer = () => {
                         </div>
                         <div className={'flex flex-col items-start pl-9'}>
                             <span className={'text-2xl font-semibold lg:text-4xl'}>0</span>
-                            <span>сантиметрiв</span>
+                            <span>см</span>
                         </div>
                     </div>
                 </div>

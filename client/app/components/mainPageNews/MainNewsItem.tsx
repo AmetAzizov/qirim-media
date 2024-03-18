@@ -11,7 +11,7 @@ const NewsItem = ({newsPost}: any) => {
         >
             <Image
                 className={
-                    'rounded-xl w-full h-[185px] sm:h-[245px] md:h-[300px] lg:h-[370px] xl:min-h-[190px] xl:h-[190px]'
+                    'rounded-xl w-full h-[185px] object-cover sm:h-[245px] md:h-[300px] lg:h-[370px] xl:min-h-[190px] xl:h-[190px]'
                 }
                 src={`${newsPost.image}`}
                 width={254}

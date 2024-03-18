@@ -47,7 +47,7 @@ export default async function TodayNews() {
                                 width={290}
                                 height={217}
                                 alt='main news'
-                                className='rounded-t-md w-full min-h-[217px] md:rounded-l-md md:rounded-tr-none md:h-full md:max-w-[466px]'
+                                className='rounded-t-md w-full min-h-[217px] object-cover md:rounded-l-md md:rounded-tr-none md:h-full md:max-w-[466px]'
                             />
                             <div
                                 className={
@@ -63,7 +63,7 @@ export default async function TodayNews() {
                                 </button>
                                 <p
                                     className={
-                                        'text-lg font-medium mb-2.5 text-clip line-clamp-3 lg:text-xl lg:mb-8'
+                                        'text-lg font-medium my-5 text-clip line-clamp-3 lg:text-xl'
                                     }
                                 >
                                     {newsPosts[0].title}
@@ -83,7 +83,7 @@ export default async function TodayNews() {
                             >
                                 <Image
                                     className={
-                                        'rounded-xl max-w-[120px] w-[100rem] max-h-[86px] h-[100rem] md:w-[100vw] md:max-h-[126px] md:max-w-[169px]'
+                                        'rounded-xl max-w-[120px] w-[100rem] max-h-[86px] h-[100rem] object-cover md:w-[100vw] md:max-h-[126px] md:max-w-[169px]'
                                     }
                                     src={`${newsPost.image}`}
                                     width={169}
