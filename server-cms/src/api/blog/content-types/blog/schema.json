@@ -67,8 +67,7 @@
       },
       "type": "uid",
       "targetField": "title",
-      "required": true,
-      "maxLength": 30
+      "required": true
     }
   }
 }

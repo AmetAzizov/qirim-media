@@ -28,7 +28,7 @@ const Breadcrumbs = () => {
         >
             {breadcrumbs.map(({label, href}, idx) => (
                 <React.Fragment key={href}>
-                    <div>
+                    <div className={`${idx === breadcrumbs.length - 1 ? 'max-w-[350px] overflow-hidden whitespace-nowrap text-ellipsis' : ''}`}>
                         <Link className={`${pathname === href ? 'text-[--accent-color]' : ''} hover:text-[--accent-color]`} href={href}>
                             {label}
                         </Link>

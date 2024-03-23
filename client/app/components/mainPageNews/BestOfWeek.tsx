@@ -76,7 +76,7 @@ export default async function BestOfWeek() {
                                         'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
                                     }
                                 >
-                                    Новини України
+                                    {newsPost.categoryList}
                                 </button>
                                 <p
                                     className={

@@ -6,17 +6,18 @@ import MainBlogs from './components/mainPageBlogs/MainBlogs';
 import BestOfWeek from './components/mainPageNews/BestOfWeek';
 import MainNews from './components/mainPageNews/MainNews';
 import TodayNews from './components/mainPageNews/TodayNews';
+import React from 'react';
 
 const Home = () => {
     return (
-        <>
+        <React.Fragment>
             <MainSlides />
             <CountDownTimer />
             <MainBlogs />
             <TodayNews />
             <MainNews />
             <BestOfWeek />
-        </>
+        </React.Fragment>
     );
 };
 

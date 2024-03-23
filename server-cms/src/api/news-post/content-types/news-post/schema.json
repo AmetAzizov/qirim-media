@@ -67,8 +67,7 @@
       },
       "type": "uid",
       "required": true,
-      "targetField": "title",
-      "maxLength": 30
+      "targetField": "title"
     },
     "authorName": {
       "pluginOptions": {
@@ -120,12 +119,28 @@
       },
       "type": "enumeration",
       "enum": [
-        "Publications",
-        "News of Ukraine and the world",
-        "Crimea",
-        "Interview"
+        "Публікації",
+        "Новини України та світу",
+        "Крим",
+        "Інтерв'ю"
       ],
       "required": false
+    },
+    "tagList": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "Головнi новини",
+        "Крим",
+        "НАТО",
+        "Кримські татари",
+        "Україна",
+        "Інше"
+      ]
     }
   }
 }

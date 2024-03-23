@@ -412,9 +412,6 @@ export interface ApiBlogBlog extends Schema.CollectionType {
         i18n: {
           localized: true;
         };
-      }> &
-      Attribute.SetMinMaxLength<{
-        maxLength: 30;
       }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -482,9 +479,6 @@ export interface ApiNewsPostNewsPost extends Schema.CollectionType {
         i18n: {
           localized: true;
         };
-      }> &
-      Attribute.SetMinMaxLength<{
-        maxLength: 30;
       }>;
     authorName: Attribute.String &
       Attribute.Required &
@@ -519,7 +513,27 @@ export interface ApiNewsPostNewsPost extends Schema.CollectionType {
         };
       }>;
     categoryList: Attribute.Enumeration<
-      ['Publications', 'News of Ukraine and the world', 'Crimea', 'Interview']
+      [
+        '\u041F\u0443\u0431\u043B\u0456\u043A\u0430\u0446\u0456\u0457',
+        '\u041D\u043E\u0432\u0438\u043D\u0438 \u0423\u043A\u0440\u0430\u0457\u043D\u0438 \u0442\u0430 \u0441\u0432\u0456\u0442\u0443',
+        '\u041A\u0440\u0438\u043C',
+        "\u0406\u043D\u0442\u0435\u0440\u0432'\u044E"
+      ]
+    > &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    tagList: Attribute.Enumeration<
+      [
+        '\u0413\u043E\u043B\u043E\u0432\u043Di \u043D\u043E\u0432\u0438\u043D\u0438',
+        '\u041A\u0440\u0438\u043C',
+        '\u041D\u0410\u0422\u041E',
+        '\u041A\u0440\u0438\u043C\u0441\u044C\u043A\u0456 \u0442\u0430\u0442\u0430\u0440\u0438',
+        '\u0423\u043A\u0440\u0430\u0457\u043D\u0430',
+        '\u0406\u043D\u0448\u0435'
+      ]
     > &
       Attribute.SetPluginOptions<{
         i18n: {

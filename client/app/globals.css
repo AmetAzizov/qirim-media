@@ -76,6 +76,3 @@ body {
 
 /* Большие настольные мониторы и телевизоры
 @media (min-width: 1440px) */
-.storyContainerStyles {
-    display: grid;
-}

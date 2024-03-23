@@ -1,11 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const BlogCard = ({blog}:any) => {
+const BlogCard = ({blog}: any) => {
     return (
         <div
             className={`h-[272px] flex flex-col justify-between w-full p-5 bg-[--secondary-color-4] rounded-lg sm:max-w-[340px]`}
         >
+            <button
+                className={
+                    'w-fit text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
+                }
+            >
+                Блоги
+            </button>
             <h2
                 className={
                     'text-base font-medium text-clip line-clamp-4 lg:text-lg lg:line-clamp-2'

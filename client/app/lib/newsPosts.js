@@ -88,7 +88,7 @@ export async function getBestOfWeek(start, limit) {
                 $eq: 'true'
             }
         },
-        fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
         pagination: {start, limit}
@@ -103,7 +103,7 @@ export async function getMainNews(start, limit) {
                 $eq: 'true'
             }
         },
-        fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
         pagination: {start, limit}
@@ -113,7 +113,7 @@ export async function getMainNews(start, limit) {
 
 export async function getNewsPosts(start, limit) {
     const {data} = await fetchNewsPosts({
-        fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
         pagination: {start, limit}
@@ -180,6 +180,7 @@ function toNewsPost(item) {
         slug: attributes.slug,
         title: attributes.title,
         subtitle: attributes.subtitle,
+        categoryList: attributes.categoryList,
         date: formatDateWithMonthName(attributes.publishedAt),
         image: attributes?.image?.data?.map(img => img.attributes.url)
     };

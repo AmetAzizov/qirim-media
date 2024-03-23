@@ -23,14 +23,14 @@ const Footer = () => {
             {title: 'Новини Украiни та свiту ', href: '#'},
             {title: 'Всi новини', href: '/news'},
             {title: 'Новини Криму', href: '#'},
-            {title: 'Ексклюзив', href: '#'},
+            // {title: 'Ексклюзив', href: '#'},
             {title: 'Блоги', href: '/blogs'},
-            {title: 'Портрет', href: '#'},
+            // {title: 'Портрет', href: '#'},
             {title: 'Вiйна', href: '#'},
             {title: 'Кримські татари', href: '#'},
-            {title: 'Злочини Росii', href: '#'},
+            // {title: 'Злочини Росii', href: '#'},
             {title: 'Публiкацii', href: '#'},
-            {title: 'Журналiсти', href: '#'}
+            // {title: 'Журналiсти', href: '#'}
         ],
         videoLinks: [
             {title: 'Інтерв‘ю', href: '#'},

@@ -4,14 +4,14 @@ import Link from 'next/link';
 import {getNewsPosts} from '../lib/newsPosts';
 import Image from 'next/image';
 
-const categoryBtn = [
-    {id: 'Публікації'},
-    {id: 'Новини України та світу'},
-    {id: 'Крим'},
-    {id: 'Інтервю'},
-    {id: 'Блоги'},
-    {id: 'Відео'}
-];
+// const categoryBtn = [
+//     {id: 'Публікації'},
+//     {id: 'Новини України та світу'},
+//     {id: 'Крим'},
+//     {id: 'Інтервю'},
+//     {id: 'Блоги'},
+//     {id: 'Відео'}
+// ];
 
 export default async function News({searchParams}: any) {
     const page = parsePageParam(searchParams.page);
@@ -22,16 +22,16 @@ export default async function News({searchParams}: any) {
             <div className={'max-w-[1479px] mx-auto my-0'}>
                 <Breadcrumbs />
                 <h2 className={'title-text pb-9'}>Всi новини</h2>
-                <div className={'flex gap-2.5 overflow-auto'}>
-                    {categoryBtn.map(item => (
+                {/* <div className={'flex gap-2.5 overflow-auto'}>
+                    {newsPosts.map(newsPost => (
                         <Link
                             href={'#'}
-                            key={item.id}
+                            key={newsPost.id}
                             className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] whitespace-nowrap rounded-md hover:bg-[#F0CA56]'}                         >
-                            asdsad
+                            {newsPost.categoryList}
                         </Link>
                     ))}
-                </div>
+                </div> */}
                 {/* <div className={'inline-block'} onClick={() => setPickerVisible(!isPickerVisible)}>
                     <div
                         className={
@@ -96,7 +96,7 @@ export default async function News({searchParams}: any) {
                                             'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
                                         }
                                     >
-                                        Новини України
+                                        {newsPost.categoryList}
                                     </button>
                                     <p
                                         className={

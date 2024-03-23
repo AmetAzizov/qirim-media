@@ -14,16 +14,16 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-    title: 'Qirim Media',
-    description: 'Новини світу та Криму'
+    // title: 'Qirim Media',
+    description: 'Новини світу та Криму',
+    icons: {
+        icon: ['./favicon.ico']
+    }
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang='en'>
-            <Head>
-                <meta name='viewport' content='width=device-width, initial-scale=1' />
-            </Head>
             <body className={montserrat.className}>
                 <Header />
                 <main>{children}</main>
