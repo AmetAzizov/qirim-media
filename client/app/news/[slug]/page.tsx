@@ -1,7 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import Breadcrumbs from '@/app/components/common/BreadCrumbs';
 import SwipeBlogCard from '@/app/blogs/SwipeBlogCard';
-import Articles from '@/app/components/common/Articles';
 import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,24 +10,31 @@ import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
 import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 import React from 'react';
 import {Metadata} from 'next';
+import ArticlesTwo from '@/app/components/common/ArticlesTwo';
+import rehypeRaw from 'rehype-raw';
 
 export async function generateMetadata({params: {slug}}: any): Promise<Metadata> {
     const newsPost = await getNewsPost(slug);
-    if (newsPost) {
-        return {
-            title: newsPost.title,
-            description: newsPost.subtitle,
-            openGraph: {
-                images: [
-                    {
-                        url: newsPost.image
-                    }
-                ]
-            }
-        };
-    } else {
-        throw new Error('News post not found');
-    }
+    return {
+        metadataBase: new URL('https://qirim.news'),
+        // openGraph: {
+        //     title: newsPost.title,
+        //     images: [
+        //         {
+        //             url: newsPost.image
+        //         }
+        //     ]
+        // },
+        twitter: {
+            card: 'summary_large_image',
+            title: newsPost?.title,
+            images: [
+                {
+                    url: newsPost?.image
+                }
+            ]
+        }
+    };
 }
 
 export default async function NewsSlug({params: {slug}}: any) {
@@ -45,25 +51,53 @@ export default async function NewsSlug({params: {slug}}: any) {
                     <Breadcrumbs />
                     <div className={'flex justify-between gap-x-10'}>
                         <aside className={'hidden xl:block lg:max-w-[337px]'}>
-                            <Articles />
+                            <ArticlesTwo />
                         </aside>
                         <div className={'xl:max-w-[1012px] w-full'}>
                             <div>
-                                <div>
-                                    <time
-                                        className={
-                                            'text-base font-medium text-[--secondary-color-5]'
-                                        }
-                                    >
-                                        {newsPost.dateTime}
-                                    </time>
-                                    <span
-                                        className={
-                                            'text-base font-medium text-[--secondary-color-5] ml-8'
-                                        }
-                                    >
-                                        {newsPost.authorName}
-                                    </span>
+                                <div
+                                    className={
+                                        'flex flex-col justify-between lg:items-center lg:flex-row'
+                                    }
+                                >
+                                    <div>
+                                        <time
+                                            className={
+                                                'text-base font-medium text-[--secondary-color-5]'
+                                            }
+                                        >
+                                            {newsPost.dateTime}
+                                        </time>
+                                        <span
+                                            className={
+                                                'text-base font-medium text-[--secondary-color-5] ml-8'
+                                            }
+                                        >
+                                            {newsPost.authorName}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <button
+                                            className={
+                                                'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
+                                            }
+                                        >
+                                            {newsPost.categoryList}
+                                        </button>
+                                        <button
+                                            style={{
+                                                color: 'rgb(255, 255, 255)',
+                                                borderRadius: '20px',
+                                                backdropFilter: 'blur(30px)',
+                                                background: 'rgba(117, 117, 117, 0.4)',
+                                                fontSize: '12px', // Установка размера шрифта
+                                                fontWeight: '600' // Установка жирности шрифта
+                                            }}
+                                            className='text-xs font-semibold px-2 py-1 ml-2.5'
+                                        >
+                                            # {newsPost.tagList}
+                                        </button>
+                                    </div>
                                 </div>
                                 <h2
                                     className={
@@ -85,6 +119,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     {newsPost.subtitle}
                                 </div>
                                 <ReactMarkdown
+                                    rehypePlugins={[rehypeRaw]}
                                     className={
                                         'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl'
                                     }
@@ -164,7 +199,11 @@ export default async function NewsSlug({params: {slug}}: any) {
                             </div>
                             <div className={'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'}>
                                 {mainNewsPosts.slice(1).map((newsPost: any) => (
-                                    <MainNewsItem key={newsPost.id} newsPost={newsPost} />
+                                    <MainNewsItem
+                                        key={newsPost.id}
+                                        newsPost={newsPost}
+                                        href={`${newsPost.slug}`}
+                                    />
                                 ))}
                             </div>
                         </div>

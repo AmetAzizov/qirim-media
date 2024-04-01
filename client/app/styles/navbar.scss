@@ -1,6 +1,8 @@
 header {
     background-color: rgba(7, 65, 107, 1);
     backdrop-filter: blur(70px);
+    position: relative;
+    z-index: 999999999;
 }
 
 .nav-category::before {

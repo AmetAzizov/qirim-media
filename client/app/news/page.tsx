@@ -1,17 +1,10 @@
-import Breadcrumbs from '../components/common/BreadCrumbs';
+import BreadCrumbs from '../components/common/BreadCrumbs';
 import React from 'react';
 import Link from 'next/link';
 import {getNewsPosts} from '../lib/newsPosts';
 import Image from 'next/image';
-
-// const categoryBtn = [
-//     {id: 'Публікації'},
-//     {id: 'Новини України та світу'},
-//     {id: 'Крим'},
-//     {id: 'Інтервю'},
-//     {id: 'Блоги'},
-//     {id: 'Відео'}
-// ];
+import {LoadMoreBtn} from './LoadMoreBtn';
+import CategoryBtn from '../components/common/CategoryBtn';
 
 export default async function News({searchParams}: any) {
     const page = parsePageParam(searchParams.page);
@@ -20,18 +13,9 @@ export default async function News({searchParams}: any) {
     return (
         <section className={'px-4 mb-14 lg:mb-36'}>
             <div className={'max-w-[1479px] mx-auto my-0'}>
-                <Breadcrumbs />
+                <BreadCrumbs />
                 <h2 className={'title-text pb-9'}>Всi новини</h2>
-                {/* <div className={'flex gap-2.5 overflow-auto'}>
-                    {newsPosts.map(newsPost => (
-                        <Link
-                            href={'#'}
-                            key={newsPost.id}
-                            className={'text-xs font-medium py-2.5 px-5 bg-[--secondary-color-4] whitespace-nowrap rounded-md hover:bg-[#F0CA56]'}                         >
-                            {newsPost.categoryList}
-                        </Link>
-                    ))}
-                </div> */}
+                <CategoryBtn />
                 {/* <div className={'inline-block'} onClick={() => setPickerVisible(!isPickerVisible)}>
                     <div
                         className={
@@ -114,14 +98,7 @@ export default async function News({searchParams}: any) {
                             </li>
                         ))}
                     </ul>
-                    <Link
-                        href={`/news?page=${page + 20}`}
-                        className={
-                            'flex justify-center mx-auto mb-0 mt-7 w-full font-medium text-sm whitespace-nowrap bg-[--accent-color] px-3.5 py-2.5 rounded-md lg:w-[145px] lg:text-base lg:mt-6'
-                        }
-                    >
-                        Бiльше новин
-                    </Link>
+                    <LoadMoreBtn page={page} />
                 </div>
             </div>
         </section>

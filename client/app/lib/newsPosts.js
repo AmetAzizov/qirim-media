@@ -42,7 +42,7 @@ function formatDateWithMonthNameAndTime(dateString) {
 export async function getNewsPost(slug) {
     const {data} = await fetchNewsPosts({
         filters: {slug: {$eq: slug}},
-        fields: ['slug', 'title', 'subtitle', 'authorName', 'text', 'publishedAt'],
+        fields: ['id', 'slug', 'title', 'subtitle', 'authorName', 'text', 'publishedAt', 'categoryList', 'tagList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
         pagination: {pageSize: 1}
@@ -53,6 +53,7 @@ export async function getNewsPost(slug) {
     const item = data[0];
     return {
         ...toNewsPost(item),
+        id: item.id,
         subtitle: item.attributes.subtitle,
         authorName: item.attributes.authorName,
         text: item.attributes.text,
@@ -79,6 +80,21 @@ export async function getBlog(slug) {
         text: item.attributes.text,
         dateTime: formatDateWithMonthNameAndTime(item.attributes.publishedAt)
     };
+}
+
+export async function getMainSlides(start, limit) {
+    const {data} = await fetchNewsPosts({
+        filters: {
+            mainSlider: {
+                $eq: 'true'
+            }
+        },
+        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
+        populate: {image: {fields: ['url']}},
+        sort: ['publishedAt:desc'],
+        pagination: {start, limit}
+    });
+    return data.map(toNewsPost);
 }
 
 export async function getBestOfWeek(start, limit) {
@@ -113,7 +129,7 @@ export async function getMainNews(start, limit) {
 
 export async function getNewsPosts(start, limit) {
     const {data} = await fetchNewsPosts({
-        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
+        fields: ['id', 'slug', 'title', 'subtitle', 'publishedAt', 'categoryList', 'tagList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
         pagination: {start, limit}
@@ -181,6 +197,7 @@ function toNewsPost(item) {
         title: attributes.title,
         subtitle: attributes.subtitle,
         categoryList: attributes.categoryList,
+        tagList: attributes.tagList,
         date: formatDateWithMonthName(attributes.publishedAt),
         image: attributes?.image?.data?.map(img => img.attributes.url)
     };

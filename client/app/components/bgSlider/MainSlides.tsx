@@ -1,11 +1,10 @@
-import {getNewsPosts} from '@/app/lib/newsPosts';
+import {getMainSlides} from '@/app/lib/newsPosts';
 import React from 'react';
 import Loader from './Loader';
 import BgSlider from './BgSlider';
 
 export default async function mainSlides() {
-    const newsPosts = await getNewsPosts(0, 4);
-    // const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 });
+    const newsPosts = await getMainSlides(0, 4);
 
     return (
         <React.Fragment>

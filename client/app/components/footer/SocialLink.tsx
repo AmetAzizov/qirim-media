@@ -19,7 +19,7 @@ const SocialLink = ({href, src, text, altText}: SocialLinkProps) => {
             href={href}
         >
             <div className={'flex items-center'}>
-                <Image src={src} width={73} height={73} alt={altText} />
+                <Image src={src} width={73} height={73} priority alt={altText} />
                 <p className={'text-lg font-semibold max-w-[180px]'}>{text}</p>
             </div>
             <Image

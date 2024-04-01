@@ -14,7 +14,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-    // title: 'Qirim Media',
+    title: 'Qirim Media',
     description: 'Новини світу та Криму',
     icons: {
         icon: ['./favicon.ico']

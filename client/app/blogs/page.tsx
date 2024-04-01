@@ -1,6 +1,6 @@
 import ModalBlog from '../components/common/ModalBlog';
 import BlogCard from './BlogCard';
-import Breadcrumbs from '../components/common/BreadCrumbs';
+import BreadCrumbs from '../components/common/BreadCrumbs';
 import Authors from './Authors';
 import {getBlogs} from '../lib/newsPosts';
 import Link from 'next/link';
@@ -13,7 +13,7 @@ export default async function Blogs() {
     return (
         <section className={'px-4 mb-20 lg:mb-36'}>
             <div className={'max-w-[1479px] mx-auto my-0'}>
-                <Breadcrumbs />
+                <BreadCrumbs />
                 <div
                     className={
                         'flex flex-wrap items-center justify-center p-4 mb-10 mx-auto bg-[#D9EDFC] rounded-md lg:p-10 lg:mb-14 lg:justify-between'

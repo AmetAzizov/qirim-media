@@ -3,11 +3,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const NewsItem = ({newsPost}: any) => {
+const NewsItem = ({newsPost, href}: any) => {
     return (
         <Link
-            href={`news/${newsPost.slug}`}
-            className={'flex items-center flex-col justify-between xl:items-start xl:justify-normal'}
+            href={href}
+            className={
+                'flex items-center flex-col justify-between xl:items-start xl:justify-normal'
+            }
         >
             <Image
                 className={

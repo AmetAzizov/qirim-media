@@ -9,7 +9,7 @@ export default async function BestOfWeek() {
     console.log(newsPosts);
 
     return (
-        <section className={'px-4 lg:my-24'}>
+        <section className={'px-4 my-11 lg:my-24'}>
             <div className={'max-w-[1479px] mx-auto my-0 w-full'}>
                 <div className={'flex items-center justify-between mb-9'}>
                     <h2 className={'title-text'}>Найкраще за тиждень</h2>
@@ -41,6 +41,13 @@ export default async function BestOfWeek() {
                         }
                     >
                         <div className={'flex flex-col'}>
+                            <button
+                                className={
+                                    'text-xs w-fit font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 mb-2.5 rounded-2xl'
+                                }
+                            >
+                                {newsPosts[0].categoryList}
+                            </button>
                             <h2
                                 className={
                                     'text-base font-medium text-[--background-color] text-clip line-clamp-2'
@@ -104,6 +111,13 @@ export default async function BestOfWeek() {
                         }
                     >
                         <div className={'flex flex-col'}>
+                            <button
+                                className={
+                                    'text-xs w-fit font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 mb-2.5 rounded-2xl'
+                                }
+                            >
+                                {newsPosts[1].categoryList}
+                            </button>
                             <h2
                                 className={
                                     'text-base font-medium text-[--background-color] text-clip line-clamp-2'

@@ -49,7 +49,7 @@ export default async function MainNews() {
                                     'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
                                 }
                             >
-                                Новини України
+                                {newsPosts[0].categoryList}
                             </button>
                             <p className={'text-lg font-medium my-5 lg:text-xl'}>{newsPosts[0].title}</p>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
@@ -58,36 +58,7 @@ export default async function MainNews() {
                         </div>
                     </Link>
                     {newsPosts.slice(1).map((newsPost: any) => (
-                        // <Link
-                        //     key={newsPost.slug}
-                        //     href={`news/${newsPost.slug}`}
-                        //     className={
-                        //         'flex items-center flex-col justify-between'
-                        //     }
-                        // >
-                        //     <Image
-                        //         className={
-                        //             'rounded-xl w-full h-[185px] sm:h-[245px] md:h-[300px] lg:h-[370px] xl:h-[190px]'
-                        //         }
-                        //         src={`${newsPost.image}`}
-                        //         width={254}
-                        //         height={200}
-                        //         alt='news-pic'
-                        //     />
-                        //     <div className={''}>
-                        //         <p
-                        //             className={
-                        //                 'text-sm font-medium text-clip line-clamp-3 lg:text-base my-2.5 lg:my-4'
-                        //             }
-                        //         >
-                        //             {newsPost.title}
-                        //         </p>
-                        //         <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                        //             {newsPost.date}
-                        //         </time>
-                        //     </div>
-                        // </Link>
-                        <MainNewsItem key={newsPost.id} newsPost={newsPost} />
+                        <MainNewsItem key={newsPost.slug} newsPost={newsPost} href={`news/${newsPost.slug}`} />
                     ))}
                 </div>
             </div>

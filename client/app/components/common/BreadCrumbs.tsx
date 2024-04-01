@@ -4,7 +4,7 @@ import {usePathname} from 'next/navigation';
 import Image from 'next/image';
 import React from 'react';
 
-const Breadcrumbs = () => {
+const BreadCrumbs = () => {
     const pathname = usePathname();
     const pathParts = pathname.split('/').filter(part => part);
     const breadcrumbs = [{label: 'Головна', href: '/'}];
@@ -48,4 +48,4 @@ const Breadcrumbs = () => {
     );
 };
 
-export default Breadcrumbs;
+export default BreadCrumbs;
