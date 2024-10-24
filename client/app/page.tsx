@@ -7,17 +7,34 @@ import BestOfWeek from './components/mainPageNews/BestOfWeek';
 import MainNews from './components/mainPageNews/MainNews';
 import TodayNews from './components/mainPageNews/TodayNews';
 import React from 'react';
+import Head from 'next/head';
 
 const Home = () => {
     return (
-        <React.Fragment>
+        <>
+            <Head>
+                <script
+                    async
+                    src='https://www.googletagmanager.com/gtag/js?id=G-0D1MKQXYQK'
+                ></script>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0D1MKQXYQK');
+          `
+                    }}
+                />
+            </Head>
             <MainSlides />
             <CountDownTimer />
             <MainBlogs />
             <TodayNews />
             <MainNews />
             <BestOfWeek />
-        </React.Fragment>
+        </>
     );
 };
 

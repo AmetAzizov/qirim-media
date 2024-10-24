@@ -14,7 +14,9 @@ const BreadCrumbs = () => {
         const defaultLabel = part.charAt(0).toLowerCase() + part.slice(1).replace('-', ' ');
         const customLabels: {[key: string]: string} = {
             news: 'Всi новини',
-            blogs: 'Блоги'
+            publications: 'Публікації',
+            blogs: 'Блоги',
+            videos: 'Відео'
         };
         const label = customLabels[part] || defaultLabel;
         breadcrumbs.push({label, href});

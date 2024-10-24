@@ -5,7 +5,6 @@ import Image from 'next/image';
 import SocialLink from './SocialLink';
 import '../../styles/footer.scss';
 import LanguageSwitcher from '../header/LanguageSwitcher';
-import SearchBox from '../SearchBox/SearchBox';
 
 type LinkData = {
     title: string;
@@ -20,15 +19,20 @@ const Footer = () => {
     }: {links: LinkData[]; videoLinks: LinkData[]; aboutLinks: LinkData[]} = {
         links: [
             {title: 'Головна', href: '/'},
-            {title: 'Новини Украiни та свiту ', href: '#'},
-            {title: 'Всi новини', href: '/news'},
-            {title: 'Новини Криму', href: '#'},
+            {title: 'Права людини', href: '#'},
+            {title: 'Новини', href: '/news'},
+            {title: 'Війна', href: '#'},
+            {title: 'Публiкацii', href: '/publications'},
+            {title: 'Політика', href: '#'},
             {title: 'Відео', href: '/videos'},
-            {title: 'Публiкацii', href: '#'},
+            {title: 'Культура', href: '#'},
             {title: 'Блоги', href: '/blogs'},
-            {title: 'Кримські татари', href: '#'},
-            {title: 'Інтерв\'ю', href: '#'},
-            {title: 'НАТО', href: '#'},
+            {title: 'Спорт', href: '#'},
+            {title: 'Освіта', href: '#'},
+            {title: 'Історія', href: '#'},
+            {title: 'Економіка', href: '#'},
+            {title: 'Екологія', href: '#'},
+            {title: 'Міжнародні новини', href: '#'},
         ],
         videoLinks: [
             {title: 'Інтерв‘ю', href: '#'},
@@ -117,7 +121,7 @@ const Footer = () => {
 
                 <div className={'flex flex-col justify-between mt-8 lg:mt-0'}>
                     <div className={'flex flex-col gap-y-11'}>
-                        <SearchBox />
+                        {/* <SearchBox /> */}
                         <LanguageSwitcher
                             onClick={handleLanguageClick}
                             textColor='text-[#01060A]'

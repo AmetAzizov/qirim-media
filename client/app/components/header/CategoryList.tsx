@@ -14,6 +14,7 @@ const CategoryList = ({
         '/': 'Головна',
         news: 'Новини',
         videos: 'Відео',
+        publications: 'Публікації',
         blogs: 'Блоги'
     };
 
@@ -21,6 +22,7 @@ const CategoryList = ({
         Головна: '/',
         Новини: 'news',
         Відео: 'videos',
+        Публікації: 'publications',
         Блоги: 'blogs'
     };
 

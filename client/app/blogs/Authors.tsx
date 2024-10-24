@@ -12,7 +12,7 @@ const Authors = ({blog}: any) => {
                     alt='author'
                     className='rounded-full h-[45px] object-cover object-top'
                 />
-                <p className={'mt-4'}>{blog.authorBlog}</p>
+                <p className={'mt-4 text-clip line-clamp-2'}>{blog.authorBlog}</p>
             </div>
         </React.Fragment>
     );

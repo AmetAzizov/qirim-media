@@ -1,7 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import Breadcrumbs from '@/app/components/common/BreadCrumbs';
 import SwipeBlogCard from '@/app/blogs/SwipeBlogCard';
-import Articles from '@/app/components/common/Articles';
+import ArticlesTwo from '@/app/components/common/ArticlesTwo';
 import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -29,23 +29,34 @@ export default async function BlogsSlug({params: {slug}}: any) {
                 <Breadcrumbs />
                 <div className={'flex justify-between gap-x-10'}>
                     <aside className={'hidden xl:block lg:max-w-[337px]'}>
-                        <Articles />
+                        <ArticlesTwo />
                     </aside>
                     <div className={'xl:max-w-[1012px] w-full'}>
                         <div>
-                            <div>
-                                <time
-                                    className={'text-base font-medium text-[--secondary-color-5]'}
-                                >
-                                    {blog.dateTime}
-                                </time>
-                                <span
+                            <div className={'flex items-center justify-between'}>
+                                <div>
+                                    <time
+                                        className={
+                                            'text-base font-medium text-[--secondary-color-5]'
+                                        }
+                                    >
+                                        {blog.dateTime}
+                                    </time>
+                                    <span
+                                        className={
+                                            'text-base font-medium text-[--secondary-color-5] ml-8'
+                                        }
+                                    >
+                                        {blog.authorBlog}
+                                    </span>
+                                </div>
+                                <button
                                     className={
-                                        'text-base font-medium text-[--secondary-color-5] ml-8'
+                                        'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
                                     }
                                 >
-                                    {blog.authorBlog}
-                                </span>
+                                    Блоги
+                                </button>
                             </div>
                             <h2
                                 className={
@@ -142,7 +153,11 @@ export default async function BlogsSlug({params: {slug}}: any) {
                         </div>
                         <div className={'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'}>
                             {mainNewsPosts.slice(1).map((newsPost: any) => (
-                                <MainNewsItem key={newsPost.id} newsPost={newsPost} />
+                                <MainNewsItem
+                                    key={newsPost.id}
+                                    newsPost={newsPost}
+                                    href={`/news/${newsPost.slug}`}
+                                />
                             ))}
                         </div>
                     </div>

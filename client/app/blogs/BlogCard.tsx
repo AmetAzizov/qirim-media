@@ -28,11 +28,11 @@ const BlogCard = ({blog}: any) => {
                     alt='author'
                     className='rounded-full h-[45px] object-cover object-top'
                 />
-                <p className={`text-sm font-medium ml-4`}>{blog.authorBlog}</p>
+                <p className={`text-sm text-clip line-clamp-1 font-medium ml-4`}>{blog.authorBlog}</p>
             </div>
             <div className={'flex items-center justify-between'}>
                 <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                    {blog.date}
+                    {blog.dateTime}
                 </time>
                 <Link href={`blogs/${blog.slug}`} className={'bg-[#F0CA56] px-3.5 py-2 rounded-md'}>
                     Читати

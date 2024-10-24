@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import React, {useState, useEffect} from 'react';
 import '../../styles/burger-menu.scss';
-import SearchInput from './SearchInput';
+// import SearchInput from './SearchInput';
 import LanguageSwitcher from './LanguageSwitcher';
 import SubscribeButton from './SubscribeButton';
 import CategoryList from './CategoryList';
@@ -52,9 +52,9 @@ const BurgerMenu = () => {
                         <Image src='/close-button.svg' width={20} height={20} alt='close-btn' />
                     </button>
                 </div>
-                <SearchInput inputBg='bg-[--secondary-color-4]' />
+                {/* <SearchInput inputBg='bg-[--secondary-color-4]' /> */}
                 <hr className={'border-[#DBDBDB] my-7'} />
-                <CategoryList onClose={closeMenu} categories={['/', 'news', 'videos', 'blogs']} />
+                <CategoryList onClose={closeMenu} categories={['/', 'news', 'publications', 'videos', 'blogs']} />
                 <div className={'flex items-center justify-between mt-7'}>
                     <div>
                         <LanguageSwitcher
