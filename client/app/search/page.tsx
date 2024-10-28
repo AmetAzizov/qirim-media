@@ -1,53 +1,106 @@
-'use client'; // Указываем, что компонент клиентский
-import {useRouter} from 'next/navigation'; // Используем useRouter из next/navigation
-import {useEffect, useState} from 'react';
+'use client';
+import React, {useEffect, useState} from 'react';
+import Image from 'next/image';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {searchNewsPosts} from '../lib/newsPosts';
+import Link from 'next/link';
 
-const SearchPage = () => {
-    const router = useRouter();
-    const [searchResults, setSearchResults] = useState<any[]>([]); // Изначально пустой массив
-    const [loading, setLoading] = useState(false); // Индикатор загрузки
+interface SearchResult {
+    slug: string;
+    image: string;
+    categoryList: string;
+    title: string;
+    date: string;
+}
 
-    // Извлечение параметра query из строки запроса
-    const searchParams = new URLSearchParams(window.location.search);
-    const query = searchParams.get('query');
+export default function SearchNews() {
+    const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const searchParams = useSearchParams();
+    const query = searchParams.get('query') || '';
 
     useEffect(() => {
-        if (query) {
-            setLoading(true); // Устанавливаем индикатор загрузки
-            fetchSearchResults(query); // Поиск по запросу
-        }
+        if (!query) return;
+
+        const fetchSearchResults = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const results = await searchNewsPosts(query);
+                setSearchResults(results);
+            } catch (error) {
+                setError('Ошибка при поиске новостей');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSearchResults();
     }, [query]);
 
-    // Функция для получения результатов поиска
-    const fetchSearchResults = async (query: string) => {
-        try {
-            const res = await fetch(`/api/search?query=${query}`);
-            const data = await res.json();
-            setSearchResults(data.results || []); // Если данных нет, устанавливаем пустой массив
-        } catch (error) {
-            console.error('Ошибка при поиске:', error);
-            setSearchResults([]); // В случае ошибки тоже ставим пустой массив
-        } finally {
-            setLoading(false); // Отключаем индикатор загрузки
-        }
-    };
-
     return (
-        <div>
-            <h1>Результаты поиска для: {query}</h1>
-            {loading ? (
-                <p>Загрузка...</p>
-            ) : searchResults.length > 0 ? (
-                <ul>
-                    {searchResults.map(result => (
-                        <li key={result.id}>{result.title}</li>
-                    ))}
-                </ul>
-            ) : (
-                <p>Ничего не найдено</p>
-            )}
-        </div>
-    );
-};
+        <section className={'px-4 mb-14 lg:mb-36'}>
+            <div className={'max-w-[1479px] mx-auto my-0 pt-7'}>
+                <h2 className={'title-text'}>Пошук</h2>
+                <p>
+                    Результати за запитом: <b>{query}</b>
+                </p>
 
-export default SearchPage;
+                {loading && <p>Загрузка...</p>}
+                {error && <p>{error}</p>}
+
+                {searchResults.length > 0 ? (
+                    <ul className={'max-w-[740px] pt-6'}>
+                        {searchResults.map(result => (
+                            <li key={result.slug} className={'mb-5'}>
+                                <Link className={'flex'} href={`news/${result.slug}`}>
+                                    <Image
+                                        className={
+                                            'h-[120px] min-w-[120px] max-w-[120px] w-full rounded-xl'
+                                        }
+                                        src={`${result.image}`}
+                                        width={220}
+                                        height={120}
+                                        alt='image'
+                                    />
+                                    <div
+                                        className={
+                                            'flex flex-col justify-between items-baseline ml-5'
+                                        }
+                                    >
+                                        <button
+                                            className={
+                                                'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
+                                            }
+                                        >
+                                            {result.categoryList}
+                                        </button>
+                                        <p
+                                            className={
+                                                'text-sm font-medium text-clip line-clamp-4 lg:text-base lg:line-clamp-3'
+                                            }
+                                        >
+                                            {result.title}
+                                        </p>
+                                        <time
+                                            className={
+                                                'text-sm font-medium text-[--secondary-color-2]'
+                                            }
+                                        >
+                                            {result.date}
+                                        </time>
+                                    </div>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    !loading && <p>Ничего не найдено</p>
+                )}
+            </div>
+        </section>
+    );
+}

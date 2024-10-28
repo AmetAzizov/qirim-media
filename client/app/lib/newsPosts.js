@@ -390,13 +390,14 @@ export async function getBlogs() {
 export async function searchNewsPosts(query) {
     const {data} = await fetchNewsPosts({
         filters: {title: {$containsi: query}},
-        fields: ['slug', 'title'],
+        fields: ['slug', 'title', 'publishedAt', 'categoryList'],
+        populate: {image: {fields: ['url']}},
         sort: ['title'],
         pagination: {pageSize: 5}
     });
-    return data.map(({attributes}) => ({
-        slug: attributes.slug,
-        title: attributes.title
+
+    return data.map(attributes => ({
+        ...toNewsPost(attributes),
     }));
 }
 

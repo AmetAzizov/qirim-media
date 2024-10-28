@@ -1,3 +1,5 @@
+import {useState} from 'react';
+import '../../styles/navbar.scss'
 
 type LanguageSwitcherProps = {
     onClick: (languageCode: string) => void;
@@ -11,36 +13,23 @@ const languages = [
     {code: 'qt', label: 'QT'}
 ];
 
-// const LanguageSwitcher = ({onClick, textColor}: LanguageSwitcherProps) => {
-    
+const LanguageSwitcher = ({onClick}: LanguageSwitcherProps) => {
+    const [activeLanguage, setActiveLanguage] = useState('ua');
 
-//     return (
-//         <div>
-//             {languages.map(language => (
-//                 <button
-//                     className={`${textColor} language-switcher p-2 mr-1.5 min-w-[40px] text-sm font-semibold bg-[--secondary-color-4] last:mr-0 focus:bg-[--primary-color-4] focus:text-[--accent-color] rounded lg:text-base lg:bg-[transparent] lg:font-medium`}
-//                     key={language.code}
-//                     onClick={() => onClick(language.code)}
-//                 >
-//                     {language.label}
-//                 </button>
-//             ))}
-//         </div>
-//     );
-// };
-
-// export default LanguageSwitcher;
-
-const LanguageSwitcher = ({ onClick, textColor }: LanguageSwitcherProps) => {
-    const activeLanguage = 'ua'; // Украинский язык активный по умолчанию
+    const handleLanguageClick = (languageCode: string) => {
+        setActiveLanguage(languageCode);
+        onClick(languageCode);
+    };
 
     return (
         <div>
             {languages.map(language => (
                 <button
-                    className={`${textColor} language-switcher p-2 mr-1.5 min-w-[40px] text-sm font-semibold bg-[--secondary-color-4] last:mr-0 focus:bg-[--primary-color-4] focus:text-[--accent-color] rounded lg:text-base lg:bg-[transparent] lg:font-medium ${language.code === activeLanguage ? 'active-language' : ''}`}
+                    className={`language-switcher p-2 text-sm font-semibold rounded lg:text-base lg:font-medium ${
+                        language.code === activeLanguage ? 'active-language' : ''
+                    }`}
                     key={language.code}
-                    onClick={() => onClick(language.code)}
+                    onClick={() => handleLanguageClick(language.code)}
                 >
                     {language.label}
                 </button>

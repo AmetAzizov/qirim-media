@@ -58,7 +58,7 @@ export default async function MainNews() {
                         </div>
                     </Link>
                     {newsPosts.slice(1).map((newsPost: any) => (
-                        <MainNewsItem key={newsPost.slug} newsPost={newsPost} href={`news/${newsPost.slug}`} />
+                        <MainNewsItem key={newsPost.slug || newsPost.id} newsPost={newsPost} href={`news/${newsPost.slug}`} />
                     ))}
                 </div>
             </div>

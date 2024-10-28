@@ -25,16 +25,19 @@ header {
     background-color: rgba(217, 237, 252, 1);
 }
 
-// .active-language {
-//     background-color: #d9edfc;
-//     color: gold;
-// }
-
 .language-switcher {
-    &:focus,
-    &:active {
-        background-color: #d9edfc;
+    background-color: var(--secondary-color-4);
+    color: var(--secondary-color-2);
+
+    &:not(:first-child) {
+        margin-left: 5px;
     }
+
+    &.active-language {
+        background-color: var(--primary-color-4);
+        color: var(--accent-color);
+    }
+
 }
 
 @media (min-width: 1024px) {
@@ -51,5 +54,10 @@ header {
 
     .nav-category::before {
         display: none;
+    }
+
+    .language-switcher {
+        background-color: transparent;
+        color: var(--background-color);
     }
 }
