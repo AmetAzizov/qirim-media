@@ -13,7 +13,7 @@ const CategoryList = ({
     const customLabels: {[key: string]: string} = {
         '/': 'Головна',
         news: 'Новини',
-        videos: 'Відео',
+        '#': 'Відео',
         publications: 'Публікації',
         blogs: 'Блоги'
     };

@@ -9,7 +9,7 @@ export default async function mainSlides() {
     return (
         <React.Fragment>
             <Loader newsPosts={newsPosts} />
-            <BgSlider />
+            <BgSlider newsPosts={newsPosts} />
         </React.Fragment>
     );
 }

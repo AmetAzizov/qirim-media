@@ -27,7 +27,7 @@ const Navbar = () => {
                     <Image src='/logoqn.svg' width={87} height={39} alt='Logo QN' />
                 </Link>
                 <ul className={'hidden lg:flex lg:items-center'}>
-                    <CategoryList categories={['/', 'news', 'publications', 'videos', 'blogs']} />
+                    <CategoryList categories={['/', 'news', 'publications', '#', 'blogs']} />
                 </ul>
                 <div className={'hidden lg:flex lg:items-center lg:justify-between'}>
                     <div>

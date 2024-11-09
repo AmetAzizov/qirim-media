@@ -1,5 +1,5 @@
-'use client';
-// import {useRouter} from 'next/navigation'; // Используем useRouter из next/navigation
+// 'use client';
+// import {useRouter} from 'next/navigation';
 // import {useEffect, useState, useRef} from 'react';
 // import Image from 'next/image';
 
@@ -7,9 +7,17 @@
 //     const [isOpen, setIsOpen] = useState(false);
 //     const [query, setQuery] = useState('');
 //     const router = useRouter();
-
-//     // Используем один useRef с корректным типом, если он ссылается на <div>
 //     const searchRef = useRef<HTMLDivElement>(null);
+
+//     useEffect(() => {
+//         const delayDebounceFn = setTimeout(() => {
+//             if (query.trim()) {
+//                 router.push(`/search?query=${query}`);
+//             }
+//         }, 500);
+
+//         return () => clearTimeout(delayDebounceFn);
+//     }, [query, router]);
 
 //     const handleClickOutside = (event: MouseEvent) => {
 //         if (
@@ -32,14 +40,6 @@
 //         };
 //     }, [isOpen]);
 
-//     const handleSearch = (e: React.FormEvent) => {
-//         e.preventDefault();
-//         if (query.trim()) {
-//             router.push(`/search?query=${query}`);
-//             setIsOpen(false); // Закрываем input после поиска
-//         }
-//     };
-
 //     return (
 //         <div ref={searchRef} className='relative'>
 //             <button
@@ -56,7 +56,7 @@
 //                 />
 //             </button>
 //             {isOpen && (
-//                 <form onSubmit={handleSearch} className='w-96 absolute right-0 top-0'>
+//                 <div className='w-96 absolute right-0 top-0'>
 //                     <input
 //                         className='w-full rounded-md py-2 pl-3 pr-10'
 //                         type='text'
@@ -64,13 +64,7 @@
 //                         value={query}
 //                         onChange={e => setQuery(e.target.value)}
 //                     />
-//                     <button
-//                         type='submit' // Тип кнопки submit, чтобы отправлять форму
-//                         className='absolute right-2 top-1/2 transform -translate-y-1/2'
-//                     >
-//                         <Image src='/u_search-close.svg' width={16} height={16} alt='close-icon' />
-//                     </button>
-//                 </form>
+//                 </div>
 //             )}
 //         </div>
 //     );
@@ -78,8 +72,9 @@
 
 // export default SearchBar;
 
+'use client';
 import {useRouter} from 'next/navigation';
-import {useEffect, useState, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import Image from 'next/image';
 
 const SearchBar = () => {
@@ -88,16 +83,12 @@ const SearchBar = () => {
     const router = useRouter();
     const searchRef = useRef<HTMLDivElement>(null);
 
-    // Дебаунс функция для задержки выполнения поиска
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            if (query.trim()) {
-                router.push(`/search?query=${query}`);
-            }
-        }, 500); // Задержка в 500 мс
-
-        return () => clearTimeout(delayDebounceFn); // Очищаем таймер при каждом изменении query
-    }, [query, router]);
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter' && query.trim()) {
+            router.push(`/search?query=${query}`);
+            setQuery('');
+        }
+    };
 
     const handleClickOutside = (event: MouseEvent) => {
         if (
@@ -143,6 +134,7 @@ const SearchBar = () => {
                         placeholder='Пошук по сайту...'
                         value={query}
                         onChange={e => setQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
                     />
                 </div>
             )}

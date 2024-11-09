@@ -1,6 +1,5 @@
 // import qs from 'qs';
 // import moment from 'moment-timezone';
-// import {cache} from 'react';
 
 // const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -21,6 +20,12 @@
 
 // export default function formatDateWithMonthName(dateString) {
 //     const date = moment.tz(dateString, 'Europe/Kyiv');
+//     const today = moment.tz('Europe/Kyiv').startOf('day');
+
+//     if (date.isSame(today, 'day')) {
+//         return 'Сьогодні';
+//     }
+
 //     const day = date.date();
 //     const monthName = MONTH_NAMES[date.month()];
 //     const year = date.year();
@@ -138,9 +143,7 @@
 // }
 
 // export async function getNewsPosts(start, limit, category) {
-//     const filters = category && category !== 'Всі'
-//         ? { categoryList: { $contains: category } }
-//         : {};
+//     const filters = category && category !== 'Всі' ? {categoryList: {$contains: category}} : {};
 
 //     const {data} = await fetchNewsPosts({
 //         fields: ['id', 'slug', 'title', 'subtitle', 'publishedAt', 'categoryList', 'tagList'],
@@ -170,13 +173,13 @@
 // export async function searchNewsPosts(query) {
 //     const {data} = await fetchNewsPosts({
 //         filters: {title: {$containsi: query}},
-//         fields: ['slug', 'title'],
-//         sort: ['title'],
-//         pagination: {pageSize: 5}
+//         fields: ['slug', 'title', 'publishedAt', 'categoryList'],
+//         populate: {image: {fields: ['url']}},
+//         sort: ['publishedAt:desc'],
 //     });
-//     return data.map(({attributes}) => ({
-//         slug: attributes.slug,
-//         title: attributes.title
+
+//     return data.map(attributes => ({
+//         ...toNewsPost(attributes)
 //     }));
 // }
 
@@ -191,26 +194,44 @@
 
 // export async function fetchNewsPosts(parameters) {
 //     const url = `${apiUrl}/news-posts?` + qs.stringify(parameters, {encodeValuesOnly: true});
-//     const response = await fetch(url, {cache: 'no-store'});
-//     if (!response.ok) {
-//         throw new Error(`CMS returned ${response.status} for ${url}`);
+//     try {
+//         const response = await fetch(url, {cache: 'no-store'});
+//         if (!response.ok) {
+//             if (response.status === 403) {
+//                 console.warn(`CMS returned ${response.status} for ${url}. Ignoring the error.`);
+//                 return {data: []}; // Return an empty array to handle the error gracefully.
+//             }
+//             throw new Error(`CMS returned ${response.status} for ${url}`);
+//         }
+//         return await response.json();
+//     } catch (error) {
+//         console.error(`An error occurred: ${error.message}`);
+//         return {data: []}; // Return an empty array to ensure the app doesn't crash.
 //     }
-//     return await response.json();
 // }
 
 // export async function fetchBlogs(parameters) {
 //     const url = `${apiUrl}/blogs?` + qs.stringify(parameters, {encodeValuesOnly: true});
-//     const response = await fetch(url, {cache: 'no-store'});
-//     if (!response.ok) {
-//         throw new Error(`CMS returned ${response.status} for ${url}`);
+//     try {
+//         const response = await fetch(url, {cache: 'no-store'});
+//         if (!response.ok) {
+//             if (response.status === 403) {
+//                 console.warn(`CMS returned ${response.status} for ${url}. Ignoring the error.`);
+//                 return {data: []}; // Return an empty array to handle the error gracefully.
+//             }
+//             throw new Error(`CMS returned ${response.status} for ${url}`);
+//         }
+//         return await response.json();
+//     } catch (error) {
+//         console.error(`An error occurred: ${error.message}`);
+//         return {data: []}; // Return an empty array to ensure the app doesn't crash.
 //     }
-//     return await response.json();
 // }
 
 // function toNewsPost(item) {
 //     const {attributes} = item;
 //     return {
-//         slug: attributes.slug,
+//         slug: data.slug,
 //         title: attributes.title,
 //         subtitle: attributes.subtitle,
 //         categoryList: attributes.categoryList,
@@ -222,7 +243,6 @@
 
 import qs from 'qs';
 import moment from 'moment-timezone';
-// import {cache} from 'react';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -243,6 +263,12 @@ const MONTH_NAMES = [
 
 export default function formatDateWithMonthName(dateString) {
     const date = moment.tz(dateString, 'Europe/Kyiv');
+    const today = moment.tz('Europe/Kyiv').startOf('day');
+
+    if (date.isSame(today, 'day')) {
+        return 'Сьогодні';
+    }
+
     const day = date.date();
     const monthName = MONTH_NAMES[date.month()];
     const year = date.year();
@@ -259,6 +285,18 @@ function formatDateWithMonthNameAndTime(dateString) {
     const minutes = date.minutes();
 
     return `${day} ${monthName} ${year} / ${hours}:${minutes.toString().padStart(2, '0')}`;
+}
+
+function toNewsPost(item) {
+    return {
+        slug: item.slug,
+        title: item.title,
+        subtitle: item.subtitle,
+        categoryList: item.categoryList,
+        tagList: item.tagList,
+        date: formatDateWithMonthName(item.publishedAt),
+        image: item?.image?.map(img => img.url)
+    };
 }
 
 export async function getNewsPost(slug) {
@@ -286,10 +324,10 @@ export async function getNewsPost(slug) {
     return {
         ...toNewsPost(item),
         id: item.id,
-        subtitle: item.attributes.subtitle,
-        authorName: item.attributes.authorName,
-        text: item.attributes.text,
-        dateTime: formatDateWithMonthNameAndTime(item.attributes.publishedAt)
+        subtitle: item.subtitle,
+        authorName: item.authorName,
+        text: item.text,
+        dateTime: formatDateWithMonthNameAndTime(item.publishedAt)
     };
 }
 
@@ -307,20 +345,16 @@ export async function getBlog(slug) {
     const item = data[0];
     return {
         ...toNewsPost(item),
-        subtitle: item.attributes.subtitle,
-        authorBlog: item.attributes.authorBlog,
-        text: item.attributes.text,
-        dateTime: formatDateWithMonthNameAndTime(item.attributes.publishedAt)
+        subtitle: item.subtitle,
+        authorBlog: item.authorBlog,
+        text: item.text,
+        dateTime: formatDateWithMonthNameAndTime(item.publishedAt)
     };
 }
 
 export async function getMainSlides(start, limit) {
     const {data} = await fetchNewsPosts({
-        filters: {
-            mainSlider: {
-                $eq: 'true'
-            }
-        },
+        filters: {mainSlider: {$eq: 'true'}},
         fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
@@ -331,11 +365,7 @@ export async function getMainSlides(start, limit) {
 
 export async function getBestOfWeek(start, limit) {
     const {data} = await fetchNewsPosts({
-        filters: {
-            bestOfWeek: {
-                $eq: 'true'
-            }
-        },
+        filters: {bestOfWeek: {$eq: 'true'}},
         fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
@@ -346,11 +376,7 @@ export async function getBestOfWeek(start, limit) {
 
 export async function getMainNews(start, limit) {
     const {data} = await fetchNewsPosts({
-        filters: {
-            mainNews: {
-                $eq: 'true'
-            }
-        },
+        filters: {mainNews: {$eq: 'true'}},
         fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc'],
@@ -378,12 +404,11 @@ export async function getBlogs() {
         fields: ['slug', 'title', 'authorBlog', 'publishedAt'],
         populate: {image: {fields: ['url']}},
         sort: ['publishedAt:desc']
-        // pagination: {start, limit}
     });
     return data.map(item => ({
         ...toNewsPost(item),
-        authorBlog: item.attributes.authorBlog,
-        dateTime: formatDateWithMonthNameAndTime(item.attributes.publishedAt)
+        authorBlog: item.authorBlog,
+        dateTime: formatDateWithMonthNameAndTime(item.publishedAt)
     }));
 }
 
@@ -392,22 +417,18 @@ export async function searchNewsPosts(query) {
         filters: {title: {$containsi: query}},
         fields: ['slug', 'title', 'publishedAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
-        sort: ['title'],
-        pagination: {pageSize: 5}
+        sort: ['publishedAt:desc']
     });
 
-    return data.map(attributes => ({
-        ...toNewsPost(attributes),
-    }));
+    return data.map(item => toNewsPost(item));
 }
 
 export async function getSlugs() {
     const {data} = await fetchNewsPosts({
         fields: ['slug'],
         sort: ['publishedAt:desc']
-        // pagination: {pageSize: 6}
     });
-    return data.map(item => item.attributes.slug);
+    return data.map(item => item.slug);
 }
 
 export async function fetchNewsPosts(parameters) {
@@ -417,14 +438,14 @@ export async function fetchNewsPosts(parameters) {
         if (!response.ok) {
             if (response.status === 403) {
                 console.warn(`CMS returned ${response.status} for ${url}. Ignoring the error.`);
-                return {data: []}; // Return an empty array to handle the error gracefully.
+                return {data: []};
             }
             throw new Error(`CMS returned ${response.status} for ${url}`);
         }
         return await response.json();
     } catch (error) {
         console.error(`An error occurred: ${error.message}`);
-        return {data: []}; // Return an empty array to ensure the app doesn't crash.
+        return {data: []};
     }
 }
 
@@ -435,26 +456,13 @@ export async function fetchBlogs(parameters) {
         if (!response.ok) {
             if (response.status === 403) {
                 console.warn(`CMS returned ${response.status} for ${url}. Ignoring the error.`);
-                return {data: []}; // Return an empty array to handle the error gracefully.
+                return {data: []};
             }
             throw new Error(`CMS returned ${response.status} for ${url}`);
         }
         return await response.json();
     } catch (error) {
         console.error(`An error occurred: ${error.message}`);
-        return {data: []}; // Return an empty array to ensure the app doesn't crash.
+        return {data: []};
     }
-}
-
-function toNewsPost(item) {
-    const {attributes} = item;
-    return {
-        slug: attributes.slug,
-        title: attributes.title,
-        subtitle: attributes.subtitle,
-        categoryList: attributes.categoryList,
-        tagList: attributes.tagList,
-        date: formatDateWithMonthName(attributes.publishedAt),
-        image: attributes?.image?.data?.map(img => img.attributes.url)
-    };
 }
