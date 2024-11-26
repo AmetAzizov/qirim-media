@@ -263,11 +263,11 @@ const MONTH_NAMES = [
 
 export default function formatDateWithMonthName(dateString) {
     const date = moment.tz(dateString, 'Europe/Kyiv');
-    const today = moment.tz('Europe/Kyiv').startOf('day');
+    // const today = moment.tz('Europe/Kyiv').startOf('day');
 
-    if (date.isSame(today, 'day')) {
-        return 'Сьогодні';
-    }
+    // if (date.isSame(today, 'day')) {
+    //     return 'Сьогодні';
+    // }
 
     const day = date.date();
     const monthName = MONTH_NAMES[date.month()];
@@ -294,7 +294,7 @@ function toNewsPost(item) {
         subtitle: item.subtitle,
         categoryList: item.categoryList,
         tagList: item.tagList,
-        date: formatDateWithMonthName(item.publishedAt),
+        date: formatDateWithMonthName(item.createdAt),
         image: item?.image?.map(img => img.url)
     };
 }
@@ -309,12 +309,12 @@ export async function getNewsPost(slug) {
             'subtitle',
             'authorName',
             'text',
-            'publishedAt',
+            'createdAt',
             'categoryList',
             'tagList'
         ],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc'],
+        sort: ['createdAt:desc'],
         pagination: {pageSize: 1}
     });
     if (data.length === 0) {
@@ -327,16 +327,16 @@ export async function getNewsPost(slug) {
         subtitle: item.subtitle,
         authorName: item.authorName,
         text: item.text,
-        dateTime: formatDateWithMonthNameAndTime(item.publishedAt)
+        dateTime: formatDateWithMonthNameAndTime(item.createdAt)
     };
 }
 
 export async function getBlog(slug) {
     const {data} = await fetchBlogs({
         filters: {slug: {$eq: slug}},
-        fields: ['slug', 'title', 'authorBlog', 'text', 'publishedAt'],
+        fields: ['slug', 'title', 'authorBlog', 'text', 'createdAt'],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc'],
+        sort: ['createdAt:desc'],
         pagination: {pageSize: 1}
     });
     if (data.length === 0) {
@@ -348,16 +348,16 @@ export async function getBlog(slug) {
         subtitle: item.subtitle,
         authorBlog: item.authorBlog,
         text: item.text,
-        dateTime: formatDateWithMonthNameAndTime(item.publishedAt)
+        dateTime: formatDateWithMonthNameAndTime(item.createdAt)
     };
 }
 
 export async function getMainSlides(start, limit) {
     const {data} = await fetchNewsPosts({
         filters: {mainSlider: {$eq: 'true'}},
-        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
+        fields: ['slug', 'title', 'subtitle', 'createdAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc'],
+        sort: ['createdAt:desc'],
         pagination: {start, limit}
     });
     return data.map(toNewsPost);
@@ -366,9 +366,9 @@ export async function getMainSlides(start, limit) {
 export async function getBestOfWeek(start, limit) {
     const {data} = await fetchNewsPosts({
         filters: {bestOfWeek: {$eq: 'true'}},
-        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
+        fields: ['slug', 'title', 'subtitle', 'createdAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc'],
+        sort: ['createdAt:desc'],
         pagination: {start, limit}
     });
     return data.map(toNewsPost);
@@ -377,9 +377,9 @@ export async function getBestOfWeek(start, limit) {
 export async function getMainNews(start, limit) {
     const {data} = await fetchNewsPosts({
         filters: {mainNews: {$eq: 'true'}},
-        fields: ['slug', 'title', 'subtitle', 'publishedAt', 'categoryList'],
+        fields: ['slug', 'title', 'subtitle', 'createdAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc'],
+        sort: ['createdAt:desc'],
         pagination: {start, limit}
     });
     return data.map(toNewsPost);
@@ -389,9 +389,9 @@ export async function getNewsPosts(start, limit, category) {
     const filters = category && category !== 'Всі' ? {categoryList: {$contains: category}} : {};
 
     const {data} = await fetchNewsPosts({
-        fields: ['id', 'slug', 'title', 'subtitle', 'publishedAt', 'categoryList', 'tagList'],
+        fields: ['id', 'slug', 'title', 'subtitle', 'createdAt', 'categoryList', 'tagList'],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc'],
+        sort: ['createdAt:desc'],
         pagination: {start, limit},
         filters
     });
@@ -401,23 +401,23 @@ export async function getNewsPosts(start, limit, category) {
 
 export async function getBlogs() {
     const {data} = await fetchBlogs({
-        fields: ['slug', 'title', 'authorBlog', 'publishedAt'],
+        fields: ['slug', 'title', 'authorBlog', 'createdAt'],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc']
+        sort: ['createdAt:desc']
     });
     return data.map(item => ({
         ...toNewsPost(item),
         authorBlog: item.authorBlog,
-        dateTime: formatDateWithMonthNameAndTime(item.publishedAt)
+        dateTime: formatDateWithMonthNameAndTime(item.createdAt)
     }));
 }
 
 export async function searchNewsPosts(query) {
     const {data} = await fetchNewsPosts({
         filters: {title: {$containsi: query}},
-        fields: ['slug', 'title', 'publishedAt', 'categoryList'],
+        fields: ['slug', 'title', 'createdAt', 'categoryList'],
         populate: {image: {fields: ['url']}},
-        sort: ['publishedAt:desc']
+        sort: ['createdAt:desc']
     });
 
     return data.map(item => toNewsPost(item));
@@ -426,9 +426,23 @@ export async function searchNewsPosts(query) {
 export async function getSlugs() {
     const {data} = await fetchNewsPosts({
         fields: ['slug'],
-        sort: ['publishedAt:desc']
+        sort: ['createdAt:desc']
     });
     return data.map(item => item.slug);
+}
+
+export async function getRelatedNews(category, excludeId, limit = 4) {
+    const {data} = await fetchNewsPosts({
+        filters: {
+            categoryList: {$contains: category},
+            id: {$ne: excludeId}
+        },
+        fields: ['id', 'slug', 'title'],
+        sort: ['createdAt:desc'],
+        pagination: {start: 0, limit}
+    });
+
+    return data.map(toNewsPost);
 }
 
 export async function fetchNewsPosts(parameters) {

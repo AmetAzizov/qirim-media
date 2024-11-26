@@ -4,10 +4,10 @@ import SwipeBlogCard from '@/app/blogs/SwipeBlogCard';
 import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getNewsPosts, getNewsPost, getMainNews} from '@/app/lib/newsPosts';
+import {getNewsPost, getRelatedNews ,getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
-import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
+// import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 import React from 'react';
 import {Metadata} from 'next';
 import ArticlesTwo from '@/app/components/common/ArticlesTwo';
@@ -38,8 +38,8 @@ export async function generateMetadata({params: {slug}}: any): Promise<Metadata>
 }
 
 export default async function NewsSlug({params: {slug}}: any) {
-    const newsPosts = await getNewsPosts(0, 4);
     const newsPost = await getNewsPost(slug);
+    const relatedNews: any[] = newsPost ? await getRelatedNews(newsPost.categoryList, newsPost.id) : [];
     const mainNewsPosts = await getMainNews(0, 9);
     if (!newsPost) {
         notFound();
@@ -90,8 +90,8 @@ export default async function NewsSlug({params: {slug}}: any) {
                                                 borderRadius: '20px',
                                                 backdropFilter: 'blur(30px)',
                                                 background: 'rgba(117, 117, 117, 0.4)',
-                                                fontSize: '12px', // Установка размера шрифта
-                                                fontWeight: '600' // Установка жирности шрифта
+                                                fontSize: '12px',
+                                                fontWeight: '600'
                                             }}
                                             className='text-xs font-semibold px-2 py-1 ml-2.5'
                                         >
@@ -139,7 +139,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                             <div className={'mt-16'}>
                                 <h3 className={'text-2xl font-bold mb-9'}>Читайте також:</h3>
                                 <ul>
-                                    {newsPosts.map((newsPost: any) => (
+                                    {relatedNews.map((newsPost: any) => (
                                         <li key={newsPost.id} className='flex items-center mb-8'>
                                             <span
                                                 className={

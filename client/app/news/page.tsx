@@ -63,7 +63,7 @@ export default function News() {
                 <div className={'pt-6'}>
                     <ul
                         className={
-                            'grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5'
+                            'grid grid-cols-1 gap-4 min-[375px]:grid-cols-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5'
                         }
                     >
                         {loading
@@ -75,7 +75,7 @@ export default function News() {
                             : newsPosts.map((newsPost: any) => (
                                   <li key={newsPost.slug}>
                                       <Link
-                                          className={'h-full hover:opacity-50'}
+                                          className={'flex flex-col justify-between items-start h-full hover:opacity-50'}
                                           href={`news/${newsPost.slug}`}
                                       >
                                           <div

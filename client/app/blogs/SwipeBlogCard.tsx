@@ -18,36 +18,69 @@ export default function SwipeBlogCard({blogs}: any) {
                         slidesPerView: 1
                     },
 
-                    380: {
+                    350: {
+                        slidesPerView: 1.1
+                    },
+
+                    375: {
+                        slidesPerView: 1.2
+                    },
+
+                    400: {
                         slidesPerView: 1.25
                     },
 
                     425: {
+                        slidesPerView: 1.3
+                    },
+
+                    450: {
+                        slidesPerView: 1.4
+                    },
+
+                    475: {
                         slidesPerView: 1.5
                     },
 
-                    600: {
+                    525: {
+                        slidesPerView: 1.6
+                    },
+
+                    575: {
+                        slidesPerView: 1.75
+                    },
+
+                    675: {
                         slidesPerView: 2
                     },
 
-                    768: {
+                    750: {
+                        slidesPerView: 2.1
+                    },
+
+                    775: {
+                        slidesPerView: 2.25
+                    },
+
+                    850: {
                         slidesPerView: 2.5
                     },
-                    975: {
+
+                    950: {
+                        slidesPerView: 2.75
+                    },
+
+                    1025: {
                         slidesPerView: 3
                     },
-                    1024: {
+
+                    1100: {
                         slidesPerView: 3.25
                     },
+
                     1280: {
-                        slidesPerView: 3.5
-                    },
-                    1380: {
                         slidesPerView: 4
-                    }
-                    // 1440: {
-                    //     slidesPerView: 4.25
-                    // }
+                    },
                 }}
             >
                 {blogs.map((blog: any) => (

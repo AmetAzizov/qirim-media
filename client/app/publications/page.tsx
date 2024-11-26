@@ -110,9 +110,9 @@ const News = () => {
         fetchNewsPosts();
     }, []);
 
-    if (loading) {
-        return <p>Loading...</p>; // Можно заменить на компонент скелетона или другой индикатор загрузки
-    }
+    // if (loading) {
+    //     return <p>Loading...</p>; // Можно заменить на компонент скелетона или другой индикатор загрузки
+    // }
 
     return (
         <section className={'px-4 mb-14 lg:mb-36'}>

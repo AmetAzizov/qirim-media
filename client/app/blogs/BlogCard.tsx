@@ -20,7 +20,7 @@ const BlogCard = ({blog}: any) => {
             >
                 {blog.title}
             </h2>
-            <div className={`flex items-center mt-10`}>
+            <div className={`flex items-center mt-2`}>
                 <Image
                     src={`${blog.image}`}
                     width={45}
@@ -31,7 +31,7 @@ const BlogCard = ({blog}: any) => {
                 <p className={`text-sm text-clip line-clamp-1 font-medium ml-4`}>{blog.authorBlog}</p>
             </div>
             <div className={'flex items-center justify-between'}>
-                <time className={'text-sm font-medium text-[--secondary-color-2]'}>
+                <time className={'text-xs font-medium text-[--secondary-color-2] sm:text-sm'}>
                     {blog.dateTime}
                 </time>
                 <Link href={`blogs/${blog.slug}`} className={'bg-[#F0CA56] px-3.5 py-2 rounded-md'}>

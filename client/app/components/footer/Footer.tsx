@@ -90,9 +90,9 @@ const Footer = () => {
                         </Link>
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <h2 className={'text-2xl font-semibold mb-5 lg:mb-10'}>Навігація</h2>
-                    <ul className={'grid grid-cols-2 gap-4 max-w-xs lg:gap-6 lg:max-w-md'}>
+                    <ul className={'grid grid-cols-3 gap-4 max-w-xs lg:gap-6 lg:max-w-md'}>
                         {links.map((link, index) => (
                             <li className={'text-sm font-normal lg:text-base'} key={index}>
                                 <Link className='hover:text-[--accent-color]' href={link.href}>
@@ -101,8 +101,8 @@ const Footer = () => {
                             </li>
                         ))}
                     </ul>
-                </div>
-                <div className={'mt-8 lg:mt-0'}>
+                </div> */}
+                {/* <div className={'mt-8 lg:mt-0'}>
                     <h2 className={'text-2xl font-semibold mb-5 lg:mb-10'}>Вiдео</h2>
                     <ul
                         className={
@@ -117,7 +117,7 @@ const Footer = () => {
                             </li>
                         ))}
                     </ul>
-                </div>
+                </div> */}
 
                 <div className={'flex flex-col justify-between mt-8 lg:mt-0'}>
                     <div className={'flex flex-col gap-y-11'}>

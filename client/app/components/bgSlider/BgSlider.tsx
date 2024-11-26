@@ -8,7 +8,6 @@ import Link from 'next/link';
 import Arrows from '../common/Arrows';
 import formatDateWithMonthName from '../../lib/newsPosts';
 import '../../styles/react-markdown.scss';
-// import CategoryBtn from '../common/CategoryBtn';
 import ContentLoader from 'react-content-loader';
 
 const OptimizedArrows = React.memo(Arrows);
@@ -116,26 +115,22 @@ const BgSlider = ({newsPosts}: any) => {
                     'flex items-center justify-center xl:justify-between xl:max-w-[1479px] w-full'
                 }
             >
-                {' '}
-                <Slider ref={sliderRef} {...settings} className='flex-2 w-full xl:w-[66%] z-[1]'>
-                    {' '}
-                    {newsPosts.map(
-                        (item: {
-                            slug: React.Key | null | undefined;
-                            title:
-                                | string
-                                | number
-                                | boolean
-                                | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-                                | Iterable<React.ReactNode>
-                                | React.ReactPortal
-                                | React.PromiseLikeOfReactNode
-                                | null
-                                | undefined;
-                            subtitle: string | null | undefined;
-                        }) => (
+                <div className='max-w-[70%]'>
+                    <Slider
+                        ref={sliderRef}
+                        {...settings}
+                        className='flex-2 w-full xl:w-[66%] z-[1]'
+                    >
+                        {newsPosts.map((item: any) => (
                             <div key={item.slug} className='w-full max-w-[850px] text-left'>
-                                <Link href={`/news/${item.slug}`}>
+                                <button
+                                    className={
+                                        'text-xs font-medium text-[--secondary-color] bg-[#DBDBDB26] px-4 py-2.5 rounded'
+                                    }
+                                >
+                                    {newsPosts[currentSlide].categoryList}
+                                </button>
+                                <Link href={`/news/${newsPosts[currentSlide].slug}`}>
                                     <h2 className='text-2xl font-bold text-[--background-color] my-7 xl:text-4xl line-clamp-2'>
                                         {item.title}
                                     </h2>
@@ -143,11 +138,11 @@ const BgSlider = ({newsPosts}: any) => {
                                         {item.subtitle}
                                     </ReactMarkdown>
                                 </Link>
-                                <OptimizedArrows sliderRef={sliderRef} />
                             </div>
-                        )
-                    )}
-                </Slider>
+                        ))}
+                    </Slider>
+                    <OptimizedArrows sliderRef={sliderRef} />
+                </div>
                 <div className='hidden xl:block xl:w-[30%]'>
                     {getNextSlides(currentSlide).map(slide => (
                         <div key={slide.slug}>
@@ -160,14 +155,21 @@ const BgSlider = ({newsPosts}: any) => {
                                     width={108}
                                     height={108}
                                     alt={slide.title}
-                                    className='w-[108px] h-[108px] rounded-lg object-cover'
+                                    className='max-w-[108px] w-full h-[108px] rounded-lg object-cover'
                                 />
-                                <div className='flex flex-col ml-3.5'>
-                                    <span className='text-sm font-medium text-clip line-clamp-3 my-2.5'>
+                                <div className='flex flex-col items-start justify-between ml-3.5 h-[-webkit-fill-available]'>
+                                    <button
+                                        className={
+                                            'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl'
+                                        }
+                                    >
+                                        {slide.categoryList}
+                                    </button>
+                                    <span className='text-sm font-medium text-clip line-clamp-2 my-2.5'>
                                         {slide.title}
                                     </span>
                                     <time className='text-sm font-medium text-[--secondary-color-2]'>
-                                        {formatDateWithMonthName(slide.publishedAt)}
+                                        {formatDateWithMonthName(slide.createdAt)}
                                     </time>
                                 </div>
                             </Link>
@@ -180,3 +182,4 @@ const BgSlider = ({newsPosts}: any) => {
 };
 
 export default BgSlider;
+

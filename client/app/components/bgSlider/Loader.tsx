@@ -19,6 +19,13 @@ const Loader = ({newsPosts}: any) => {
                 }}
             >
                 <Link className={'flex flex-col justify-center px-4'} href={newsPost.slug}>
+                    {/* <button
+                        className={
+                            'text-xs font-medium text-[--secondary-color] bg-[#DBDBDB26] px-4 py-2.5 rounded'
+                        }
+                    >
+                        {newsPost.categoryList}
+                    </button> */}
                     <h2
                         className={
                             'text-2xl font-bold text-[--background-color] text-clip line-clamp-3 xl:line-clamp-2 xl:text-4xl'

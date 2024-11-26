@@ -54,7 +54,7 @@ const BurgerMenu = () => {
                 </div>
                 {/* <SearchInput inputBg='bg-[--secondary-color-4]' /> */}
                 <hr className={'border-[#DBDBDB] my-7'} />
-                <CategoryList onClose={closeMenu} categories={['/', 'news', 'publications', 'videos', 'blogs']} />
+                <CategoryList onClose={closeMenu} categories={['/', 'news', 'publications', 'blogs']} />
                 <div className={'flex items-center justify-between mt-7'}>
                     <div>
                         <LanguageSwitcher

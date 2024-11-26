@@ -33,7 +33,7 @@ export default async function MainNews() {
                         className={'flex flex-col justify-between item-left w-full rounded-xl bg-[--secondary-color-4]'}
                     >
                         <Image
-                            className='w-full min-h-[250px] rounded-t-xl object-cover sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
+                            className='w-full min-h-[250px] rounded-t-xl object-cover min-[375px]:min-h-[300px] min-[425px]:min-h-[350px] sm:min-h-[439px] lg:min-h-[639px] xl:min-h-[420px]'
                             src={`${newsPosts[0].image}`}
                             width={290}
                             height={217}
