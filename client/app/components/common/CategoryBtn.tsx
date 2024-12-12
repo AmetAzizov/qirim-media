@@ -40,9 +40,6 @@ import React, { useState } from 'react';
 const CategoryBtn = ({ setCategory }: any) => {
     const categoryBtnList = [
         { id: 'Всі' },
-        // { id: 'Публікації' },
-        // { id: 'Крим' },
-        // { id: 'Новини України та світу' },
         { id: 'Права людини' },
         { id: 'Війна' },
         { id: 'Політика' },
@@ -52,7 +49,8 @@ const CategoryBtn = ({ setCategory }: any) => {
         { id: 'Історія' },
         { id: 'Економіка' },
         { id: 'Екологія' },
-        { id: 'Міжнародні новини' },
+        { id: 'Суспільство' },
+        { id: 'Міжнародні новини' }
     ];
 
     const [activeCategory, setActiveCategory] = useState('Всі');

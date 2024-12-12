@@ -4,36 +4,14 @@ import Image from 'next/image';
 import Articles from '../common/Articles';
 import '@/app/styles/main-news.scss';
 import {getNewsPosts} from '@/app/lib/newsPosts';
-
-const date = new Date();
-const day = date.getDate();
-const months = [
-    'cічня',
-    'лютого',
-    'березня',
-    'квітня',
-    'травня',
-    'червеня',
-    'липня',
-    'серпня',
-    'вересня',
-    'жовтня',
-    'листопада',
-    'грудня'
-];
-const month = months[date.getMonth()];
+import TodayNewsDate from '../common/TodayNewsDate';
 
 export default async function TodayNews() {
     const newsPosts = await getNewsPosts(0, 7);
     return (
         <section className={'px-4 my-11 lg:my-24'}>
             <div className={'max-w-[1479px] mx-auto my-0 w-full'}>
-                <h2 className={'title-text mb-9'}>
-                    Сьогоднi,{' '}
-                    <span className={'font-normal'}>
-                        {day} {month}
-                    </span>
-                </h2>
+                <TodayNewsDate />
                 <div className='flex justify-between'>
                     <div className={'grid grid-cols-1 max-w-[972px] gap-11 md:grid-cols-2 xl:mr-5'}>
                         <Link
@@ -106,7 +84,7 @@ export default async function TodayNews() {
                                         {newsPost.title}
                                     </p>
                                     <time
-                                        className={'text-xs font-medium text-[--secondary-color-2]'}
+                                        className={'text-xs font-medium text-[--secondary-color-2] xl:text-sm'}
                                     >
                                         {newsPost.date}
                                     </time>

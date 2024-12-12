@@ -10,6 +10,25 @@ import BtnCreateBlog from './BtnCreateBlog';
 export default async function Blogs() {
     const blogs = await getBlogs();
 
+    const normalizeString = (str: string) => {
+        return str
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-zа-яё0-9]/gi, '');
+    };
+
+    const uniqueAuthors = Array.from(
+        blogs
+            .reduce((map: Map<string, any>, blog: any) => {
+                const normalizedAuthor = normalizeString(blog.authorBlog);
+                if (!map.has(normalizedAuthor)) {
+                    map.set(normalizedAuthor, blog);
+                }
+                return map;
+            }, new Map())
+            .values()
+    );
+
     return (
         <section className={'px-4 mb-20 lg:mb-36'}>
             <div className={'max-w-[1479px] mx-auto my-0'}>
@@ -41,7 +60,7 @@ export default async function Blogs() {
                     >
                         <h2 className={'block title-text mb-9'}>Автори</h2>
                         <div className={'grid grid-cols-3 gap-x-2.5 gap-y-5'}>
-                            {blogs.map((blog: any) => (
+                            {uniqueAuthors.map((blog: any) => (
                                 <Authors key={blog.id} blog={blog} />
                             ))}
                         </div>

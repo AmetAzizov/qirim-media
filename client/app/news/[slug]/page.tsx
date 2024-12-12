@@ -4,14 +4,15 @@ import SwipeBlogCard from '@/app/blogs/SwipeBlogCard';
 import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getNewsPost, getRelatedNews ,getMainNews} from '@/app/lib/newsPosts';
+import {getNewsPost, getRelatedNews, getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
 // import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
-import React from 'react';
+import React, { useState } from 'react';
 import {Metadata} from 'next';
 import ArticlesTwo from '@/app/components/common/ArticlesTwo';
 import rehypeRaw from 'rehype-raw';
+import SharePanel from './SharePanel';
 
 export async function generateMetadata({params: {slug}}: any): Promise<Metadata> {
     const newsPost = await getNewsPost(slug);
@@ -39,7 +40,9 @@ export async function generateMetadata({params: {slug}}: any): Promise<Metadata>
 
 export default async function NewsSlug({params: {slug}}: any) {
     const newsPost = await getNewsPost(slug);
-    const relatedNews: any[] = newsPost ? await getRelatedNews(newsPost.categoryList, newsPost.id) : [];
+    const relatedNews: any[] = newsPost
+        ? await getRelatedNews(newsPost.categoryList, newsPost.id)
+        : [];
     const mainNewsPosts = await getMainNews(0, 9);
     if (!newsPost) {
         notFound();
@@ -54,10 +57,10 @@ export default async function NewsSlug({params: {slug}}: any) {
                             <ArticlesTwo />
                         </aside>
                         <div className={'xl:max-w-[1012px] w-full'}>
-                            <div>
+                            <div className={'xl:relative'}>
                                 <div
                                     className={
-                                        'flex flex-col justify-between lg:items-center lg:flex-row'
+                                        'flex flex-col justify-between lg:items-start lg:flex-row xl:w-[90%]'
                                     }
                                 >
                                     <div>
@@ -79,7 +82,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     <div>
                                         <button
                                             className={
-                                                'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
+                                                'text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4 lg:mt-0'
                                             }
                                         >
                                             {newsPost.categoryList}
@@ -101,7 +104,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                 </div>
                                 <h2
                                     className={
-                                        'text-2xl font-semibold my-6 lg:text-5xl lg:font-medium lg:my-9'
+                                        'text-2xl font-semibold my-6 lg:text-5xl lg:font-medium lg:my-9 xl:w-[90%]'
                                     }
                                 >
                                     {newsPost.title}
@@ -112,21 +115,21 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     height={582}
                                     alt='mainnews-id'
                                     className={
-                                        'w-full h-[217px] object-cover sm:h-[350px] md:h-[400px] lg:h-[582px] rounded-lg'
+                                        'w-full h-[217px] object-cover rounded-lg sm:h-[350px] md:h-[400px] lg:h-[582px] xl:w-[90%]'
                                     }
                                 />
-                                <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9'}>
+                                <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9 xl:w-[90%]'}>
                                     {newsPost.subtitle}
                                 </div>
                                 <ReactMarkdown
                                     rehypePlugins={[rehypeRaw]}
                                     className={
-                                        'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl'
+                                        'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl xl:w-[90%]'
                                     }
                                 >
                                     {newsPost.text}
                                 </ReactMarkdown>
-                                <div>
+                                <div className={'xl:w-[90%]'}>
                                     <time
                                         className={
                                             'text-base font-medium text-[--secondary-color-5]'
@@ -135,8 +138,9 @@ export default async function NewsSlug({params: {slug}}: any) {
                                         {newsPost.dateTime}
                                     </time>
                                 </div>
+                                <SharePanel link={newsPost.slug} />
                             </div>
-                            <div className={'mt-16'}>
+                            <div className={'mt-16 xl:w-[90%]'}>
                                 <h3 className={'text-2xl font-bold mb-9'}>Читайте також:</h3>
                                 <ul>
                                     {relatedNews.map((newsPost: any) => (
