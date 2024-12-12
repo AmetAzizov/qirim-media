@@ -478,6 +478,7 @@ export interface ApiNewsPostNewsPost extends Struct.CollectionTypeSchema {
         '\u0415\u043A\u043E\u043D\u043E\u043C\u0456\u043A\u0430',
         '\u0415\u043A\u043E\u043B\u043E\u0433\u0456\u044F',
         '\u041C\u0456\u0436\u043D\u0430\u0440\u043E\u0434\u043D\u0456 \u043D\u043E\u0432\u0438\u043D\u0438',
+        '\u0421\u0443\u0441\u043F\u0456\u043B\u044C\u0441\u0442\u0432\u043E',
         '\u041F\u0443\u0431\u043B\u0456\u043A\u0430\u0446\u0456\u0457',
       ]
     > &
@@ -518,6 +519,12 @@ export interface ApiNewsPostNewsPost extends Struct.CollectionTypeSchema {
       }> &
       Schema.Attribute.DefaultTo<false>;
     publish_at: Schema.Attribute.DateTime &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishDate: Schema.Attribute.DateTime &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

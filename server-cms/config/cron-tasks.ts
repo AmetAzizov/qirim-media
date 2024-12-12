@@ -3,7 +3,7 @@ import moment from 'moment-timezone';
 export default {
     '*/1 * * * *': {
         task: async() => {
-             const now = moment().tz('Europe/Kyiv').toDate();
+            const now = moment().tz('Europe/Kyiv').toDate();
             const newsToBePublished = await strapi.db.query('api::news-post.news-post').findMany({
                 where: {
                     publishedAt: {
