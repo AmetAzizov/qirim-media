@@ -169,7 +169,7 @@ const BgSlider = ({newsPosts}: any) => {
                                         {slide.title}
                                     </span>
                                     <time className='text-sm font-medium text-[--secondary-color-2]'>
-                                        {formatDateWithMonthName(slide.createdAt)}
+                                        {slide.date}
                                     </time>
                                 </div>
                             </Link>
