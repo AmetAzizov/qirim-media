@@ -12,7 +12,7 @@ const SharePanel = ({link}: any) => {
     const shareLinks = [
         {
             name: 'Twitter',
-            href: `https://twitter.com/intent/tweet?url=${fullLink}`,
+            href: `https://x.com/intent/tweet?url=${fullLink}`,
             icon: `/black-twitter.svg`
         },
         {

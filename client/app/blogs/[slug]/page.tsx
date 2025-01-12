@@ -8,6 +8,7 @@ import Image from 'next/image';
 import {getBlogs, getBlog, getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
+import { someHandlerFunction } from '@/app/utils/handlers';
 // import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
 
 // interface NewsSlugParams {
@@ -17,6 +18,7 @@ import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
 // const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default async function BlogsSlug({params: {slug}}: any) {
+    await someHandlerFunction(slug);
     const blogs = await getBlogs();
     const blog = await getBlog(slug);
     const mainNewsPosts = await getMainNews(0, 9);

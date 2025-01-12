@@ -1,24 +1,20 @@
 .video-slider-container {
+    // max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
-.video-slider .swiper-slide {
+.video-item {
+    background: #1a1a1a;
+    transition: transform 0.3s ease;
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.swiper-slide {
+    width: 974px;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-}
-
-.video-item {
-    width: 100%;
-    max-width: 320px;
-}
-
-.swiper-button-prev, .swiper-button-next {
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.swiper-button-prev:hover, .swiper-button-next:hover {
-    background-color: #2563eb;
 }

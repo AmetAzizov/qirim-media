@@ -8,37 +8,20 @@ import {getNewsPost, getRelatedNews, getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
 // import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
-import React, { useState } from 'react';
-import {Metadata} from 'next';
+import React, {useState} from 'react';
 import ArticlesTwo from '@/app/components/common/ArticlesTwo';
 import rehypeRaw from 'rehype-raw';
 import SharePanel from './SharePanel';
+// import {generateMetadata} from '@/app/utils/metadata';
+import { someHandlerFunction } from '@/app/utils/handlers';
 
-export async function generateMetadata({params: {slug}}: any): Promise<Metadata> {
-    const newsPost = await getNewsPost(slug);
-    return {
-        metadataBase: new URL('https://qirim.news'),
-        openGraph: {
-            title: newsPost?.title,
-            images: [
-                {
-                    url: newsPost?.image
-                }
-            ]
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title: newsPost?.title,
-            images: [
-                {
-                    url: newsPost?.image
-                }
-            ]
-        }
-    };
-}
+// export async function someHandlerFunction(slug: string) {
+//     const metadata = await generateMetadata({params: {slug}});
+//     console.log(metadata);
+// }
 
 export default async function NewsSlug({params: {slug}}: any) {
+    await someHandlerFunction(slug);
     const newsPost = await getNewsPost(slug);
     const relatedNews: any[] = newsPost
         ? await getRelatedNews(newsPost.categoryList, newsPost.id)
@@ -118,7 +101,11 @@ export default async function NewsSlug({params: {slug}}: any) {
                                         'w-full h-[217px] object-cover rounded-lg sm:h-[350px] md:h-[400px] lg:h-[582px] xl:w-[90%]'
                                     }
                                 />
-                                <div className={'text-lg font-semibold my-6 lg:text-4xl lg:my-9 xl:w-[90%]'}>
+                                <div
+                                    className={
+                                        'text-lg font-semibold my-6 lg:text-4xl lg:my-9 xl:w-[90%]'
+                                    }
+                                >
                                     {newsPost.subtitle}
                                 </div>
                                 <ReactMarkdown
@@ -129,7 +116,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                 >
                                     {newsPost.text}
                                 </ReactMarkdown>
-                                <div className={'xl:w-[90%]'}>
+                                <div className={'flex items-center gap-x-10 xl:w-[90%]'}>
                                     <time
                                         className={
                                             'text-base font-medium text-[--secondary-color-5]'
@@ -137,6 +124,22 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     >
                                         {newsPost.dateTime}
                                     </time>
+                                    {/* <div className={'flex'}>
+                                        <Image
+                                            className={''}
+                                            src='/u_eye.svg'
+                                            width={26}
+                                            height={22}
+                                            alt='eye'
+                                        />
+                                        <span
+                                            className={
+                                                'text-xs font-medium text-[--secondary-color-5] lg:text-base'
+                                            }
+                                        >
+                                            122
+                                        </span>
+                                    </div> */}
                                 </div>
                                 <SharePanel link={newsPost.slug} />
                             </div>

@@ -1,0 +1,9 @@
+// Header
+{
+    "main": "Main",
+    "news": "News",
+    "publications": "Publications",
+    "video": "Video",
+    "blogs": "Blogs",
+    "subscribe": "Subscribe"
+}

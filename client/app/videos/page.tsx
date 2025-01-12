@@ -9,10 +9,10 @@ import YouTubeVideos from './YouTubeVideos';
 
 const Videos = () => {
     return (
-        <section className={'px-4 mb-14 lg:mb-36'}>
-            <div className={'max-w-[1479px] mx-auto my-0'}>
+        <section className={'px-4 mb-14 lg:mb-36 bg-[--primary-color-2]'}>
+            <div className={'mx-auto my-0'}>
                 <BreadCrumbs />
-                <h2 className={'title-text pb-9'}>Останнi вiдео новини</h2>
+                <h2 className={'title-text text-[--background-color] pb-9'}>Останнi вiдео новини</h2>
                 <YouTubeVideos />
                 {/* <div>
                     <Swiper

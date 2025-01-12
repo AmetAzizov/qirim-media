@@ -1,4 +1,4 @@
-import {getMainSlides} from '@/app/lib/newsPosts';
+import { getMainSlides } from '@/app/lib/newsPosts';
 import React from 'react';
 import Loader from './Loader';
 import BgSlider from './BgSlider';

@@ -1,4 +1,3 @@
-
 import qs from 'qs';
 import moment from 'moment-timezone';
 import 'moment/locale/uk';
@@ -130,7 +129,11 @@ export async function getMainNews(start, limit) {
 }
 
 export async function getNewsPosts(start, limit, category) {
-    const filters = category && category !== 'Всі' ? {categoryList: {$contains: category}} : {};
+    const filters = {};
+    // const filters = category && category !== 'Всі' ? {categoryList: {$contains: category}} : {};
+    if (category && category !== 'Всі') {
+        filters.categoryList = {$contains: category};
+    }
 
     const {data} = await fetchNewsPosts({
         fields: [
