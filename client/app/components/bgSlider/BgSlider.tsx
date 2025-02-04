@@ -6,7 +6,7 @@ import Slider from 'react-slick';
 import Image from 'next/image';
 import Link from 'next/link';
 import Arrows from '../common/Arrows';
-import formatDateWithMonthName from '../../lib/newsPosts';
+// import formatDateWithMonthName from '../../lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import ContentLoader from 'react-content-loader';
 

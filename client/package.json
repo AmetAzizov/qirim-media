@@ -26,6 +26,7 @@
         "mysql2": "^3.6.0",
         "next": "^13.5.4",
         "next-i18n-router": "^5.5.1",
+        "next-i18next": "^15.4.1",
         "next-intl": "^3.26.3",
         "next-mdx-remote": "^4.4.1",
         "node-fetch": "^3.3.2",

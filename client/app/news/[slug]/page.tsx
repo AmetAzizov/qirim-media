@@ -12,16 +12,40 @@ import React, {useState} from 'react';
 import ArticlesTwo from '@/app/components/common/ArticlesTwo';
 import rehypeRaw from 'rehype-raw';
 import SharePanel from './SharePanel';
-// import {generateMetadata} from '@/app/utils/metadata';
-import { someHandlerFunction } from '@/app/utils/handlers';
+import {Metadata} from 'next';
 
-// export async function someHandlerFunction(slug: string) {
-//     const metadata = await generateMetadata({params: {slug}});
-//     console.log(metadata);
-// }
+// METADATA
+interface Params {
+    slug: string;
+}
+
+export async function generateMetadata({params}: {params: Params}): Promise<Metadata> {
+    const {slug} = params;
+    const newsPost = await getNewsPost(slug);
+    return {
+        metadataBase: new URL('https://qirim.news'),
+        openGraph: {
+            title: newsPost?.title,
+            images: [
+                {
+                    url: newsPost?.image
+                }
+            ]
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: newsPost?.title,
+            images: [
+                {
+                    url: newsPost?.image
+                }
+            ]
+        }
+    };
+}
+// METADATA
 
 export default async function NewsSlug({params: {slug}}: any) {
-    await someHandlerFunction(slug);
     const newsPost = await getNewsPost(slug);
     const relatedNews: any[] = newsPost
         ? await getRelatedNews(newsPost.categoryList, newsPost.id)

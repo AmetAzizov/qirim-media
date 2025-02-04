@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, {useState, useEffect} from 'react';
 import '../../styles/burger-menu.scss';
 // import SearchInput from './SearchInput';
-import LanguageSwitcher from './LanguageSwitcher';
+// import LanguageSwitcher from './LanguageSwitcher';
 import SubscribeButton from './SubscribeButton';
 import CategoryList from './CategoryList';
 
@@ -57,12 +57,12 @@ const BurgerMenu = () => {
                 <CategoryList onClose={closeMenu} categories={['/', 'news', 'publications', 'blogs']} />
                 <div className={'flex items-center justify-between mt-7'}>
                     <div>
-                        <LanguageSwitcher
+                        {/* <LanguageSwitcher
                             onClick={function (languageCode: string): void {
                                 throw new Error('Function not implemented.');
                             }}
                             textColor={''}
-                        />
+                        /> */}
                     </div>
                     <SubscribeButton />
                 </div>

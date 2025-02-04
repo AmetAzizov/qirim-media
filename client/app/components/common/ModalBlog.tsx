@@ -9,7 +9,7 @@ const ModalBlog = ({onClose}: any) => {
         {id: 'name', label: "Назвіть себе (Ваше ім'я) *", type: 'text', placeholder: "Ім'я"},
         {id: 'email', label: 'Ваш Email *', type: 'email', placeholder: 'Email'},
         {id: 'title', label: 'Заголовок *', type: 'text', placeholder: 'Заголовок'},
-        {id: 'thesis', label: 'Тезис *', type: 'textarea', placeholder: ''},
+        // {id: 'thesis', label: 'Тезис *', type: 'textarea', placeholder: ''},
         {id: 'text', label: 'Текст *', type: 'textarea', placeholder: ''}
     ];
 

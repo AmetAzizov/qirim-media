@@ -6,7 +6,6 @@ import {Montserrat} from 'next/font/google';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-datepicker/dist/react-datepicker.css';
-import Head from 'next/head';
 
 const montserrat = Montserrat({
     weight: ['400', '500', '600', '700'],
@@ -29,16 +28,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                     async
                     src='https://www.googletagmanager.com/gtag/js?id=G-0D1MKQXYQK'
                 ></script>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-0D1MKQXYQK');
-          `
-                    }}
-                />
+                <script async src='/gtag.js'></script>
             </head>
             <body className={montserrat.className}>
                 <Header />

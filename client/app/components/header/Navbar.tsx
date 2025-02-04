@@ -8,13 +8,12 @@ import CategoryList from './CategoryList';
 import SearchBar from './SearchBar';
 import LanguageSwitcher from './LanguageSwitcher';
 import SubscribeButton from './SubscribeButton';
+
 // import Loader from '../bgSlider/Loader';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     const [selectedLanguage, setSelectedLanguage] = useState(null);
-
     const handleLanguageClick = (languageCode: any) => {
         setSelectedLanguage(languageCode);
         console.log('Выбранный язык:', languageCode);

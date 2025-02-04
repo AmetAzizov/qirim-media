@@ -6,7 +6,7 @@ const BtnCreateBlog = ({customStyle}: any) => {
     // const [visibleItems, setVisibleItems] = useState(10);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleModalToggle = () => {
-        document.body.style.overflow = isModalOpen ? 'auto' : 'hidden';
+        document.body.style.overflow = isModalOpen ? '' : 'inherit';
         setIsModalOpen(!isModalOpen);
     };
 

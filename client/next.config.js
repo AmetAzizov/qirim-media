@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {};
-
 module.exports = {
     images: {
         remotePatterns: [
@@ -12,7 +10,7 @@ module.exports = {
         ]
     },
     // i18n: {
-    //     locales: ['en-US', 'ua-UA'], 
-    //     defaultLocale: 'ua-UA'
-    // }
+    //     locales: ['uk', 'en'],
+    //     defaultLocale: 'uk', 
+    //   },
 };

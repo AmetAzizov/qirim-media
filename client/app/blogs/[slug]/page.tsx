@@ -8,17 +8,40 @@ import Image from 'next/image';
 import {getBlogs, getBlog, getMainNews} from '@/app/lib/newsPosts';
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '@/app/components/mainPageNews/MainNewsItem';
-import { someHandlerFunction } from '@/app/utils/handlers';
-// import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
+import {Metadata} from 'next';
 
-// interface NewsSlugParams {
-//     slug: string;
-// }
+// METADATA
+interface Params {
+    slug: string;
+}
 
-// const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+export async function generateMetadata({params}: {params: Params}): Promise<Metadata> {
+    const {slug} = params;
+    const newsPost = await getBlog(slug);
+    return {
+        metadataBase: new URL('https://qirim.news'),
+        openGraph: {
+            title: newsPost?.title,
+            images: [
+                {
+                    url: newsPost?.image
+                }
+            ]
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: newsPost?.title,
+            images: [
+                {
+                    url: newsPost?.image
+                }
+            ]
+        }
+    };
+}
+// METADATA
 
 export default async function BlogsSlug({params: {slug}}: any) {
-    await someHandlerFunction(slug);
     const blogs = await getBlogs();
     const blog = await getBlog(slug);
     const mainNewsPosts = await getMainNews(0, 9);
