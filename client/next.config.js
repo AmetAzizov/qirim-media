@@ -1,6 +1,8 @@
-/** @type {import('next').NextConfig} */
+const createNextIntlPlugin = require('next-intl/plugin');
+const withNextIntl = createNextIntlPlugin();
 
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
     images: {
         remotePatterns: [
             {
@@ -8,9 +10,7 @@ module.exports = {
                 hostname: 's3-qirimbucket.gmhost.space'
             }
         ]
-    },
-    // i18n: {
-    //     locales: ['uk', 'en'],
-    //     defaultLocale: 'uk', 
-    //   },
+    }
 };
+
+module.exports = withNextIntl(nextConfig);

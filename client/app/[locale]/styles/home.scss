@@ -1,0 +1,38 @@
+// .video-slider-container {
+//     // max-width: 1200px;
+//     margin: 0 auto;
+//     padding: 20px;
+// }
+
+// .video-item {
+//     background: #1a1a1a;
+//     transition: transform 0.3s ease;
+//     &:hover {
+//         transform: scale(1.05);
+//     }
+// }
+
+// .swiper-slide {
+//     width: 974px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+.swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+}

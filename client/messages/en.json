@@ -1,0 +1,59 @@
+{
+  "common": {
+    "today": "Today",
+    "mainNews": "Main news",
+    "bestOfWeek": "Best of the week",
+    "expressOpinionBtn": "Express your opinion",
+    "expressOpinion1": "Express your opinion on any topic,",
+    "expressOpinion2": "and publish it on our portal",
+    "read": "Read",
+    "moreNews": "More news"
+  },
+  "categories": {
+    "home": "Home",
+    "news": "News",
+    "video": "Video",
+    "publications": "Publications",
+    "blogs": "Blogs"
+  },
+  "categoryList": {
+    "all": "All",
+    "humanRights": "Human Rights",
+    "war": "War",
+    "politics": "Politics",
+    "culture": "Culture",
+    "sports": "Sports",
+    "education": "Education",
+    "history": "History",
+    "economy": "Economy",
+    "ecology": "Ecology",
+    "society": "Society",
+    "internationalNews": "International News"
+  },
+  "subscribeButton": {
+    "subscribe": "Subscribe"
+  },
+  "countDownTimer": {
+    "title1": "Since the occupation of Crimea has passed:",
+    "title2": "Since the beginning of full-scale war:",
+    "title3": "Distance to Crimea:",
+    "years": "years",
+    "months": "months",
+    "days": "days",
+    "km": "km",
+    "m": "metres",
+    "sm": "sm"
+  },
+  "footer": {
+    "contacts": "Contacts",
+    "ourTeam": "Our team",
+    "partners": "For partners",
+    "ourMission": "Our mission",
+    "followUs": "Follow us",
+    "tgNews": "News in Telegram",
+    "ytbChannel": "YouTube channel",
+    "addressOffice": "2, Mykhailivska Street, Kyiv, 01001, office 34",
+    "idNumber": "Identifier in the Register of Media Entities: R40-04012",
+    "firmName": "LLC AGENCY \"CRIMEAN NEWS\""
+  }
+}

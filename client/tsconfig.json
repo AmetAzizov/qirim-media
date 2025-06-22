@@ -53,6 +53,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/lib/newsPosts.tsx", "app/reviews/page.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts",
+    "app/[locale]/lib/newsPosts.tsx", "app/reviews/page.tsx"],
   "exclude": ["node_modules"]
 }
