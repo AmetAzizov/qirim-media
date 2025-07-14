@@ -5,7 +5,7 @@ import Image from 'next/image';
 import '../../styles/navbar.scss';
 import BurgerMenu from './BurgerMenu';
 import CategoryList from './CategoryList';
-import SearchBar from './SearchBar';
+import SearchButton from "@/app/[locale]/components/header/SearchButton";
 import LanguageSwitcher from './LanguageSwitcher';
 import SubscribeButton from './SubscribeButton';
 
@@ -33,7 +33,7 @@ const Navbar = () => {
                         <LanguageSwitcher onClick={handleLanguageClick} textColor='text-[#FFF]' />
                     </div>
                     <SubscribeButton />
-                    <SearchBar />
+                    <SearchButton />
                 </div>
                 {/* HAMBURGER BUTTON FOR MOBILE */}
                 <BurgerMenu />

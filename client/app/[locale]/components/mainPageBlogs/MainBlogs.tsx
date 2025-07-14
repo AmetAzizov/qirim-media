@@ -3,9 +3,11 @@ import SwipeBlogCard from '@/app/[locale]/blogs/SwipeBlogCard';
 import {getBlogs} from '@/app/[locale]/lib/newsPosts';
 import React from 'react';
 import {getTranslations} from "next-intl/server";
+import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
 export default async function MainBlogs() {
-    const blogs = await getBlogs();
+    const locale = getCurrentLocale()
+    const blogs = await getBlogs(locale);
     const t = await  getTranslations('categories')
     const customStyle = {
         paddingTop: 10,

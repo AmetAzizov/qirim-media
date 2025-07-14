@@ -2,14 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import {getNewsPosts} from '@/app/[locale]/lib/newsPosts';
 
-// type ArticlesProps = {
-//     title: string;
-//     date: any;
-// };
+interface Props {
+    locale: string;
+}
 
-export default async function ArticlesTwo() {
-    const articles = await getNewsPosts(0, 20);
-    // console.log('ReviewsPage reviews:', articles);
+export default async function ArticlesTwo({locale}: Props) {
+    const articles = await getNewsPosts(0, 20, null, null, locale);
+
     return (
         <>
             {articles.map((article: any) => (
@@ -22,7 +21,7 @@ export default async function ArticlesTwo() {
                             {article.title}
                         </p>
                         <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                            {article.date}
+                            {article.dateTime}
                         </time>
                     </Link>
                 </article>

@@ -1,69 +1,106 @@
 'use client';
+
+import {useSearchModalStore} from '@/stores/searchModalStore';
 import {useRouter} from 'next/navigation';
-import {useState, useEffect, useRef} from 'react';
-import Image from 'next/image';
+import React, {useEffect, useRef, useState, startTransition} from 'react';
+import '../../styles/search-bar.scss';
+import SearchInput from "@/app/[locale]/components/header/SearchInput";
+import CloseButton from "@/public/close-button.svg";
 
 const SearchBar = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const {isOpen, closeModal} = useSearchModalStore();
     const [query, setQuery] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
-    const searchRef = useRef<HTMLDivElement>(null);
+    const [visible, setVisible] = useState(false);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter' && query.trim()) {
-            router.push(`/search?query=${query}`);
+    useEffect(() => {
+        if (isOpen) {
+            setTimeout(() => setVisible(true), 10); // 10ms задержка, чтобы класс успел примениться
+        } else {
+            setVisible(false);
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (isOpen) {
+            setTimeout(() => inputRef.current?.focus(), 100);
+
+            const onKeyDown = (e: KeyboardEvent) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            };
+
+            document.addEventListener('keydown', onKeyDown);
+            return () => document.removeEventListener('keydown', onKeyDown);
+        }
+    }, [isOpen, closeModal]);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (query.trim()) {
+            const q = query.trim();
+
+            startTransition(() => {
+                router.push(`/search?query=${encodeURIComponent(q)}`);
+            });
+
+            setTimeout(() => closeModal(), 150);
             setQuery('');
         }
     };
 
-    const handleClickOutside = (event: MouseEvent) => {
-        if (
-            searchRef.current &&
-            event.target instanceof Node &&
-            !searchRef.current.contains(event.target)
-        ) {
-            setIsOpen(false);
-        }
-    };
-
-    useEffect(() => {
-        if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
-        }
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isOpen]);
+    if (!isOpen) return null;
 
     return (
-        <div ref={searchRef} className='relative'>
+        <div
+            className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md transition-opacity duration-300 ${
+                visible ? 'opacity-100' : 'opacity-0'
+            }`}
+            onClick={() => {
+                setVisible(false);
+                setTimeout(() => closeModal(), 200);
+            }}
+        >
             <button
-                className={`${
-                    isOpen ? 'bg-[#C22C2C]' : ''
-                } relative rounded-r-md py-2 px-2.5 ml-6 z-10`}
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => {
+                    setVisible(false);
+                    setTimeout(() => closeModal(), 200);
+                }}
+                className="absolute top-12 right-12 text-[--background-color] hover:text-black"
+                type="button"
             >
-                <Image
-                    src={isOpen ? '/u_search-close.svg' : '/main_u_search.svg'}
-                    width={25}
-                    height={25}
-                    alt='search-icons'
-                />
+                <CloseButton className="w-[24px] h-[24px] fill-[#f5f5f5] hover:fill-[#c2c2c2]"/>
             </button>
-            {isOpen && (
-                <div className='w-96 absolute right-0 top-0'>
-                    <input
-                        className='w-full rounded-md py-2 pl-3 pr-10'
-                        type='text'
-                        placeholder='Пошук по сайту...'
-                        value={query}
-                        onChange={e => setQuery(e.target.value)}
-                        onKeyDown={handleKeyDown}
+
+            <div
+                className={`relative max-w-[704px] w-full transition-all duration-300 transform ${
+                    visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                }`}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <form
+                    className="relative flex items-center w-full text-2xl lg:text-4xl"
+                    onSubmit={handleSubmit}
+                >
+                    <SearchInput
+                        query={query}
+                        setQuery={setQuery}
+                        darkStyle={true}
+                        onSubmit={() => {
+                            if (query.trim()) {
+                                router.push(`/search?query=${encodeURIComponent(query.trim())}`);
+                                setQuery('');
+                                setVisible(false);
+                                setTimeout(() => closeModal(), 200);
+                            }
+                        }}
+                        autoFocus
                     />
-                </div>
-            )}
+                </form>
+            </div>
         </div>
     );
 };

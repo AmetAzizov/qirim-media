@@ -42,6 +42,7 @@
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
+import SearchBar from "@/app/[locale]/components/header/SearchBar";
 import './globals.css';
 import type {Metadata} from 'next';
 import {Montserrat} from 'next/font/google';
@@ -89,9 +90,10 @@ export default async function LocaleLayout({children, params: {locale}}:
         </head>
         <body className={montserrat.className}>
         <NextIntlClientProvider messages={messages}>
-            <Header/>
+            <Header />
             <main>{children}</main>
-            <Footer/>
+            <SearchBar />
+            <Footer />
         </NextIntlClientProvider>
         </body>
         </html>

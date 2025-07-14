@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {getNewsPosts} from '@/app/[locale]/lib/newsPosts';
+import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
 // type ArticlesProps = {
 //     title: string;
@@ -8,8 +9,8 @@ import {getNewsPosts} from '@/app/[locale]/lib/newsPosts';
 // };
 
 export default async function Articles() {
-    const articles = await getNewsPosts(7, 7);
-    // console.log('ReviewsPage reviews:', articles);
+    const locale = getCurrentLocale();
+    const articles = await getNewsPosts(7, 7, null ,null, locale);
     return (
         <>
             {articles.map((article: any) => (
@@ -22,7 +23,7 @@ export default async function Articles() {
                             {article.title}
                         </p>
                         <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                            {article.date}
+                            {article.dateTime}
                         </time>
                     </Link>
                 </article>

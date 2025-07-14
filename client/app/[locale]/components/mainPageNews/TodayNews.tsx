@@ -3,11 +3,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Articles from '../common/Articles';
 import '../../styles/main-news.scss';
-import {getNewsPosts} from '@/app/[locale]/lib/newsPosts';
 import TodayNewsDate from '../common/TodayNewsDate';
+// import {getTranslations} from "next-intl/server";
+import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
+import {getTodayNews} from "@/app/[locale]/lib/getTodayNews";
 
 export default async function TodayNews() {
-    const newsPosts = await getNewsPosts(0, 7);
+    const locale = getCurrentLocale();
+    // const start = 0;
+    // const limit = 7;
+    const newsPosts = await getTodayNews(0, 7, locale);
+    // const t = await getTranslations('common')
 
     return (
         <section className={'px-4 my-11 lg:my-24'}>
@@ -16,6 +22,7 @@ export default async function TodayNews() {
                 <div className='flex justify-between'>
                     <div className={'grid grid-cols-1 max-w-[972px] gap-11 md:grid-cols-2 xl:mr-5'}>
                         <Link
+                            key={newsPosts.slug}
                             href={`news/${newsPosts[0].slug}`}
                             className={
                                 'item-top flex flex-col rounded-xl md:flex-row md:max-h-[350px]'
@@ -48,7 +55,7 @@ export default async function TodayNews() {
                                     {newsPosts[0].title}
                                 </p>
                                 <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                    {newsPosts[0].date}
+                                    {newsPosts[0].dateTime}
                                 </time>
                             </div>
                         </Link>
@@ -87,7 +94,7 @@ export default async function TodayNews() {
                                     <time
                                         className={'text-xs font-medium text-[--secondary-color-2] xl:text-sm'}
                                     >
-                                        {newsPost.date}
+                                        {newsPost.dateTime}
                                     </time>
                                 </div>
                             </Link>

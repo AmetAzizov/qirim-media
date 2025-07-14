@@ -1,12 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getMainNews} from '@/app/[locale]/lib/newsPosts';
+import {getMainNews} from "@/app/[locale]/lib/getMainNews";
 import MainNewsItem from './MainNewsItem';
 import {getTranslations} from "next-intl/server";
+import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
 export default async function MainNews() {
-    const newsPosts = await getMainNews(0, 7);
+    const locale = getCurrentLocale();
+    const newsPosts = await getMainNews(0, 7, locale);
     const t = await getTranslations('common')
 
     return (
@@ -55,7 +57,7 @@ export default async function MainNews() {
                             </button>
                             <p className={'text-lg font-medium my-5 lg:text-xl'}>{newsPosts[0].title}</p>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                {newsPosts[0].date}
+                                {newsPosts[0].dateTime}
                             </time>
                         </div>
                     </Link>

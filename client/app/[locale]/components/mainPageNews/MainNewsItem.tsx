@@ -36,7 +36,7 @@ const NewsItem = ({newsPost, href}: any) => {
                 {newsPost.title}
             </p>
             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                {newsPost.date}
+                {newsPost.dateTime}
             </time>
         </Link>
     );

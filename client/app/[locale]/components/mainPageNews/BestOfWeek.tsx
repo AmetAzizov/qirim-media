@@ -1,12 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getBestOfWeek} from '@/app/[locale]/lib/newsPosts';
+import {getBestOfWeek} from "@/app/[locale]/lib/getBestOfWeek";
 import '../../styles/main-news.scss';
 import {getTranslations} from "next-intl/server";
+import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
 export default async function BestOfWeek() {
-    const newsPosts = await getBestOfWeek(0, 13);
+    const locale = getCurrentLocale();
+    const newsPosts = await getBestOfWeek(0, 13, locale);
     const t = await getTranslations('common')
     console.log(newsPosts);
 
@@ -58,7 +60,7 @@ export default async function BestOfWeek() {
                                 {newsPosts[0].title}
                             </h2>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                {newsPosts[0].date}
+                                {newsPosts[0].dateTime}
                             </time>
                         </div>
                     </Link>
@@ -95,7 +97,7 @@ export default async function BestOfWeek() {
                                     {newsPost.title}
                                 </p>
                                 <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                    {newsPost.date}
+                                    {newsPost.dateTime}
                                 </time>
                             </div>
                         </Link>
@@ -128,7 +130,7 @@ export default async function BestOfWeek() {
                                 {newsPosts[1].title}
                             </h2>
                             <time className={'text-sm font-medium text-[--secondary-color-2]'}>
-                                {newsPosts[1].date}
+                                {newsPosts[1].dateTime}
                             </time>
                         </div>
                     </Link>

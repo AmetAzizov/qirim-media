@@ -38,7 +38,7 @@ import {useTranslations, useLocale} from 'next-intl';
 export default function TodayNewsDate() {
     const [currentDate, setCurrentDate] = useState<Date>(new Date());
     const t = useTranslations('common');
-    const locale = useLocale(); // получаем текущую локаль сайта
+    const locale = useLocale();
 
     useEffect(() => {
         const interval = setInterval(() => {

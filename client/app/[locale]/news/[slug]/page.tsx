@@ -4,7 +4,8 @@ import SwipeBlogCard from '@/app/[locale]/blogs/SwipeBlogCard';
 import {notFound} from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getNewsPost, getRelatedNews, getMainNews} from '@/app/[locale]/lib/newsPosts';
+import {getNewsPost, getRelatedNews} from '@/app/[locale]/lib/newsPosts';
+import {getMainNews} from "@/app/[locale]/lib/getMainNews";
 import '../../styles/react-markdown.scss';
 import MainNewsItem from '../../components/mainPageNews/MainNewsItem';
 // import MainBlogs from '@/app/components/mainPageBlogs/MainBlogs';
@@ -13,6 +14,7 @@ import ArticlesTwo from '../../components/common/ArticlesTwo';
 import rehypeRaw from 'rehype-raw';
 import SharePanel from './SharePanel';
 import {Metadata} from 'next';
+import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
 // METADATA
 interface Params {
@@ -21,7 +23,8 @@ interface Params {
 
 export async function generateMetadata({params}: {params: Params}): Promise<Metadata> {
     const {slug} = params;
-    const newsPost = await getNewsPost(slug);
+    const locale = getCurrentLocale();
+    const newsPost = await getNewsPost(slug, locale);
     return {
         metadataBase: new URL('https://qirim.news'),
         openGraph: {
@@ -46,11 +49,12 @@ export async function generateMetadata({params}: {params: Params}): Promise<Meta
 // METADATA
 
 export default async function NewsSlug({params: {slug}}: any) {
-    const newsPost = await getNewsPost(slug);
+    const locale = getCurrentLocale();
+    const newsPost = await getNewsPost(slug, locale);
     const relatedNews: any[] = newsPost
         ? await getRelatedNews(newsPost.categoryList, newsPost.id)
         : [];
-    const mainNewsPosts = await getMainNews(0, 9);
+    const mainNewsPosts = await getMainNews(0, 9, locale);
     if (!newsPost) {
         notFound();
     }
@@ -61,7 +65,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                     <Breadcrumbs />
                     <div className={'flex justify-between gap-x-10'}>
                         <aside className={'hidden xl:block lg:max-w-[337px]'}>
-                            <ArticlesTwo />
+                            <ArticlesTwo locale={locale} />
                         </aside>
                         <div className={'xl:max-w-[1012px] w-full'}>
                             <div className={'xl:relative'}>

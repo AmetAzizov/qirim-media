@@ -7,9 +7,11 @@ import {getTranslations} from "next-intl/server";
 import Link from 'next/link';
 import Image from 'next/image';
 import BtnCreateBlog from './BtnCreateBlog';
+import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
 export default async function Blogs() {
-    const blogs = await getBlogs();
+    const locale = getCurrentLocale();
+    const blogs = await getBlogs(locale);
     const t = await getTranslations('common');
 
     const normalizeString = (str: string) => {
@@ -62,7 +64,7 @@ export default async function Blogs() {
                         <h2 className={'block title-text mb-9'}>Автори</h2>
                         <div className={'grid grid-cols-3 gap-x-2.5 gap-y-5'}>
                             {uniqueAuthors.map((blog: any) => (
-                                <Authors key={blog.id} blog={blog} />
+                                <Authors key={blog.slug} blog={blog} />
                             ))}
                         </div>
                     </div>

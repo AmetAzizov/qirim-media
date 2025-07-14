@@ -41,6 +41,10 @@ header {
 }
 
 @media (min-width: 1024px) {
+    .header {
+     z-index: unset;
+    }
+
     .nav-category,
     .language-switcher {
         &:hover {

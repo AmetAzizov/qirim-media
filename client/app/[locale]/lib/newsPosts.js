@@ -2,8 +2,8 @@ import qs from 'qs';
 import moment from 'moment-timezone';
 import 'moment/locale/uk';
 import 'moment/locale/en-gb';
+import {fetchBlogs, fetchNewsPosts} from "@/app/[locale]/lib/fetch";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const monthCases = {
     січень: 'січня',
     лютий: 'лютого',
@@ -19,8 +19,8 @@ const monthCases = {
     грудень: 'грудня'
 };
 
-export default function formatDateWithMonthName(dateString) {
-    const date = moment(dateString).tz('Europe/Kyiv');
+export default function formatDateWithMonthName(dateString, locale) {
+    const date = moment(dateString).tz('Europe/Kyiv').locale(locale);
     const today = moment().startOf('day');
 
     if (date.isSame(today, 'day')) {
@@ -32,11 +32,11 @@ export default function formatDateWithMonthName(dateString) {
     const monthGenitive = monthCases[monthName] || monthName;
     const year = date.year();
 
-    return `${day} ${monthGenitive} ${year}`;
+    return `${locale === 'uk' ? `${day} ${monthGenitive}, ${year}` : `${monthGenitive} ${day}, ${year}`}`;
 }
 
-function formatDateWithMonthNameAndTime(dateString) {
-    const date = moment.tz(dateString, 'Europe/Kyiv');
+export function formatDateWithMonthNameAndTime(dateString, locale) {
+    const date = moment.tz(dateString, 'Europe/Kyiv').locale(locale);
     const day = date.date();
     const monthName = date.format('MMMM');
     const monthGenitive = monthCases[monthName] || monthName;
@@ -44,22 +44,23 @@ function formatDateWithMonthNameAndTime(dateString) {
     const hours = date.hours();
     const minutes = date.minutes();
 
-    return `${day} ${monthGenitive} ${year} / ${hours}:${minutes.toString().padStart(2, '0')}`;
+    return `${locale === 'uk' ? `${day} ${monthGenitive}, ${year}` : `${monthGenitive} ${day}, ${year}`} / ${hours}:${minutes.toString().padStart(2, '0')}`;
 }
 
-function toNewsPost(item) {
+export function toNewsPost(item, locale) {
     return {
         slug: item.slug,
         title: item.title,
         subtitle: item.subtitle,
         categoryList: item.categoryList,
         tagList: item.tagList,
-        date: formatDateWithMonthName(item.publish_at),
+        // date: item.publish_at,
+        // dateTime: formatDateWithMonthName(item.publish_at, locale),
         image: item?.image?.map(img => img.url)
     };
 }
 
-export async function getNewsPost(slug) {
+export async function getNewsPost(slug, locale) {
     const {data} = await fetchNewsPosts({
         filters: {slug: {$eq: slug}},
         fields: [
@@ -73,9 +74,10 @@ export async function getNewsPost(slug) {
             'categoryList',
             'tagList'
         ],
-        populate: {image: {fields: ['url']}},
+        populate: {image: {fields: ['url']}, localizations: {fields: ['slug', 'locale']}},
         sort: ['publish_at:desc'],
-        pagination: {pageSize: 1}
+        pagination: {pageSize: 1},
+        locale
     });
     if (data.length === 0) {
         return null;
@@ -87,17 +89,19 @@ export async function getNewsPost(slug) {
         subtitle: item.subtitle,
         authorName: item.authorName,
         text: item.text,
-        dateTime: formatDateWithMonthNameAndTime(item.publish_at)
+        dateTime: formatDateWithMonthNameAndTime(item.publish_at, locale),
+        localizations: item.localizations
     };
 }
 
-export async function getBlog(slug) {
+export async function getBlog(slug, locale) {
     const {data} = await fetchBlogs({
         filters: {slug: {$eq: slug}},
         fields: ['slug', 'title', 'authorBlog', 'text', 'publish_at'],
-        populate: {image: {fields: ['url']}},
+        populate: {image: {fields: ['url']}, localizations: {fields: ['slug', 'locale']}},
         sort: ['publish_at:desc'],
-        pagination: {pageSize: 1}
+        pagination: {pageSize: 1},
+        locale,
     });
     if (data.length === 0) {
         return null;
@@ -108,44 +112,27 @@ export async function getBlog(slug) {
         subtitle: item.subtitle,
         authorBlog: item.authorBlog,
         text: item.text,
-        dateTime: formatDateWithMonthNameAndTime(item.publish_at)
+        dateTime: formatDateWithMonthNameAndTime(item.publish_at, locale),
+        localizations: item.localizations,
     };
 }
 
-export async function getMainSlides(start, limit) {
+export async function getMainSlides(start, limit, locale) {
     const {data} = await fetchNewsPosts({
         filters: {mainSlider: {$eq: 'true'}},
         fields: ['slug', 'title', 'subtitle', 'publish_at', 'categoryList'],
         populate: {image: {fields: ['url']}},
         sort: ['publish_at:desc'],
-        pagination: {start, limit}
+        pagination: {start, limit},
+        locale
     });
-    return data.map(toNewsPost);
+    return data.map(item => ({
+        ...toNewsPost(item),
+        dateTime: formatDateWithMonthName(item.publish_at, locale)
+    }));
 }
 
-export async function getBestOfWeek(start, limit) {
-    const {data} = await fetchNewsPosts({
-        filters: {bestOfWeek: {$eq: 'true'}},
-        fields: ['slug', 'title', 'subtitle', 'publish_at', 'categoryList'],
-        populate: {image: {fields: ['url']}},
-        sort: ['publish_at:desc'],
-        pagination: {start, limit}
-    });
-    return data.map(toNewsPost);
-}
-
-export async function getMainNews(start, limit) {
-    const {data} = await fetchNewsPosts({
-        filters: {mainNews: {$eq: 'true'}},
-        fields: ['slug', 'title', 'subtitle', 'publish_at', 'categoryList'],
-        populate: {image: {fields: ['url']}},
-        sort: ['publish_at:desc'],
-        pagination: {start, limit}
-    });
-    return data.map(toNewsPost);
-}
-
-export async function getNewsPosts(start, limit, category, date) {
+export async function getNewsPosts(start, limit, category, date, locale) {
     const filters = {};
     // const filters = category && category !== 'Всі' ? {categoryList: {$contains: category}} : {};
     if (category && category !== 'Всі') {
@@ -172,35 +159,44 @@ export async function getNewsPosts(start, limit, category, date) {
         populate: {image: {fields: ['url']}},
         sort: ['publish_at:desc'],
         pagination: {start, limit},
-        filters
+        filters,
+        locale
     });
 
-    return data.map(toNewsPost);
+    return data.map(item => ({
+        ...toNewsPost(item),
+        dateTime: formatDateWithMonthName(item.publish_at, locale)
+    }));
 }
 
-export async function getBlogs() {
+export async function getBlogs(locale) {
     const {data} = await fetchBlogs({
-        fields: ['slug', 'title', 'authorBlog', 'createdAt'],
+        fields: ['slug', 'title', 'authorBlog', 'publish_at'],
         populate: {image: {fields: ['url']}},
-        sort: ['createdAt:desc']
+        sort: ['publish_at:desc'],
+        locale,
     });
     return data.map(item => ({
         ...toNewsPost(item),
         authorBlog: item.authorBlog,
-        dateTime: formatDateWithMonthNameAndTime(item.createdAt)
+        dateTime: formatDateWithMonthNameAndTime(item.publish_at, locale)
     }));
 }
 
-export async function getPublications(start, limit) {
+export async function getPublications(start, limit, locale) {
     const {data} = await fetchNewsPosts({
         filters: {categoryList: {$contains: 'Публікації'}},
         fields: ['id', 'slug', 'title', 'subtitle', 'publish_at', 'categoryList', 'tagList'],
         populate: {image: {fields: ['url']}},
         sort: ['publish_at:desc'],
-        pagination: {start, limit}
+        pagination: {start, limit},
+        locale,
     });
 
-    return data.map(toNewsPost);
+    return data.map(item => ({
+        ...toNewsPost(item),
+        dateTime: formatDateWithMonthName(item.publish_at, locale)
+    }));
 }
 
 
@@ -235,51 +231,4 @@ export async function getRelatedNews(category, excludeId, limit = 4) {
     });
 
     return data.map(toNewsPost);
-}
-
-export async function fetchNewsPosts(parameters) {
-    const paramsWithStatus = {
-        ...parameters,
-        status: parameters.status || 'published',
-        locale: parameters.locale,
-    };
-
-    const url = `${apiUrl}/news-posts?` + qs.stringify(paramsWithStatus, {encodeValuesOnly: true});
-    try {
-        const response = await fetch(url, {cache: 'no-store'});
-        if (!response.ok) {
-            if (response.status === 403) {
-                console.warn(`CMS returned ${response.status} for ${url}. Ignoring the error.`);
-                return {data: []};
-            }
-            throw new Error(`CMS returned ${response.status} for ${url}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error(`An error occurred: ${error.message}`);
-        return {data: []};
-    }
-}
-
-export async function fetchBlogs(parameters) {
-    const locale = parameters.locale || 'uk';
-    const query = {
-        ...parameters,
-        locale,
-    };
-    const url = `${apiUrl}/blogs?` + qs.stringify(query, {encodeValuesOnly: true});
-    try {
-        const response = await fetch(url, {cache: 'no-store'});
-        if (!response.ok) {
-            if (response.status === 403) {
-                console.warn(`CMS returned ${response.status} for ${url}. Ignoring the error.`);
-                return {data: []};
-            }
-            throw new Error(`CMS returned ${response.status} for ${url}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error(`An error occurred: ${error.message}`);
-        return {data: []};
-    }
 }
