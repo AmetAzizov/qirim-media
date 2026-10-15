@@ -150,6 +150,16 @@
         "Україна",
         "Інше"
       ]
+    },
+    "views": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "integer",
+      "default": 0,
+      "min": 0
     }
   }
 }

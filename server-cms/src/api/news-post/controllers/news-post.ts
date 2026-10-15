@@ -4,4 +4,37 @@
 
 import { factories } from '@strapi/strapi'
 
-export default factories.createCoreController('api::news-post.news-post');
+export default factories.createCoreController('api::news-post.news-post', ({ strapi }) => ({
+  async incrementViews(ctx) {
+    const { documentId } = ctx.params;
+
+    if (!documentId || typeof documentId !== 'string' || documentId.length > 64) {
+      return ctx.badRequest('Invalid documentId');
+    }
+
+    // Атомарный инкремент прямо в БД: не создаёт черновик, не запускает lifecycles
+    // и не теряет просмотры при одновременных запросах.
+    // Поле не локализовано, поэтому обновляем все строки документа (все языки, draft + published).
+    const knex = strapi.db.connection;
+    const published = await knex('news_posts')
+      .where({ document_id: documentId })
+      .whereNotNull('published_at')
+      .count({ count: '*' })
+      .first();
+
+    if (!published || Number(published.count) === 0) {
+      return ctx.notFound();
+    }
+
+    await knex('news_posts')
+      .where({ document_id: documentId })
+      .update({ views: knex.raw('COALESCE(views, 0) + 1') });
+
+    const row = await knex('news_posts')
+      .where({ document_id: documentId })
+      .whereNotNull('published_at')
+      .first('views');
+
+    ctx.body = { views: Number(row?.views ?? 0) };
+  },
+}));

@@ -13,6 +13,7 @@ import React from 'react';
 import ArticlesTwo from '../../components/common/ArticlesTwo';
 import rehypeRaw from 'rehype-raw';
 import SharePanel from './SharePanel';
+import ViewCounter from './ViewCounter';
 import {Metadata} from 'next';
 import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
@@ -152,22 +153,10 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     >
                                         {newsPost.dateTime}
                                     </time>
-                                    {/* <div className={'flex'}>
-                                        <Image
-                                            className={''}
-                                            src='/u_eye.svg'
-                                            width={26}
-                                            height={22}
-                                            alt='eye'
-                                        />
-                                        <span
-                                            className={
-                                                'text-xs font-medium text-[--secondary-color-5] lg:text-base'
-                                            }
-                                        >
-                                            122
-                                        </span>
-                                    </div> */}
+                                    <ViewCounter
+                                        documentId={newsPost.documentId}
+                                        initialViews={newsPost.views}
+                                    />
                                 </div>
                                 <SharePanel link={newsPost.slug} />
                             </div>

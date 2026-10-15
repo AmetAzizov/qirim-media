@@ -72,7 +72,8 @@ export async function getNewsPost(slug, locale) {
             'text',
             'publish_at',
             'categoryList',
-            'tagList'
+            'tagList',
+            'views'
         ],
         populate: {image: {fields: ['url']}, localizations: {fields: ['slug', 'locale']}},
         sort: ['publish_at:desc'],
@@ -86,6 +87,8 @@ export async function getNewsPost(slug, locale) {
     return {
         ...toNewsPost(item),
         id: item.id,
+        documentId: item.documentId,
+        views: item.views ?? 0,
         subtitle: item.subtitle,
         authorName: item.authorName,
         text: item.text,
