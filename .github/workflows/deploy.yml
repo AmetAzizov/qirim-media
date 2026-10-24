@@ -23,6 +23,6 @@ jobs:
 
       - name: Деплой на сервер
         run: |
-          ssh -i ~/.ssh/id_deploy -p "${{ secrets.SSH_PORT || 22 }}" \
+          ssh -i ~/.ssh/id_deploy -o ServerAliveInterval=30 -o ServerAliveCountMax=40 -p "${{ secrets.SSH_PORT || 22 }}" \
             "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
-            "cd '${{ secrets.DEPLOY_PATH }}' && ./deploy.sh"
+            "cd '${{ secrets.DEPLOY_PATH }}' && bash ./deploy.sh"
