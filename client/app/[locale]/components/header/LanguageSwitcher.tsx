@@ -1,7 +1,8 @@
 'use client';
 
-import {usePathname, useRouter} from 'next/navigation';
-import {locales} from '@/navigation';
+import {useLocale} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
+import {usePathname, useRouter, routing} from '@/i18n/routing';
 import Link from "next/link";
 
 interface LanguageSwitcherProps {
@@ -12,25 +13,34 @@ interface LanguageSwitcherProps {
 export default function LanguageSwitcher({onClick, textColor}: LanguageSwitcherProps) {
     const router = useRouter();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const currentLocale = useLocale();
+    const locales = routing.locales;
 
-    const currentLocale = (() => {
-        if (!pathname) return 'uk';
-        const firstSegment = pathname.split('/')[1];
-        return locales.includes(firstSegment as any) ? firstSegment : 'uk';
-    })();
+    const handleChangeLocale = async (newLocale: (typeof locales)[number]) => {
+        if (newLocale === currentLocale) return;
+        const query = searchParams?.toString();
+        let target = query ? `${pathname}?${query}` : pathname;
 
-    const handleChangeLocale = (newLocale: string) => {
-        if (!pathname) return;
-
-        const segments = pathname.split('/');
-        if (locales.includes(segments[1] as any)) {
-            segments[1] = newLocale;
-        } else {
-            segments.splice(1, 0, newLocale);
+        // У новости/блога на другом языке другой slug — ищем перевод в CMS
+        const match = pathname.match(/^\/(news|blogs)\/([^/]+)$/);
+        if (match) {
+            const [, type, slug] = match;
+            let translatedSlug: string | null = null;
+            try {
+                const res = await fetch(
+                    `/api/localized-slug?type=${type}&slug=${encodeURIComponent(
+                        decodeURIComponent(slug)
+                    )}&from=${currentLocale}&to=${newLocale}`
+                );
+                translatedSlug = (await res.json()).slug;
+            } catch {}
+            // нет перевода — ведём на список, а не на 404
+            target = translatedSlug ? `/${type}/${translatedSlug}` : `/${type}`;
         }
 
-        const newPath = segments.join('/') || '/';
-        router.push(newPath);
+        router.replace(target, {locale: newLocale, scroll: false});
+        onClick?.(newLocale);
     };
 
     return (

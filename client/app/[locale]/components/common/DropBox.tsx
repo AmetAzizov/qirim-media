@@ -33,7 +33,7 @@ const DropBox = ({onUpload}: Props) => {
             style={{
                 border: '2px dashed #D1D5DB',
                 width: '100%',
-                height: '200px',
+                height: '120px',
                 position: 'relative',
                 borderRadius: '6px',
                 padding: '0.625rem 0.75rem'
@@ -53,11 +53,11 @@ const DropBox = ({onUpload}: Props) => {
                 imagesPreview.map((image, index) => (
                     <Image
                         width={130}
-                        height={155}
+                        height={90}
                         key={index}
                         src={image}
                         alt={`Preview ${index}`}
-                        className='object-cover mr-2'
+                        className='object-cover mr-2 h-[90px] w-[130px]'
                     />
                 ))
             ) : (
@@ -73,7 +73,7 @@ const DropBox = ({onUpload}: Props) => {
                             transform: 'translate(-50%, -50%)'
                         }}
                     >
-                        <Image src='../dragDrop.svg' width={48} height={48} alt='Logo QN' />
+                        <Image src='../dragDrop.svg' width={32} height={32} alt='Logo QN' />
                         <p className={'text-sm text-[#4B5563] text-center font-medium'}>
                             Завантажте зображення вашого поста
                         </p>

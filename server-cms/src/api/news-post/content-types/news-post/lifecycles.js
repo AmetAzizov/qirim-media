@@ -31,7 +31,7 @@
 module.exports = {
   beforeCreate(event) {
     const { data, where, select, populate } = event.params;
-    
+
     if (data.status === 'published' && !data.firstPublishedAt) {
       event.params.data.firstPublishedAt = new Date();
     }
@@ -51,4 +51,23 @@ module.exports = {
       }
     }
   },
+
+  afterCreate: purgeFrontendCache,
+  afterUpdate: purgeFrontendCache,
+  afterDelete: purgeFrontendCache,
 };
+
+// Сбрасываем кэш фронта, чтобы новая/изменённая новость появилась сразу
+async function purgeFrontendCache() {
+  const { CLIENT_URL, REVALIDATE_SECRET } = process.env;
+  if (!CLIENT_URL || !REVALIDATE_SECRET) return;
+  try {
+    await fetch(`${CLIENT_URL}/api/revalidate`, {
+      method: "POST",
+      headers: { "x-revalidate-secret": REVALIDATE_SECRET },
+      signal: AbortSignal.timeout(3000),
+    });
+  } catch (e) {
+    strapi.log.warn(`Frontend revalidate failed: ${e.message}`);
+  }
+}

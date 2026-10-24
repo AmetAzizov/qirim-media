@@ -14,7 +14,8 @@
     "news": "Новини",
     "video": "Відео",
     "publications": "Публікації",
-    "blogs": "Блоги"
+    "blogs": "Блоги",
+    "partners": "Партнерам"
   },
   "categoryList": {
     "all": "Всі",
@@ -44,12 +45,21 @@
     "m": "метрiв",
     "sm": "см"
   },
+  "share": {
+    "copied": "Посилання скопійовано"
+  },
   "footer": {
     "contacts": "Контакти",
     "ourTeam": "Наша команда",
     "partners": "Партнерам",
     "ourMission": "Наша місія",
     "followUs": "Слідкуй за нами",
+    "navigation": "Навігація",
+    "address": "Адреса",
+    "phone": "Телефон",
+    "email": "Email",
+    "close": "Закрити",
+    "searchPlaceholder": "Пошук по сайту",
     "tgNews": "Новини в телеграмi",
     "ytbChannel": "Ютуб-канал",
     "addressOffice": "01001, місто Київ, вулиця Михайлівська, будинок 2, офіс 34",

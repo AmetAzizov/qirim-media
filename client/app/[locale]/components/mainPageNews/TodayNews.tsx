@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import Image from 'next/image';
 import Articles from '../common/Articles';
 import '../../styles/main-news.scss';
@@ -13,6 +13,7 @@ export default async function TodayNews() {
     // const start = 0;
     // const limit = 7;
     const newsPosts = await getTodayNews(0, 7, locale);
+    if (!newsPosts?.length) return null;
     // const t = await getTranslations('common')
 
     return (
@@ -22,8 +23,8 @@ export default async function TodayNews() {
                 <div className='flex justify-between'>
                     <div className={'grid grid-cols-1 max-w-[972px] gap-11 md:grid-cols-2 xl:mr-5'}>
                         <Link
-                            key={newsPosts.slug}
-                            href={`news/${newsPosts[0].slug}`}
+                            key={newsPosts[0].slug}
+                            href={`/news/${newsPosts[0].slug}`}
                             className={
                                 'item-top flex flex-col rounded-xl md:flex-row md:max-h-[350px]'
                             }
@@ -61,8 +62,8 @@ export default async function TodayNews() {
                         </Link>
                         {newsPosts.slice(1).map((newsPost: any) => (
                             <Link
-                                key={newsPost.id}
-                                href={`news/${newsPost.slug}`}
+                                key={newsPost.slug || newsPost.id}
+                                href={`/news/${newsPost.slug}`}
                                 className={
                                     'flex items-center flex-row-reverse justify-between xl:justify-normal xl:flex-row'
                                 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import Image from 'next/image';
 import {getMainNews} from "@/app/[locale]/lib/getMainNews";
 import MainNewsItem from './MainNewsItem';
@@ -9,6 +9,7 @@ import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 export default async function MainNews() {
     const locale = getCurrentLocale();
     const newsPosts = await getMainNews(0, 7, locale);
+    if (!newsPosts?.length) return null;
     const t = await getTranslations('common')
 
     return (
@@ -33,7 +34,7 @@ export default async function MainNews() {
                 >
                     <Link
                         key={newsPosts.slug}
-                        href={`news/${newsPosts[0].slug}`}
+                        href={`/news/${newsPosts[0].slug}`}
                         className={'flex flex-col justify-between item-left w-full rounded-xl bg-[--secondary-color-4]'}
                     >
                         <Image
@@ -62,7 +63,7 @@ export default async function MainNews() {
                         </div>
                     </Link>
                     {newsPosts.slice(1).map((newsPost: any) => (
-                        <MainNewsItem key={newsPost.slug || newsPost.id} newsPost={newsPost} href={`news/${newsPost.slug}`} />
+                        <MainNewsItem key={newsPost.slug || newsPost.id} newsPost={newsPost} href={`/news/${newsPost.slug}`} />
                     ))}
                 </div>
             </div>

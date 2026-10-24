@@ -28,8 +28,8 @@
 
 html,
 body {
-    overflow-x: hidden;
-    height: 100%;
+    overflow-x: clip;
+    min-height: 100%;
 }
 
 body {

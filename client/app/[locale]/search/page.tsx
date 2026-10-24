@@ -1,8 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import {Link} from '@/i18n/routing';
+import {useSearchParams} from 'next/navigation';
+import {useRouter} from '@/i18n/routing';
 import ContentLoader from 'react-content-loader';
 import { searchNewsPosts } from '../../[locale]/lib/newsPosts';
 import SearchInput from "@/app/[locale]/components/header/SearchInput";
@@ -114,7 +115,7 @@ export default function SearchNews() {
                     <ul className="max-w-[740px] pt-6">
                         {searchResults.map((result) => (
                             <li key={result.slug} className="mb-5">
-                                <Link className="flex" href={`news/${result.slug}`}>
+                                <Link className="flex" href={`/news/${result.slug}`}>
                                     <Image
                                         className="h-[120px] min-w-[120px] max-w-[120px] w-full rounded-xl object-cover"
                                         src={`${result.image}`}

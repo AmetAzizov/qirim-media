@@ -66,8 +66,8 @@
         }
       },
       "type": "uid",
-      "required": true,
-      "targetField": "title"
+      "targetField": "title",
+      "visible": false
     },
     "authorName": {
       "pluginOptions": {

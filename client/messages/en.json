@@ -14,7 +14,8 @@
     "news": "News",
     "video": "Video",
     "publications": "Publications",
-    "blogs": "Blogs"
+    "blogs": "Blogs",
+    "partners": "For partners"
   },
   "categoryList": {
     "all": "All",
@@ -44,12 +45,21 @@
     "m": "metres",
     "sm": "sm"
   },
+  "share": {
+    "copied": "Link copied"
+  },
   "footer": {
     "contacts": "Contacts",
     "ourTeam": "Our team",
     "partners": "For partners",
     "ourMission": "Our mission",
     "followUs": "Follow us",
+    "navigation": "Navigation",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "close": "Close",
+    "searchPlaceholder": "Search the site",
     "tgNews": "News in Telegram",
     "ytbChannel": "YouTube channel",
     "addressOffice": "2, Mykhailivska Street, Kyiv, 01001, office 34",

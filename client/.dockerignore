@@ -1,1 +1,11 @@
 node_modules
+.next
+.git
+.idea
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+npm-debug.log*
+README.md
+scripts

@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useState} from 'react';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import NewsSkeletonLoader from '../components/common/NewsSkeletonLoader';
 import {getPublications} from "@/app/[locale]/lib/newsPosts";
 import Image from "next/image";
@@ -34,7 +34,7 @@ const PublicationsClient = ({initialPosts, locale}: { initialPosts: any[], local
             <ul className="grid grid-cols-1 gap-4 min-[425ыpx]:grid-cols-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
                 {newsPosts.map((newsPost: any) => (
                     <li key={newsPost.slug}>
-                        <Link className="flex flex-col justify-between items-start h-full hover:opacity-50" href={`news/${newsPost.slug}`}>
+                        <Link className="flex flex-col justify-between items-start h-full hover:opacity-50" href={`/news/${newsPost.slug}`}>
                             <Image
                                 src={`${newsPost.image}`}
                                 alt={newsPost.title}

@@ -1,17 +1,28 @@
-FROM node:20.18.0
+# syntax=docker/dockerfile:1
+FROM node:20.18.0-slim AS build
 
 WORKDIR /opt/app
 
-COPY package*.json ./
+# Зависимости — отдельный слой: пересобирается только при изменении package*.json
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
 
-RUN npm install --production
+# NEXT_PUBLIC_* вшиваются при сборке, поэтому передаются как build arg
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY . .
+RUN npm run build && npm prune --omit=dev
 
-RUN npm run build
+FROM node:20.18.0-slim
 
+WORKDIR /opt/app
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+COPY --from=build --chown=node:node /opt/app ./
+
+USER node
 EXPOSE 3000
-
 CMD ["npm", "run", "start"]
-
-

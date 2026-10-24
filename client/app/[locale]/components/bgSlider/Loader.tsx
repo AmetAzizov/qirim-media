@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import React from 'react';
 import Stories from 'react-insta-stories';
 import ReactMarkdown from 'react-markdown';
@@ -18,7 +18,7 @@ const Loader = ({newsPosts}: any) => {
                     backgroundPosition: 'center'
                 }}
             >
-                <Link className={'flex flex-col justify-center px-4'} href={newsPost.slug}>
+                <Link className={'flex flex-col justify-center px-4'} href={`/news/${newsPost.slug}`}>
                     {/* <button
                         className={
                             'text-xs font-medium text-[--secondary-color] bg-[#DBDBDB26] px-4 py-2.5 rounded'

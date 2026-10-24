@@ -1,6 +1,8 @@
-import Link from 'next/link';
-import {usePathname} from 'next/navigation';
+import {Link} from '@/i18n/routing';
+import {usePathname} from '@/i18n/routing';
 import {useTranslations} from "next-intl";
+
+const YOUTUBE_VIDEOS_URL = 'https://www.youtube.com/@qirimnews9210/videos';
 
 const CategoryList = ({
     categories = [],
@@ -14,7 +16,7 @@ const CategoryList = ({
     const customLabels: {[key: string]: string} = {
         '/': t('home'),
         news: t('news'),
-        '#': t('video'),
+        videos: t('video'),
         publications: t('publications'),
         blogs: t('blogs')
     };
@@ -22,7 +24,6 @@ const CategoryList = ({
     const customPaths: {[key: string]: string} = {
         Головна: '/',
         Новини: 'news',
-        Відео: 'videos',
         Публікації: 'publications',
         Блоги: 'blogs'
     };
@@ -32,9 +33,26 @@ const CategoryList = ({
             {categories.map(category => {
                 const path = customPaths[category] || category.toLowerCase();
                 const label = customLabels[path] || category;
+                const isExternal = path === 'videos';
                 const href = path === '/' ? path : `/${path}`;
                 const isActive =
                     (path === '/' && pathname === '/') || (path !== '/' && pathname.includes(path));
+
+                if (isExternal) {
+                    return (
+                        <li className={'lg:mr-3 last:mr-0'} key={path}>
+                            <a
+                                className='nav-category block w-full h-full text-base font-medium p-4 rounded lg:text-[--background-color] lg:px-4 lg:py-2'
+                                href={YOUTUBE_VIDEOS_URL}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                onClick={onClose}
+                            >
+                                {label}
+                            </a>
+                        </li>
+                    );
+                }
 
                 return (
                     <li className={'lg:mr-3 last:mr-0'} key={path}>

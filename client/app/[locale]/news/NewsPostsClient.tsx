@@ -8,7 +8,8 @@ import uk from 'date-fns/locale/uk';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import BreadCrumbs from '../components/common/BreadCrumbs';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
+import {useSearchParams} from 'next/navigation';
 import {getNewsPosts} from '../../[locale]/lib/newsPosts';
 import CategoryBtn from '../components/common/CategoryBtn';
 import NewsSkeletonLoader from '../components/common/NewsSkeletonLoader';
@@ -22,7 +23,14 @@ export default function NewsPostsClient({locale}: { locale: string }) {
     const [offset, setOffset] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
     const [loadingMore, setLoadingMore] = useState<boolean>(false);
-    const [category, setCategory] = useState<string>('Всі');
+    const searchParams = useSearchParams();
+    const urlCategory = searchParams.get('category') || 'Всі';
+    const [category, setCategory] = useState<string>(urlCategory);
+
+    // Ссылки из футера (/news?category=...) меняют категорию без перезагрузки страницы
+    useEffect(() => {
+        setCategory(urlCategory);
+    }, [urlCategory]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const limit = 30;
 
@@ -80,8 +88,8 @@ export default function NewsPostsClient({locale}: { locale: string }) {
                 <BreadCrumbs/>
                 <h2 className={'title-text pb-9'}>Всi новини</h2>
 
-                <div className='flex flex-nowrap gap-36 mb-6 items-center'>
-                    <CategoryBtn setCategory={setCategory}/>
+                <div className='flex flex-nowrap gap-8 mb-6 justify-between items-center'>
+                    <CategoryBtn value={category} setCategory={setCategory}/>
                     <div className="flex items-center cursor-pointer">
                         <DatePicker
                             selected={selectedDate}
@@ -110,7 +118,7 @@ export default function NewsPostsClient({locale}: { locale: string }) {
                                 <li key={newsPost.slug}>
                                     <Link
                                         className='flex flex-col justify-between items-start h-full hover:opacity-50'
-                                        href={`news/${newsPost.slug}`}
+                                        href={`/news/${newsPost.slug}`}
                                     >
                                         <div
                                             style={{
@@ -135,7 +143,7 @@ export default function NewsPostsClient({locale}: { locale: string }) {
                                             {newsPost.dateTime}
                                         </time>
                                     </Link>
-                                </li>
+                                 </li>
                             ))}
                         {loadingMore &&
                             Array.from({length: 5}).map((_, index) => (

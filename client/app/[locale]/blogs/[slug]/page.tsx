@@ -3,7 +3,7 @@ import Breadcrumbs from '../../components/common/BreadCrumbs';
 import SwipeBlogCard from '@/app/[locale]/blogs/SwipeBlogCard';
 import ArticlesTwo from '../../components/common/ArticlesTwo';
 import {notFound} from 'next/navigation';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import Image from 'next/image';
 import {getBlog, getBlogs} from '@/app/[locale]/lib/newsPosts';
 import {getMainNews} from "@/app/[locale]/lib/getMainNews";
@@ -54,7 +54,7 @@ export default async function BlogsSlug({params: {slug}}: any) {
     return (
         <section className={'px-4 mb-14 lg:mb-36'}>
             <div className={'max-w-[1479px] mx-auto my-0'}>
-                <Breadcrumbs />
+                <Breadcrumbs current={blog.title} />
                 <div className={'flex justify-between gap-x-10'}>
                     <aside className={'hidden xl:block lg:max-w-[337px]'}>
                         <ArticlesTwo locale={locale} />

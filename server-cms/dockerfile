@@ -1,15 +1,15 @@
-FROM node:20.18.0-alpine as build
+# syntax=docker/dockerfile:1
+FROM node:20.18.0-alpine AS build
 
-RUN apk update && apk add --no-cache build-base zlib-dev libpng-dev vips-dev git
+RUN apk add --no-cache build-base zlib-dev libpng-dev vips-dev git
 
 WORKDIR /opt/app
 
+# Зависимости — отдельный слой: пересобирается только при изменении package*.json
 COPY package.json package-lock.json ./
-
-RUN npm install --only=production
+RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev
 
 COPY . .
-
 RUN npm run build
 
 FROM node:20.18.0-alpine
@@ -17,11 +17,10 @@ FROM node:20.18.0-alpine
 RUN apk add --no-cache vips-dev
 
 WORKDIR /opt/app
+ENV NODE_ENV=production
 
-COPY --from=build /opt/app ./
+COPY --from=build --chown=node:node /opt/app ./
 
 USER node
-
 EXPOSE 1337
-
 CMD ["npm", "run", "start"]

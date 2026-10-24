@@ -2,7 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import Breadcrumbs from '../../components/common/BreadCrumbs';
 import SwipeBlogCard from '@/app/[locale]/blogs/SwipeBlogCard';
 import {notFound} from 'next/navigation';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import Image from 'next/image';
 import {getNewsPost, getRelatedNews} from '@/app/[locale]/lib/newsPosts';
 import {getMainNews} from "@/app/[locale]/lib/getMainNews";
@@ -20,16 +20,23 @@ import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 // METADATA
 interface Params {
     slug: string;
+    locale: 'uk' | 'en';
 }
 
 export async function generateMetadata({params}: {params: Params}): Promise<Metadata> {
     const {slug} = params;
-    const locale = getCurrentLocale();
-    const newsPost = await getNewsPost(slug, locale);
+    const newsPost = await getNewsPost(slug, null);
     return {
         metadataBase: new URL('https://qirim.news'),
+        title: newsPost?.title,
+        description: newsPost?.subtitle,
         openGraph: {
             title: newsPost?.title,
+            description: newsPost?.subtitle,
+            url: `https://qirim.news${params.locale === 'uk' ? '' : `/${params.locale}`}/news/${slug}`,
+            siteName: 'Qirim News',
+            locale: params.locale === 'uk' ? 'uk_UA' : 'en_US',
+            alternateLocale: ['uk_UA', 'en_US'],
             images: [
                 {
                     url: newsPost?.image
@@ -63,7 +70,7 @@ export default async function NewsSlug({params: {slug}}: any) {
         <React.Fragment>
             <section className={'px-4 mb-14 lg:mb-36'}>
                 <div className={'max-w-[1479px] mx-auto my-0'}>
-                    <Breadcrumbs />
+                    <Breadcrumbs current={newsPost.title} />
                     <div className={'flex justify-between gap-x-10'}>
                         <aside className={'hidden xl:block lg:max-w-[337px]'}>
                             <ArticlesTwo locale={locale} />
@@ -159,12 +166,11 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     />
                                 </div>
                                 <SharePanel link={newsPost.slug} />
-                            </div>
                             <div className={'mt-16 xl:w-[90%]'}>
                                 <h3 className={'text-2xl font-bold mb-9'}>Читайте також:</h3>
                                 <ul>
                                     {relatedNews.map((newsPost: any) => (
-                                        <li key={newsPost.id} className='flex items-center mb-8'>
+                                        <li key={newsPost.slug || newsPost.id} className='flex items-center mb-8'>
                                             <span
                                                 className={
                                                     'w-[9px] min-w-[9px] h-[8px] bg-[--primary-color] rounded-[50%] mr-6'
@@ -181,6 +187,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                         </li>
                                     ))}
                                 </ul>
+                            </div>
                             </div>
                             <div className='flex flex-col justify-between items-center p-4 my-11 bg-[--secondary-color-4] rounded-lg md:flex-row lg:p-11 lg:my-24'>
                                 <div>
@@ -224,7 +231,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                             <div className={'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'}>
                                 {mainNewsPosts.slice(1).map((newsPost: any) => (
                                     <MainNewsItem
-                                        key={newsPost.id}
+                                        key={newsPost.slug || newsPost.id}
                                         newsPost={newsPost}
                                         href={`${newsPost.slug}`}
                                     />

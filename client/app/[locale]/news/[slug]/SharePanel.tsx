@@ -3,12 +3,15 @@
 import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {useLocale, useTranslations} from 'next-intl';
 import '../../styles/home.scss';
 
 const SharePanel = ({link}: any) => {
+    const t = useTranslations('share');
+    const locale = useLocale();
     const [copied, setCopied] = useState(false);
 
-    const fullLink = `https://qirim.news/news/${link}`;
+    const fullLink = `https://qirim.news${locale === 'uk' ? '' : `/${locale}`}/news/${link}`;
     const shareLinks = [
         {
             name: 'Twitter',
@@ -43,9 +46,30 @@ const SharePanel = ({link}: any) => {
     };
 
     return (
-        <div
-            className={`flex justify-end mt-5 xl:absolute xl:mt-0 xl:right-0 xl:top-0 xl:flex-col xl:w-[50px] xl:justify-self-end`}
-        >
+        <>
+            <div
+                role='status'
+                aria-live='polite'
+                className={`fixed left-1/2 bottom-6 z-[1000] flex items-center gap-2.5 rounded-xl bg-[--secondary-color-4] border border-[--secondary-color-3] px-4 py-3 text-sm font-medium shadow-lg transition-all duration-300 ${
+                    copied
+                        ? '-translate-x-1/2 translate-y-0 opacity-100'
+                        : 'pointer-events-none -translate-x-1/2 translate-y-4 opacity-0'
+                }`}
+            >
+                <svg width='20' height='20' viewBox='0 0 20 20' fill='none' aria-hidden='true'>
+                    <circle cx='10' cy='10' r='10' fill='#22c55e' />
+                    <path
+                        d='M5.5 10.5l3 3 6-6.5'
+                        stroke='#fff'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                    />
+                </svg>
+                {t('copied')}
+            </div>
+        <div className='mt-5 xl:absolute xl:inset-y-0 xl:right-0 xl:mt-0 xl:w-[50px]'>
+        <div className='flex justify-end xl:sticky xl:top-28 xl:flex-col'>
             <button
                 className={'p-4 bg-[--secondary-color-4] rounded-lg hover:bg-[--secondary-color] mr-8 xl:mr-0 xl:mb-2.5'}
                 onClick={handleCopy}
@@ -80,6 +104,8 @@ const SharePanel = ({link}: any) => {
                 ))}
             </div>
         </div>
+        </div>
+        </>
     );
 };
 

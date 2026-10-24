@@ -41,8 +41,32 @@ header {
 }
 
 @media (min-width: 1024px) {
-    .header {
-     z-index: unset;
+    // header становится "прозрачным" контейнером, чтобы nav залипал на весь скролл страницы
+    header {
+        display: contents;
+    }
+
+    .site-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: rgba(7, 65, 107, 1);
+        transition: box-shadow 0.25s ease, background-color 0.25s ease;
+
+        &.is-scrolled {
+            background-color: rgba(7, 65, 107, 0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 6px 24px rgba(1, 6, 10, 0.25);
+        }
+
+        img[alt='Logo QN'] {
+            transition: transform 0.25s ease;
+            transform-origin: left center;
+        }
+
+        &.is-scrolled img[alt='Logo QN'] {
+            transform: scale(0.88);
+        }
     }
 
     .nav-category,

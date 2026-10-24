@@ -4,7 +4,7 @@ import BreadCrumbs from '../components/common/BreadCrumbs';
 import Authors from './Authors';
 import {getBlogs} from '@/app/[locale]/lib/newsPosts';
 import {getTranslations} from "next-intl/server";
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import Image from 'next/image';
 import BtnCreateBlog from './BtnCreateBlog';
 import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
@@ -15,10 +15,11 @@ export default async function Blogs() {
     const t = await getTranslations('common');
 
     const normalizeString = (str: string) => {
-        return str
+        return (str || '')
+            .split(',')[0] // имя до запятой, без должности: "Имя, лидер..." -> "Имя"
             .trim()
             .toLowerCase()
-            .replace(/[^a-zа-яё0-9]/gi, '');
+            .replace(/[^\p{L}\p{N}]/gu, '');
     };
 
     const uniqueAuthors = Array.from(

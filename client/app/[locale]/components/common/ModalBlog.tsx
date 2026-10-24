@@ -1,172 +1,183 @@
-// import React from 'react';
-// import DropBox from './DropBox';
-//
-// const ModalBlog = ({onClose}: any) => {
-//     const handleContentClick = (e: any) => {
-//         e.stopPropagation();
-//     };
-//     const inputs = [
-//         {id: 'name', label: "Назвіть себе (Ваше ім'я) *", type: 'text', placeholder: "Ім'я"},
-//         {id: 'email', label: 'Ваш Email *', type: 'email', placeholder: 'Email'},
-//         {id: 'title', label: 'Заголовок *', type: 'text', placeholder: 'Заголовок'},
-//         // {id: 'thesis', label: 'Тезис *', type: 'textarea', placeholder: ''},
-//         {id: 'text', label: 'Текст *', type: 'textarea', placeholder: ''}
-//     ];
-//
-//     const handleFileUpload = (file: File) => {
-//         console.log('File uploaded:', file);
-//         // Здесь обрабатывать или отправлять файл на сервер
-//     };
-//
-//     return (
-//         <div
-//             onClick={onClose}
-//             className={'overlay fixed top-0 left-0 w-full h-full bg-black/[0.5] z-50'}
-//         >
-//             <form
-//
-//                 onClick={handleContentClick}
-//                 className='grid fixed top-1/2 left-1/2 translate-x-[-50%] and translate-y-[-50%]
-//                 max-w-[959px] w-full h-full p-4 gap-y-5 bg-[--background-color] overflow-auto mx-auto my-0 z-50 lg:rounded-xl lg:my-5 lg:h-100vh lg:p-12 lg:gap-y-7'
-//             >
-//                 <button className={'w-6 h-6 absolute top-6 right-6'} onClick={onClose}>
-//                     <span className='bg-black w-1 h-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-45'></span>
-//                     <span className='bg-black w-1 h-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-45'></span>
-//                 </button>
-//                 <h3 className='font-semibold lg:text-2xl'>
-//                     Висловлюйте свою думку на будь яку тему, <br /> та публiкуйтеся на нашому
-//                     порталi
-//                 </h3>
-//                 {inputs.map(input => (
-//                     <div key={input.id} className='flex flex-col w-full text-sm'>
-//                         <label className='text-sm font-semibold' htmlFor={input.id}>
-//                             {input.label}
-//                         </label>
-//                         {input.type === 'textarea' ? (
-//                             <textarea
-//                                 className='border resize-none border-solid border-[#D1D5DB] rounded-md py-2.5 px-3 focus:outline-[--primary-color-5]'
-//                                 id={input.id}
-//                                 name={input.id}
-//                                 required
-//                             />
-//                         ) : (
-//                             <input
-//                                 className='border border-solid border-[#D1D5DB] rounded-md py-2.5 px-3 focus:outline-[--primary-color-5]'
-//                                 type={input.type}
-//                                 id={input.id}
-//                                 name={input.id}
-//                                 placeholder={input.placeholder}
-//                                 required
-//                             />
-//                         )}
-//                     </div>
-//                 ))}
-//                 <div className='cursor-pointer'>
-//                     <label htmlFor='fileInput' className='text-sm font-semibold'>Зображення поста *</label>
-//                     <DropBox onUpload={handleFileUpload} />
-//                 </div>
-//
-//                 <button
-//                     className={
-//                         'block mx-auto mb-0 mt-7 w-full font-medium text-sm whitespace-nowrap bg-[--accent-color] px-3.5 py-2.5 rounded-md lg:w-[unset] lg:mx-[unset] lg:justify-self-start lg:text-base lg:mt-6'
-//                     }
-//                     type='submit'
-//                 >
-//                     Створити пост
-//                 </button>
-//             </form>
-//         </div>
-//     );
-// };
-//
-// export default ModalBlog;
+'use client';
+import React, {useEffect, useRef, useState} from 'react';
+import {useLocale} from 'next-intl';
 
+const MAX_SIZE = 1024 * 1024;
 
-import React, {useEffect, useState} from 'react';
-import DropBox from './DropBox';
+const fieldClass =
+    'w-full border border-[#E5E7EB] rounded-md py-2.5 px-3 text-sm bg-white placeholder:text-[#9CA3AF] focus:outline-[--primary-color-5]';
+const labelClass = 'text-xs font-semibold mb-1.5';
 
 const ModalBlog = ({onClose}: any) => {
+    const locale = useLocale();
     const [visible, setVisible] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+    const [error, setError] = useState('');
+    const [avatar, setAvatar] = useState<File | null>(null);
+    const [avatarPreview, setAvatarPreview] = useState('');
+    const avatarInput = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        // Позволяет применить transition после монтирования
-        setTimeout(() => setVisible(true), 10);
+        const timer = setTimeout(() => setVisible(true), 10);
+        return () => clearTimeout(timer);
     }, []);
 
-    const handleContentClick = (e: any) => {
-        e.stopPropagation();
+    const handleAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        if (file.size > MAX_SIZE) {
+            setError('Аватар має бути до 1 MB');
+            return;
+        }
+        setError('');
+        setAvatar(file);
+        setAvatarPreview(URL.createObjectURL(file));
     };
 
-    const inputs = [
-        {id: 'name', label: "Назвіть себе (Ваше ім'я) *", type: 'text', placeholder: "Ім'я"},
-        {id: 'email', label: 'Ваш Email *', type: 'email', placeholder: 'Email'},
-        {id: 'title', label: 'Заголовок *', type: 'text', placeholder: 'Заголовок'},
-        {id: 'text', label: 'Текст *', type: 'textarea', placeholder: ''}
-    ];
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!avatar) return setError('Завантажте аватар автора');
 
-    const handleFileUpload = (file: File) => {
-        console.log('File uploaded:', file);
+        const data = new FormData(e.currentTarget);
+        data.append('avatar', avatar);
+        data.append('locale', locale);
+
+        setStatus('sending');
+        setError('');
+        try {
+            const res = await fetch('/api/blog-submit', {method: 'POST', body: data});
+            if (!res.ok) throw new Error();
+            setStatus('success');
+        } catch {
+            setStatus('idle');
+            setError('Не вдалося надіслати. Спробуйте ще раз пізніше.');
+        }
     };
+
+    const closeBtn = (
+        <button className='w-6 h-6 absolute top-6 right-6' onClick={onClose} type='button' aria-label='Закрити'>
+            <span className='bg-black w-0.5 h-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-45'></span>
+            <span className='bg-black w-0.5 h-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45'></span>
+        </button>
+    );
 
     return (
         <div
             onClick={onClose}
             className='overlay fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex items-center justify-center'
         >
-            <form
-                onClick={handleContentClick}
-                className={`
-                    transform transition-all duration-1000 ease-out
-                    ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
-                    max-w-[959px] w-full max-h-[95vh] p-4 gap-y-5 bg-[--background-color] overflow-auto
-                    z-50 rounded-xl shadow-xl grid lg:p-12 lg:gap-y-7
-                `}
+            <div
+                onClick={e => e.stopPropagation()}
+                className={`relative transform transition-all duration-500 ease-out ${
+                    visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                } max-w-[959px] w-full max-h-[95vh] p-4 bg-white overflow-auto rounded-xl shadow-xl lg:px-10 lg:py-6`}
             >
-                <button className='w-6 h-6 absolute top-6 right-6' onClick={onClose} type="button">
-                    <span
-                        className='bg-black w-1 h-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-45'></span>
-                    <span
-                        className='bg-black w-1 h-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-45'></span>
-                </button>
-                <h3 className='font-semibold lg:text-2xl'>
-                    Висловлюйте свою думку на будь-яку тему, <br/> та публiкуйтеся на нашому порталi
-                </h3>
-                {inputs.map(input => (
-                    <div key={input.id} className='flex flex-col w-full text-sm'>
-                        <label className='text-sm font-semibold' htmlFor={input.id}>
-                            {input.label}
-                        </label>
-                        {input.type === 'textarea' ? (
-                            <textarea
-                                className='border resize-none border-[#D1D5DB] rounded-md py-2.5 px-3 focus:outline-[--primary-color-5]'
-                                id={input.id}
-                                name={input.id}
-                                required
-                            />
-                        ) : (
-                            <input
-                                className='border border-[#D1D5DB] rounded-md py-2.5 px-3 focus:outline-[--primary-color-5]'
-                                type={input.type}
-                                id={input.id}
-                                name={input.id}
-                                placeholder={input.placeholder}
-                                required
-                            />
-                        )}
-                    </div>
-                ))}
-                <div className='cursor-pointer'>
-                    <label htmlFor='fileInput' className='text-sm font-semibold'>Зображення поста *</label>
-                    <DropBox onUpload={handleFileUpload}/>
-                </div>
+                {closeBtn}
 
-                <button
-                    className='block mx-auto mt-7 w-full font-medium text-sm bg-[--accent-color] px-3.5 py-2.5 rounded-md lg:w-auto lg:mt-6'
-                    type='submit'
-                >
-                    Створити пост
-                </button>
-            </form>
+                {status === 'success' ? (
+                    <div className='text-center py-16'>
+                        <h3 className='font-semibold text-xl lg:text-2xl mb-3'>Дякуємо! Ваш пост надіслано</h3>
+                        <p className='text-sm text-[#4B5563] mb-8'>
+                            Він з’явиться на сайті після перевірки модератором.
+                        </p>
+                        <button
+                            type='button'
+                            onClick={onClose}
+                            className='font-medium text-sm bg-[--accent-color] px-5 py-2.5 rounded-md'
+                        >
+                            Закрити
+                        </button>
+                    </div>
+                ) : (
+                    <form onSubmit={handleSubmit} className='grid gap-y-5 lg:gap-y-3'>
+                        <h3 className='font-semibold text-lg lg:text-xl pr-8'>
+                            Висловлюйте свою думку на будь яку тему, <br /> та публікуйтеся на нашому порталі
+                        </h3>
+
+                        {/* honeypot для ботів */}
+                        <input
+                            type='text'
+                            name='website'
+                            tabIndex={-1}
+                            autoComplete='off'
+                            className='hidden'
+                            aria-hidden='true'
+                        />
+
+                        <div className='grid gap-5 lg:grid-cols-2 lg:gap-x-3'>
+                            <div className='flex flex-col'>
+                                <label className={labelClass} htmlFor='name'>
+                                    Назвіть себе (Ваше ім’я) *
+                                </label>
+                                <input className={fieldClass} id='name' name='name' maxLength={100} required />
+                            </div>
+                            <div className='flex flex-col'>
+                                <label className={labelClass} htmlFor='email'>
+                                    Ваш Email *
+                                </label>
+                                <input className={fieldClass} id='email' name='email' type='email' required />
+                            </div>
+                        </div>
+
+                        <div>
+                            <p className={labelClass}>Аватар автора *</p>
+                            <div className='flex items-center gap-3'>
+                                <div className='w-[34px] h-[34px] rounded-full bg-[#E5E7EB] overflow-hidden'>
+                                    {avatarPreview && (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img src={avatarPreview} alt='' className='w-full h-full object-cover' />
+                                    )}
+                                </div>
+                                <button
+                                    type='button'
+                                    onClick={() => avatarInput.current?.click()}
+                                    className='text-xs font-medium border border-[#E5E7EB] rounded-md px-3 py-1.5 bg-white'
+                                >
+                                    Завантажити
+                                </button>
+                                <input
+                                    ref={avatarInput}
+                                    type='file'
+                                    accept='image/png,image/jpeg'
+                                    className='hidden'
+                                    onChange={handleAvatar}
+                                />
+                            </div>
+                        </div>
+
+                        <div className='flex flex-col'>
+                            <label className={labelClass} htmlFor='title'>
+                                Заголовок *
+                            </label>
+                            <input className={fieldClass} id='title' name='title' maxLength={200} required />
+                        </div>
+
+                        <div className='flex flex-col'>
+                            <label className={labelClass} htmlFor='text'>
+                                Текст *
+                            </label>
+                            <textarea
+                                className={`${fieldClass} h-[160px] resize-y`}
+                                id='text'
+                                name='text'
+                                maxLength={30000}
+                                placeholder='Текст'
+                                required
+                            />
+                        </div>
+
+                        {error && <p className='text-sm text-red-600'>{error}</p>}
+
+                        <button
+                            className='lg:mt-0 mt-2 font-medium text-sm bg-[--accent-color] px-5 py-3 rounded-md justify-self-start disabled:opacity-60'
+                            type='submit'
+                            disabled={status === 'sending'}
+                        >
+                            {status === 'sending' ? 'Надсилаємо...' : 'Створити пост'}
+                        </button>
+                    </form>
+                )}
+            </div>
         </div>
     );
 };

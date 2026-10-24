@@ -208,16 +208,18 @@ export async function searchNewsPosts(query) {
         filters: {title: {$containsi: query}},
         fields: ['slug', 'title', 'publish_at', 'categoryList'],
         populate: {image: {fields: ['url']}},
-        sort: ['publish_at:desc']
+        sort: ['publish_at:desc'],
+        pagination: {start: 0, limit: 30}
     });
 
     return data.map(item => toNewsPost(item));
 }
 
-export async function getSlugs() {
+export async function getSlugs(limit = 100) {
     const {data} = await fetchNewsPosts({
         fields: ['slug'],
-        sort: ['publish_at:desc']
+        sort: ['publish_at:desc'],
+        pagination: {start: 0, limit}
     });
     return data.map(item => item.slug);
 }

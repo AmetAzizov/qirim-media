@@ -67,7 +67,37 @@
         }
       },
       "targetField": "title",
-      "required": true
+      "visible": false
+    },
+    "thesis": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "authorEmail": {
+      "type": "email",
+      "private": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "authorAvatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "publish_at": {
       "type": "datetime",

@@ -1,16 +1,19 @@
-version: '3.9'
-
 services:
   client:
     build:
       context: ../client
-      dockerfile: ../client/dockerfile
+      dockerfile: dockerfile
+      args:
+        # Берётся из dev-config/.env (см. .env.example)
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:?Задайте NEXT_PUBLIC_API_URL в dev-config/.env}
     ports:
       - "3000:3000"
     depends_on:
       - server-cms
+    env_file:
+      - ../client/.env
     environment:
-      - NEXT_PUBLIC_API_URL=http://server-cms:1337
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     restart: unless-stopped
     networks:
       - app-network
@@ -18,9 +21,11 @@ services:
   server-cms:
     build:
       context: ../server-cms
-      dockerfile: ../server-cms/dockerfile
+      dockerfile: dockerfile
     ports:
       - "1337:1337"
+    env_file:
+      - ../server-cms/.env
     environment:
       - NODE_ENV=production
       - TZ=Europe/Kyiv

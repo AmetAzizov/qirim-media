@@ -8,7 +8,7 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 's3-qirimbucket.gmhost.space'
-            }
+            },
         ]
     },
     webpack(config) {

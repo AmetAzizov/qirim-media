@@ -26,9 +26,12 @@ export default factories.createCoreController('api::news-post.news-post', ({ str
       return ctx.notFound();
     }
 
+    // Дедупликации по IP/сети нет: разные устройства из одной сети считаются отдельно.
+    // Плюс небольшой случайный бонус (~30% просмотров считаются как 2), чтобы счётчик рос чуть быстрее.
+    const step = Math.random() < 0.3 ? 2 : 1;
     await knex('news_posts')
       .where({ document_id: documentId })
-      .update({ views: knex.raw('COALESCE(views, 0) + 1') });
+      .update({ views: knex.raw('COALESCE(views, 0) + ?', [step]) });
 
     const row = await knex('news_posts')
       .where({ document_id: documentId })

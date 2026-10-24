@@ -4,3 +4,13 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
 }
+
+// На светлом фоне футера неактивные языки должны быть тёмными (в шапке они белые)
+.footer-lang .language-switcher:not(.active-language) {
+    background-color: transparent;
+    color: var(--secondary-color-2);
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.06);
+    }
+}

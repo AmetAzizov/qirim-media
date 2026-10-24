@@ -4,11 +4,12 @@ import SearchIcon from '@/public/u_search.svg'
 import CloseIcon from '@/public/close-button.svg';
 
 interface SearchInputProps {
-    query: string;
-    setQuery: (value: string) => void;
-    onSubmit: () => void;
-    autoFocus?: boolean;
-    darkStyle?: boolean;
+    query: string,
+    setQuery: (value: string) => void,
+    onSubmit: () => void,
+    autoFocus?: boolean,
+    darkStyle?: boolean,
+    inputBg?: string
 }
 
 export default function SearchInput({
@@ -17,6 +18,7 @@ export default function SearchInput({
                                         onSubmit,
                                         autoFocus = false,
                                         darkStyle = false,
+                                        inputBg
                                     }: SearchInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,7 +64,8 @@ export default function SearchInput({
                 onClick={onSubmit}
                 className="absolute right-2 top-1/2 -translate-y-1/2"
             >
-                <SearchIcon className={`w-[32px] h-[32px] hover:opacity-50 ${darkStyle ? 'fill-[#f5f5f5]' : 'fill-[#01060a]'}`} />
+                <SearchIcon
+                    className={`w-[32px] h-[32px] hover:opacity-50 ${darkStyle ? 'fill-[#f5f5f5]' : 'fill-[#01060a]'}`}/>
             </button>
         </div>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import {Link} from '@/i18n/routing';
 import Image from 'next/image';
 import {getBestOfWeek} from "@/app/[locale]/lib/getBestOfWeek";
 import '../../styles/main-news.scss';
@@ -9,6 +9,7 @@ import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 export default async function BestOfWeek() {
     const locale = getCurrentLocale();
     const newsPosts = await getBestOfWeek(0, 13, locale);
+    if (!newsPosts || newsPosts.length < 2) return null;
     const t = await getTranslations('common')
     console.log(newsPosts);
 
@@ -33,7 +34,7 @@ export default async function BestOfWeek() {
                     }
                 >
                     <Link
-                        href={`news/${newsPosts[0].slug}`}
+                        href={`/news/${newsPosts[0].slug}`}
                         style={{
                             backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${newsPosts[0].image})`,
                             backgroundPosition: 'center',
@@ -66,8 +67,8 @@ export default async function BestOfWeek() {
                     </Link>
                     {newsPosts.slice(2).map((newsPost: any) => (
                         <Link
-                            key={newsPost.id}
-                            href={`news/${newsPost.slug}`}
+                            key={newsPost.slug || newsPost.id}
+                            href={`/news/${newsPost.slug}`}
                             className={
                                 'flex items-center flex-row-reverse justify-between xl:justify-normal xl:flex-row'
                             }
@@ -103,7 +104,7 @@ export default async function BestOfWeek() {
                         </Link>
                     ))}
                     <Link
-                        href={`news/${newsPosts[1].slug}`}
+                        href={`/news/${newsPosts[1].slug}`}
                         style={{
                             backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50%, #000 100%), url(${newsPosts[1].image})`,
                             backgroundPosition: 'center',

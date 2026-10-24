@@ -1,7 +1,7 @@
 'use client';
 
 import {useSearchModalStore} from '@/stores/searchModalStore';
-import {useRouter} from 'next/navigation';
+import {useRouter} from '@/i18n/routing';
 import React, {useEffect, useRef, useState, startTransition} from 'react';
 import '../../styles/search-bar.scss';
 import SearchInput from "@/app/[locale]/components/header/SearchInput";
