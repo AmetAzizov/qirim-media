@@ -123,7 +123,7 @@ export async function getBlog(slug, locale) {
 export async function getMainSlides(start, limit, locale) {
     const {data} = await fetchNewsPosts({
         filters: {mainSlider: {$eq: 'true'}},
-        fields: ['slug', 'title', 'subtitle', 'publish_at', 'categoryList'],
+        fields: ['slug', 'title', 'subtitle', 'publish_at', 'categoryList', 'views'],
         populate: {image: {fields: ['url']}},
         sort: ['publish_at:desc'],
         pagination: {start, limit},
@@ -131,6 +131,7 @@ export async function getMainSlides(start, limit, locale) {
     });
     return data.map(item => ({
         ...toNewsPost(item),
+        views: item.views ?? 0,
         dateTime: formatDateWithMonthName(item.publish_at, locale)
     }));
 }

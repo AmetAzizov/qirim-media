@@ -31,7 +31,7 @@ const Navbar = () => {
         <nav className={`site-nav p-4 ${isScrolled ? 'is-scrolled' : ''} ${isMenuOpen ? 'navbar-burger' : ''}`}>
             <div className={'flex my-0 mx-auto max-w-[1479px] justify-between'}>
                 <Link className='flex items-center' href='/'>
-                    <Image src='/logoqn.svg' width={138} height={28} alt='Logo QN' />
+                    <Image src='/logoqn.svg' width={153} height={28} alt='Logo QN' />
                 </Link>
                 <ul className={'hidden lg:flex lg:items-center'}>
                     <CategoryList categories={['/', 'news', 'publications', 'videos', 'blogs']} />

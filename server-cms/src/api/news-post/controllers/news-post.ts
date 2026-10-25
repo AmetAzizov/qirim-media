@@ -5,6 +5,25 @@
 import { factories } from '@strapi/strapi'
 
 export default factories.createCoreController('api::news-post.news-post', ({ strapi }) => ({
+  // Текущее значение счётчика без инкремента (страница кэшируется Next.js, поэтому initialViews устаревает)
+  async getViews(ctx) {
+    const { documentId } = ctx.params;
+
+    if (!documentId || typeof documentId !== 'string' || documentId.length > 64) {
+      return ctx.badRequest('Invalid documentId');
+    }
+
+    const row = await strapi.db.connection('news_posts')
+      .where({ document_id: documentId })
+      .whereNotNull('published_at')
+      .first('views');
+
+    if (!row) return ctx.notFound();
+
+    ctx.set('Cache-Control', 'no-store');
+    ctx.body = { views: Number(row.views ?? 0) };
+  },
+
   async incrementViews(ctx) {
     const { documentId } = ctx.params;
 

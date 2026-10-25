@@ -1,11 +1,8 @@
 'use client';
 
 import React, {useState, useEffect} from 'react';
-import DatePicker, {registerLocale} from 'react-datepicker';
-import DateIcon from '@/public/date-picker.svg';
 import {format} from 'date-fns';
-import uk from 'date-fns/locale/uk';
-import 'react-datepicker/dist/react-datepicker.css';
+import Image from 'next/image';
 
 import BreadCrumbs from '../components/common/BreadCrumbs';
 import {Link} from '@/i18n/routing';
@@ -13,9 +10,30 @@ import {useSearchParams} from 'next/navigation';
 import {getNewsPosts} from '../../[locale]/lib/newsPosts';
 import CategoryBtn from '../components/common/CategoryBtn';
 import NewsSkeletonLoader from '../components/common/NewsSkeletonLoader';
-import CustomInput from "@/app/[locale]/components/common/CustomDatePicker";
+import CustomDatePicker from "@/app/[locale]/components/common/CustomDatePicker";
 
-registerLocale('uk', uk);
+// Плейсхолдер + плавное проявление, чтобы картинки не "выскакивали" в случайном порядке
+function FadeInImage({src, alt, priority, delay}: {src: string; alt: string; priority: boolean; delay: number}) {
+    const [loaded, setLoaded] = useState(false);
+
+    return (
+        <div className='relative w-full h-[190.5px] rounded-xl overflow-hidden bg-[#ECEBEB]'>
+            <Image
+                src={src}
+                alt={alt}
+                fill
+                priority={priority}
+                sizes='(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw'
+                quality={70}
+                onLoad={() => setLoaded(true)}
+                style={{transitionDelay: loaded ? `${delay}ms` : '0ms'}}
+                className={`object-cover transition-opacity duration-500 ease-out ${
+                    loaded ? 'opacity-100' : 'opacity-0'
+                }`}
+            />
+        </div>
+    );
+}
 
 export default function NewsPostsClient({locale}: { locale: string }) {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -90,17 +108,8 @@ export default function NewsPostsClient({locale}: { locale: string }) {
 
                 <div className='flex flex-nowrap gap-8 mb-6 justify-between items-center'>
                     <CategoryBtn value={category} setCategory={setCategory}/>
-                    <div className="flex items-center cursor-pointer">
-                        <DatePicker
-                            selected={selectedDate}
-                            onChange={(date: Date) => setSelectedDate(date)}
-                            dateFormat="dd.MM.yyyy"
-                            placeholderText="Оберіть дату"
-                            locale="uk"
-                            className=" border-none text-sm text-black color"
-                            isClearable
-                            customInput={<CustomInput/>}
-                        />
+                    <div className="flex items-center">
+                        <CustomDatePicker selected={selectedDate} onChange={setSelectedDate} locale={locale}/>
                     </div>
                 </div>
 
@@ -114,23 +123,20 @@ export default function NewsPostsClient({locale}: { locale: string }) {
                                     <NewsSkeletonLoader/>
                                 </li>
                             ))
-                            : newsPosts.map(newsPost => (
+                            : newsPosts.map((newsPost, index) => (
                                 <li key={newsPost.slug}>
                                     <Link
                                         className='flex flex-col justify-between items-start h-full hover:opacity-50'
                                         href={`/news/${newsPost.slug}`}
                                     >
-                                        <div
-                                            style={{
-                                                background: `url(${newsPost.image})`,
-                                                backgroundPosition: 'center',
-                                                backgroundSize: 'cover',
-                                                backgroundRepeat: 'no-repeat',
-                                                width: '100%',
-                                                height: '190.5px',
-                                                borderRadius: '12px'
-                                            }}
-                                        ></div>
+                                        <FadeInImage
+                                            src={Array.isArray(newsPost.image) ? newsPost.image[0] : newsPost.image}
+                                            alt={newsPost.title || ''}
+                                            // первые карточки каждой порции грузим сразу, остальные лениво
+                                            priority={index % limit < 4}
+                                            // небольшая задержка по порядку внутри ряда, чтобы появлялись "волной"
+                                            delay={(index % 5) * 60}
+                                        />
                                         <button
                                             className='text-xs font-semibold text-[--primary-color-5] bg-[#D9EDFC] px-2 py-1 rounded-2xl mt-4'
                                         >

@@ -21,7 +21,7 @@ const CountDownTimer = () => {
     ];
 
     return (
-        <div className='flex flex-col max-w-[1479px] mt-0 mb-12 mx-auto lg:flex-row lg:mt-[-6rem] lg:mb-24'>
+        <div className='relative z-[2] flex flex-col max-w-[1479px] mt-0 mb-12 mx-auto lg:flex-row lg:mt-[-6rem] lg:mb-24'>
             {timersData.map(timerData => {
                 const givenDate = new Date(timerData.inputDate);
 
@@ -33,7 +33,7 @@ const CountDownTimer = () => {
                 let days = differenceInDays(currentDate, dateAfterMonths);
                 return (
                     <div
-                        key={''}
+                        key={timerData.inputDate}
                         style={timerData.styles}
                         className={'flex flex-col py-7 px-4 basis-1/3 lg:py-10'}
                     >

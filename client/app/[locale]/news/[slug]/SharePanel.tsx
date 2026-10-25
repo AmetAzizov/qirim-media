@@ -71,7 +71,7 @@ const SharePanel = ({link}: any) => {
         <div className='mt-5 xl:absolute xl:inset-y-0 xl:right-0 xl:mt-0 xl:w-[50px]'>
         <div className='flex justify-end xl:sticky xl:top-28 xl:flex-col'>
             <button
-                className={'p-4 bg-[--secondary-color-4] rounded-lg hover:bg-[--secondary-color] mr-8 xl:mr-0 xl:mb-2.5'}
+                className={'p-4 bg-[--secondary-color-4] rounded-lg [@media(hover:hover)]:hover:bg-[--secondary-color] active:bg-[--secondary-color] mr-8 xl:mr-0 xl:mb-2.5'}
                 onClick={handleCopy}
             >
                 <Image src='/clipboard.svg' width={20} height={20} alt='clipboard' />
@@ -87,7 +87,7 @@ const SharePanel = ({link}: any) => {
                 {shareLinks.map(({name, href, icon}: any) => (
                     <Link
                         className={
-                            'flex items-center justify-center w-[40px] h-[40px] bg-[--background-color] rounded-md mr-1.5 hover:bg-[--secondary-color-3] xl:mr-0 xl:mb-1.5'
+                            'flex items-center justify-center w-[40px] h-[40px] bg-[--background-color] rounded-md mr-1.5 [@media(hover:hover)]:hover:bg-[--secondary-color-3] active:bg-[--secondary-color-3] xl:mr-0 xl:mb-1.5'
                         }
                         key={name}
                         href={href}

@@ -1,5 +1,6 @@
 'use client';
 import React, {useEffect, useRef, useState} from 'react';
+import {createPortal} from 'react-dom';
 import {useLocale} from 'next-intl';
 
 const MAX_SIZE = 1024 * 1024;
@@ -17,9 +18,41 @@ const ModalBlog = ({onClose}: any) => {
     const [avatarPreview, setAvatarPreview] = useState('');
     const avatarInput = useRef<HTMLInputElement>(null);
 
+    const [mounted, setMounted] = useState(false);
+
     useEffect(() => {
+        setMounted(true);
         const timer = setTimeout(() => setVisible(true), 10);
         return () => clearTimeout(timer);
+    }, []);
+
+    // блокируем прокрутку страницы под модалкой
+    useEffect(() => {
+        const {body, documentElement: html} = document;
+        const scrollY = window.scrollY;
+        const scrollbarWidth = window.innerWidth - html.clientWidth;
+        const prevScrollBehavior = html.style.scrollBehavior;
+
+        html.style.overflow = 'hidden';
+        body.style.position = 'fixed';
+        body.style.top = `-${scrollY}px`;
+        body.style.left = '0';
+        body.style.right = '0';
+        body.style.width = '100%';
+        body.style.paddingRight = `${scrollbarWidth}px`;
+
+        return () => {
+            html.style.overflow = '';
+            body.style.position = '';
+            body.style.top = '';
+            body.style.left = '';
+            body.style.right = '';
+            body.style.width = '';
+            body.style.paddingRight = '';
+            html.style.scrollBehavior = 'auto';
+            window.scrollTo(0, scrollY);
+            html.style.scrollBehavior = prevScrollBehavior;
+        };
     }, []);
 
     const handleAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,16 +94,18 @@ const ModalBlog = ({onClose}: any) => {
         </button>
     );
 
-    return (
+    if (!mounted) return null;
+
+    return createPortal(
         <div
             onClick={onClose}
-            className='overlay fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex items-center justify-center'
+            className='overlay fixed inset-0 w-full h-[100dvh] bg-black/50 z-[1000] flex items-center justify-center p-3 overscroll-contain'
         >
             <div
                 onClick={e => e.stopPropagation()}
                 className={`relative transform transition-all duration-500 ease-out ${
                     visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-                } max-w-[959px] w-full max-h-[95vh] p-4 bg-white overflow-auto rounded-xl shadow-xl lg:px-10 lg:py-6`}
+                } max-w-[959px] w-full max-h-[calc(100dvh-24px)] p-4 bg-white overflow-auto overscroll-contain rounded-xl shadow-xl lg:px-10 lg:py-6`}
             >
                 {closeBtn}
 
@@ -178,7 +213,8 @@ const ModalBlog = ({onClose}: any) => {
                     </form>
                 )}
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

@@ -24,12 +24,30 @@ const FOCUSABLE =
 function useScrollLock(isLocked: boolean) {
     useEffect(() => {
         if (!isLocked) return;
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
+        const {body, documentElement: html} = document;
+        const scrollY = window.scrollY;
+        const scrollbarWidth = window.innerWidth - html.clientWidth;
+        const prevScrollBehavior = html.style.scrollBehavior;
+
+        html.style.overflow = 'hidden';
+        body.style.position = 'fixed';
+        body.style.top = `-${scrollY}px`;
+        body.style.left = '0';
+        body.style.right = '0';
+        body.style.width = '100%';
+        body.style.paddingRight = `${scrollbarWidth}px`;
+
         return () => {
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
+            html.style.overflow = '';
+            body.style.position = '';
+            body.style.top = '';
+            body.style.left = '';
+            body.style.right = '';
+            body.style.width = '';
+            body.style.paddingRight = '';
+            html.style.scrollBehavior = 'auto';
+            window.scrollTo(0, scrollY);
+            html.style.scrollBehavior = prevScrollBehavior;
         };
     }, [isLocked]);
 }
@@ -149,9 +167,9 @@ export default function BurgerMenu() {
                                     <Link
                                         href='/'
                                         onClick={closeMenu}
-                                        className='flex items-center rounded-md bg-[--primary-color] px-3 py-2'
+                                        className='flex items-center rounded-lg bg-[#212121] px-4 py-3'
                                     >
-                                        <Image src='/logoqn.svg' width={138} height={28} alt='Qirim News' />
+                                        <Image src='/logoqn.svg' width={153} height={28} alt='Qirim News' />
                                     </Link>
                                     <button
                                         className='menu-close'
