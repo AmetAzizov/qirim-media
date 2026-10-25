@@ -74,13 +74,13 @@ const Footer = () => {
                     <h2 className={'text-2xl font-semibold mb-5 lg:mb-10'}>{t('followUs')}</h2>
                     <SocialLink
                         href='https://t.me/qirimnews'
-                        src='/telegram.svg'
+                        src='/telegram.png'
                         text={t('tgNews')}
                         altText='social-network'
                     />
                     <SocialLink
                         href='https://www.youtube.com/@qirimnews9210'
-                        src='/youtube.svg'
+                        src='/youtube.png'
                         text={t('ytbChannel')}
                         altText='social-network'
                     />
