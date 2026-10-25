@@ -1,20 +1,22 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {format} from 'date-fns';
 import Image from 'next/image';
 
 import BreadCrumbs from '../components/common/BreadCrumbs';
 import {Link} from '@/i18n/routing';
 import {useSearchParams} from 'next/navigation';
-import {getNewsPosts} from '../../[locale]/lib/newsPosts';
+import {getNewsPosts, NEWS_PAGE_LIMIT} from '../../[locale]/lib/newsPosts';
 import CategoryBtn from '../components/common/CategoryBtn';
 import NewsSkeletonLoader from '../components/common/NewsSkeletonLoader';
 import CustomDatePicker from "@/app/[locale]/components/common/CustomDatePicker";
 
 // Плейсхолдер + плавное проявление, чтобы картинки не "выскакивали" в случайном порядке
 function FadeInImage({src, alt, priority, delay}: {src: string; alt: string; priority: boolean; delay: number}) {
-    const [loaded, setLoaded] = useState(false);
+    // Приоритетные (LCP) картинки не прячем: невидимый элемент не считается LCP
+    const [loaded, setLoaded] = useState(priority);
+    delay = priority ? 0 : delay;
 
     return (
         <div className='relative w-full h-[190.5px] rounded-xl overflow-hidden bg-[#ECEBEB]'>
@@ -35,11 +37,17 @@ function FadeInImage({src, alt, priority, delay}: {src: string; alt: string; pri
     );
 }
 
-export default function NewsPostsClient({locale}: { locale: string }) {
+export default function NewsPostsClient({locale, initialPosts = [], initialCategory = 'Всі'}: {
+    locale: string;
+    initialPosts?: any[];
+    initialCategory?: string;
+}) {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [newsPosts, setNewsPosts] = useState<any[]>([]);
-    const [offset, setOffset] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [newsPosts, setNewsPosts] = useState<any[]>(initialPosts);
+    const [offset, setOffset] = useState<number>(initialPosts.length);
+    const [loading, setLoading] = useState<boolean>(initialPosts.length === 0);
+    // Если сервер отдал данные — первый запрос из браузера не нужен
+    const skipInitialFetch = useRef(initialPosts.length > 0);
     const [loadingMore, setLoadingMore] = useState<boolean>(false);
     const searchParams = useSearchParams();
     const urlCategory = searchParams.get('category') || 'Всі';
@@ -49,8 +57,8 @@ export default function NewsPostsClient({locale}: { locale: string }) {
     useEffect(() => {
         setCategory(urlCategory);
     }, [urlCategory]);
-    const [hasMore, setHasMore] = useState<boolean>(true);
-    const limit = 30;
+    const [hasMore, setHasMore] = useState<boolean>(initialPosts.length === NEWS_PAGE_LIMIT);
+    const limit = NEWS_PAGE_LIMIT;
 
     const fetchNews = async (
         start: number,
@@ -71,6 +79,11 @@ export default function NewsPostsClient({locale}: { locale: string }) {
     };
 
     useEffect(() => {
+        if (skipInitialFetch.current) {
+            skipInitialFetch.current = false;
+            if (category === initialCategory && !selectedDate) return;
+        }
+
         const fetchInitialNews = async () => {
             setLoading(true);
             const initialPosts = await fetchNews(0, category, selectedDate);

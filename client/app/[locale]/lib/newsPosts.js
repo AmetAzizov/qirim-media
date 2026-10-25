@@ -19,6 +19,9 @@ const monthCases = {
     грудень: 'грудня'
 };
 
+// Размер порции списка новостей (сервер и клиент должны совпадать)
+export const NEWS_PAGE_LIMIT = 30;
+
 export default function formatDateWithMonthName(dateString, locale) {
     const date = moment(dateString).tz('Europe/Kyiv').locale(locale);
     const today = moment().startOf('day');
