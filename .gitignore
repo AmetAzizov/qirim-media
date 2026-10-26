@@ -16,3 +16,6 @@ dist/
 build/
 *.tsbuildinfo
 *.log
+
+# Состояние деплоя на сервере
+.deployed-sha

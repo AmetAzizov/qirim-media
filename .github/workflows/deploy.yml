@@ -3,6 +3,10 @@ name: Deploy
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - 'ops/**'
+      - '**.md'
+      - '.idea/**'
   workflow_dispatch: # ручной запуск из вкладки Actions
 
 concurrency:
