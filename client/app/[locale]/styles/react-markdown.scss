@@ -10,6 +10,18 @@
     a {
         color: var(--primary-color-5);
     }
+    img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: contain;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 8px;
+        cursor: zoom-in;
+    }
     iframe {
         width: 100%;
         min-height: 550px;

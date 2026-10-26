@@ -13,6 +13,7 @@ import React from 'react';
 import ArticlesTwo from '../../components/common/ArticlesTwo';
 import rehypeRaw from 'rehype-raw';
 import SharePanel from './SharePanel';
+import ArticleLightbox from './ArticleLightbox';
 import ViewCounter from './ViewCounter';
 import {Metadata} from 'next';
 import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
@@ -69,7 +70,7 @@ export default async function NewsSlug({params: {slug}}: any) {
     return (
         <React.Fragment>
             <section className={'px-4 mb-14 lg:mb-36'}>
-                <div className={'max-w-[1479px] mx-auto my-0'}>
+                <div className={'max-w-[1280px] mx-auto my-0'}>
                     <Breadcrumbs current={newsPost.title} />
                     <div className={'flex justify-between gap-x-10'}>
                         <aside className={'hidden xl:block lg:max-w-[337px]'}>
@@ -128,13 +129,19 @@ export default async function NewsSlug({params: {slug}}: any) {
                                 >
                                     {newsPost.title}
                                 </h2>
+                                <ArticleLightbox>
                                 <Image
                                     src={`${newsPost.image}`}
                                     width={1012}
                                     height={582}
-                                    alt='mainnews-id'
+                                    quality={90}
+                                    priority
+                                    sizes='(min-width: 1280px) 910px, 100vw'
+                                    alt={newsPost.title || 'mainnews-id'}
+                                    data-zoomable=''
+                                    data-full={newsPost.image}
                                     className={
-                                        'w-full h-[217px] object-cover rounded-lg sm:h-[350px] md:h-[400px] lg:h-[582px] xl:w-[90%]'
+                                        'w-full h-auto aspect-[1012/582] object-cover rounded-lg cursor-zoom-in xl:w-[90%]'
                                     }
                                 />
                                 <div
@@ -152,6 +159,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                 >
                                     {newsPost.text}
                                 </ReactMarkdown>
+                                </ArticleLightbox>
                                 <div className={'flex items-center gap-x-10 xl:w-[90%]'}>
                                     <time
                                         className={
