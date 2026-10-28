@@ -40,6 +40,29 @@ header {
 
 }
 
+@media (max-width: 1023px) {
+    // на мобилке nav залипает и прячется при скролле вниз, появляется при скролле вверх
+    header {
+        display: contents;
+    }
+
+    .site-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: rgba(7, 65, 107, 1);
+        transition: transform 0.3s ease, box-shadow 0.25s ease;
+
+        &.is-scrolled {
+            box-shadow: 0 6px 24px rgba(1, 6, 10, 0.25);
+        }
+
+        &.is-hidden {
+            transform: translateY(-100%);
+        }
+    }
+}
+
 @media (min-width: 1024px) {
     // header становится "прозрачным" контейнером, чтобы nav залипал на весь скролл страницы
     header {

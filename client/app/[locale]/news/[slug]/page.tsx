@@ -15,6 +15,7 @@ import rehypeRaw from 'rehype-raw';
 import SharePanel from './SharePanel';
 import ArticleLightbox from './ArticleLightbox';
 import ViewCounter from './ViewCounter';
+import {markdownComponents, parseVideo, VideoEmbed} from './markdownComponents';
 import {Metadata} from 'next';
 import {getCurrentLocale} from "@/app/[locale]/utils/getCurrentLocale";
 
@@ -67,6 +68,7 @@ export default async function NewsSlug({params: {slug}}: any) {
     if (!newsPost) {
         notFound();
     }
+    const mainVideo = parseVideo(newsPost.videoUrl);
     return (
         <React.Fragment>
             <section className={'px-4 mb-14 lg:mb-36'}>
@@ -130,6 +132,11 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     {newsPost.title}
                                 </h2>
                                 <ArticleLightbox>
+                                {mainVideo ? (
+                                    <div className={'xl:w-[90%]'}>
+                                        <VideoEmbed video={mainVideo} />
+                                    </div>
+                                ) : (
                                 <Image
                                     src={`${newsPost.image}`}
                                     width={1012}
@@ -144,6 +151,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                         'w-full h-auto aspect-[1012/582] object-cover rounded-lg cursor-zoom-in xl:w-[90%]'
                                     }
                                 />
+                                )}
                                 <div
                                     className={
                                         'text-lg font-semibold my-6 lg:text-4xl lg:my-9 xl:w-[90%]'
@@ -153,6 +161,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                 </div>
                                 <ReactMarkdown
                                     rehypePlugins={[rehypeRaw]}
+                                    components={markdownComponents}
                                     className={
                                         'react-markdown text-base font-medium mb-9 space-y-9 lg:text-2xl xl:w-[90%]'
                                     }

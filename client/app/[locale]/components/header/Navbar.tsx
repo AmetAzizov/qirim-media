@@ -14,6 +14,7 @@ import SubscribeButton from './SubscribeButton';
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState(null);
     const handleLanguageClick = (languageCode: any) => {
         setSelectedLanguage(languageCode);
@@ -21,14 +22,22 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-        const onScroll = () => setIsScrolled(window.scrollY > 80);
+        let lastY = window.scrollY;
+        const onScroll = () => {
+            const y = window.scrollY;
+            setIsScrolled(y > 80);
+            if (y < 80) setIsHidden(false);
+            else if (y > lastY + 4) setIsHidden(true);
+            else if (y < lastY - 4) setIsHidden(false);
+            lastY = y;
+        };
         onScroll();
         window.addEventListener('scroll', onScroll, {passive: true});
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
     return (
-        <nav className={`site-nav p-4 ${isScrolled ? 'is-scrolled' : ''} ${isMenuOpen ? 'navbar-burger' : ''}`}>
+        <nav className={`site-nav p-4 ${isScrolled ? 'is-scrolled' : ''} ${isHidden ? 'is-hidden' : ''} ${isMenuOpen ? 'navbar-burger' : ''}`}>
             <div className={'flex my-0 mx-auto max-w-[1479px] justify-between'}>
                 <Link className='flex items-center' href='/'>
                     <Image src='/logoqn.svg' width={153} height={28} alt='Logo QN' />

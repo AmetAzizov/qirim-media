@@ -114,6 +114,8 @@ const BgSlider = ({newsPosts}: any) => {
                 @keyframes slide-text-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
                 .bg-layer-in{animation:bg-fade-in 1000ms cubic-bezier(0.4,0,0.2,1) both}
                 .bg-layer-zoom{animation:bg-zoom 14s ease-out both}
+                .slick-slide:not(.slick-active){pointer-events:none}
+                .slick-slide.slick-active{pointer-events:auto}
                 .slide-card-in{animation:slide-text-in 700ms cubic-bezier(0.22,1,0.36,1) both}
                 @media (prefers-reduced-motion: reduce){
                     .bg-layer-in,.bg-layer-zoom,.slide-card-in{animation:none}
