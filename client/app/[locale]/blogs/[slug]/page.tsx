@@ -20,24 +20,31 @@ interface Params {
 export async function generateMetadata({params: {slug}}: any): Promise<Metadata> {
     const locale = getCurrentLocale();
     const newsPost = await getBlog(slug, locale);
+    const description = (newsPost?.text || '')
+        .replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/[#*_>`~]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 200);
+    const image = Array.isArray(newsPost?.image) ? newsPost?.image[0] : newsPost?.image;
     return {
         metadataBase: new URL('https://qirim.news'),
+        title: newsPost?.title,
+        description,
         openGraph: {
+            type: 'article',
             title: newsPost?.title,
-            images: [
-                {
-                    url: newsPost?.image
-                }
-            ]
+            description,
+            url: `https://qirim.news${locale === 'uk' ? '' : `/${locale}`}/blogs/${slug}`,
+            siteName: 'Qirim News',
+            images: [{url: image}]
         },
         twitter: {
             card: 'summary_large_image',
             title: newsPost?.title,
-            images: [
-                {
-                    url: newsPost?.image
-                }
-            ]
+            description,
+            images: [{url: image}]
         }
     };
 }
