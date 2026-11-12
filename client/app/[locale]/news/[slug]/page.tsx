@@ -28,6 +28,7 @@ interface Params {
 export async function generateMetadata({params}: {params: Params}): Promise<Metadata> {
     const {slug} = params;
     const newsPost = await getNewsPost(slug, null);
+    const image = Array.isArray(newsPost?.image) ? newsPost?.image[0] : newsPost?.image;
     return {
         metadataBase: new URL('https://qirim.news'),
         title: newsPost?.title,
@@ -39,20 +40,13 @@ export async function generateMetadata({params}: {params: Params}): Promise<Meta
             siteName: 'Qirim News',
             locale: params.locale === 'uk' ? 'uk_UA' : 'en_US',
             alternateLocale: ['uk_UA', 'en_US'],
-            images: [
-                {
-                    url: newsPost?.image
-                }
-            ]
+            images: [{url: image}]
         },
         twitter: {
             card: 'summary_large_image',
             title: newsPost?.title,
-            images: [
-                {
-                    url: newsPost?.image
-                }
-            ]
+            description: newsPost?.subtitle,
+            images: [{url: image}]
         }
     };
 }
@@ -148,7 +142,7 @@ export default async function NewsSlug({params: {slug}}: any) {
                                     data-zoomable=''
                                     data-full={newsPost.image}
                                     className={
-                                        'w-full h-auto aspect-[1012/582] object-cover rounded-lg cursor-zoom-in xl:w-[90%]'
+                                        'w-full h-auto max-h-[720px] object-contain rounded-lg cursor-zoom-in xl:w-[90%]'
                                     }
                                 />
                                 )}
